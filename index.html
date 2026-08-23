@@ -1,247 +1,43 @@
 <!DOCTYPE html>
-<html dir="rtl" lang="he">
+<html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>בית הכנסת משכן יהודה - אזור אישי</title>
-  <style>
-    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
-    body { background-color: #f0f2f5; margin: 0; padding: 20px 10px; display: flex; justify-content: center; }
-    .wrapper { width: 100%; max-width: 850px; }
-    
-    .header-box {
-      background: linear-gradient(135deg, #1a3b8b, #2563eb);
-      color: white; text-align: center; padding: 30px 20px;
-      border-radius: 20px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.12);
-    }
-    .header-box h1 { margin: 0; font-size: 34px; font-weight: 800; }
-    .header-box p { margin: 10px 0 0; opacity: 0.95; font-size: 20px; }
-
-    .card {
-      background: white; border-radius: 20px; padding: 30px 20px;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.06); margin-bottom: 25px;
-    }
-    
-    label { display: block; font-weight: 700; margin-bottom: 12px; color: #1e293b; font-size: 22px; }
-    select, input[type="password"] {
-      width: 100%; padding: 18px; border: 2px solid #cbd5e0; border-radius: 14px;
-      font-size: 20px; margin-bottom: 25px; outline: none; background: #fff;
-    }
-    select:focus, input[type="password"]:focus { border-color: #2563eb; }
-
-    .btn-submit {
-      width: 100%; background: #1a3b8b; color: white; border: none; padding: 18px;
-      font-size: 22px; font-weight: bold; border-radius: 14px; cursor: pointer;
-      transition: background 0.2s;
-    }
-    .btn-submit:hover { background: #2563eb; }
-
-    .user-title { text-align: center; font-size: 28px; color: #1a3b8b; margin-top: 0; margin-bottom: 25px; font-weight: 800; }
-    
-    /* קוביות סיכום - גופן מוגדל */
-    .stats-grid { display: flex; gap: 15px; justify-content: space-between; margin-bottom: 10px; }
-    .stat-box { flex: 1; border-radius: 16px; padding: 20px 10px; text-align: center; }
-    .stat-label { font-size: 18px; margin-bottom: 8px; font-weight: 700; }
-    .stat-val { font-size: 28px; font-weight: 900; }
-    
-    .box-credit { background-color: #ecfdf5; color: #047857; border: 2px solid #a7f3d0; }
-    .box-debit { background-color: #fef2f2; color: #b91c1c; border: 2px solid #fecaca; }
-    .box-balance { background-color: #eff6ff; color: #1d4ed8; border: 2px solid #bfdbfe; }
-
-    /* טבלאות - גופן מוגדל */
-    .section-title {
-      font-size: 24px; color: #1a3b8b; margin: 10px 0 20px; text-align: right;
-      border-right: 6px solid #1a3b8b; padding-right: 12px; font-weight: bold;
-    }
-    .table-responsive { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; text-align: right; margin-bottom: 10px; min-width: 550px; }
-    th { padding: 16px 12px; color: #1e293b; font-size: 18px; border-bottom: 3px solid #e2e8f0; background: #f8fafc; font-weight: 800; }
-    td { padding: 16px 12px; border-bottom: 1px solid #e2e8f0; font-size: 18px; color: #1e293b; font-weight: 500; }
-    
-    .loader { text-align: center; color: #1e293b; padding: 30px; font-size: 22px; font-weight: 700; }
-    .error-msg { color: #dc2626; text-align: center; margin-bottom: 15px; font-size: 18px; font-weight: 700; }
-
-    @media (max-width: 600px) {
-      .stats-grid { flex-direction: column; }
-      .stat-val { font-size: 24px; }
-      .header-box h1 { font-size: 26px; }
-      .header-box p { font-size: 17px; }
-      label, select, input, .btn-submit { font-size: 18px; }
-      th, td { font-size: 16px; padding: 12px 8px; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>משכן יהודה</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .notice {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-
-<div class="wrapper">
-  <div class="header-box">
-    <h1>בית הכנסת משכן יהודה</h1>
-    <p>בירור מצב חשבון אישי למתפלל</p>
-  </div>
-
-  <!-- טופס התחברות -->
-  <div class="card" id="loginCard">
-    <div id="loader" class="loader">טוען נתונים, נא להמתין...</div>
-    
-    <div id="loginForm" style="display:none;">
-      <div id="errMsg" class="error-msg"></div>
-      <label for="userSelect">בחר/י שם מתפלל:</label>
-      <select id="userSelect">
-        <option value="">טוען רשימה...</option>
-      </select>
-
-      <label for="passInput">הזן קוד אישי:</label>
-      <input type="password" id="passInput" placeholder="הזן קוד..." />
-
-      <button class="btn-submit" onclick="login()">כניסה למערכת</button>
+    <div class="container">
+        <div class="notice">בדיקת עדכון: המערכת פועלת בצורה תקינה!</div>
+        <h1>ברוכים הבאים למשכן יהודה</h1>
+        <p>האתר מעודכן ופעיל ב-GitHub Pages.</p>
     </div>
-  </div>
-
-  <!-- אזור נתונים אישי -->
-  <div id="dashboard" style="display:none;">
-    
-    <!-- סיכום מאזן שמי -->
-    <div class="card">
-      <h2 id="dispName" class="user-title"></h2>
-      <div class="stats-grid">
-        <div class="stat-box box-credit">
-          <div class="stat-label">זכות (שולם)</div>
-          <div id="statCredit" class="stat-val">₪ 0</div>
-        </div>
-        <div class="stat-box box-debit">
-          <div class="stat-label">חובה (חיובים)</div>
-          <div id="statDebit" class="stat-val">₪ 0</div>
-        </div>
-        <div class="stat-box box-balance">
-          <div class="stat-label">יתרה לתשלום</div>
-          <div id="statBalance" class="stat-val">₪ 0</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- פירוט קניות ומכירות -->
-    <div class="card">
-      <div class="section-title">פירוט קניות ועליות (מכירות)</div>
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th>תאריך</th>
-              <th>פרשה</th>
-              <th>תיאור</th>
-              <th>מניין</th>
-              <th>מחיר</th>
-            </tr>
-          </thead>
-          <tbody id="purchasesTable"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- פירוט תשלומים -->
-    <div class="card">
-      <div class="section-title">פירוט תשלומים (זכות)</div>
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th>תאריך</th>
-              <th>מס' קבלה</th>
-              <th>סכום</th>
-            </tr>
-          </thead>
-          <tbody id="paymentsTable"></tbody>
-        </table>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwOjcj-bb-Nn1Bqrhh1UY2RkxyouUqAfzScA-oUlEBiFlfdHxvZ5vE1OGDG3zfrLGwa2Q/exec";
-  let usersData = {};
-
-  window.onload = function() {
-    fetch(SCRIPT_URL)
-      .then(res => res.json())
-      .then(data => {
-        if(data && data.users) {
-          usersData = data.users;
-          populateUsers();
-          document.getElementById('loader').style.display = 'none';
-          document.getElementById('loginForm').style.display = 'block';
-        } else {
-          document.getElementById('loader').innerText = "שגיאה בטעינת נתונים";
-        }
-      })
-      .catch(err => {
-        document.getElementById('loader').innerText = "שגיאה בתקשורת מול השרת";
-      });
-  };
-
-  function populateUsers() {
-    const select = document.getElementById('userSelect');
-    select.innerHTML = '<option value="">-- בחר שם --</option>';
-    Object.keys(usersData).sort().forEach(name => {
-      const opt = document.createElement('option');
-      opt.value = name;
-      opt.textContent = name;
-      select.appendChild(opt);
-    });
-  }
-
-  function login() {
-    const name = document.getElementById('userSelect').value;
-    const pass = document.getElementById('passInput').value;
-    const errDiv = document.getElementById('errMsg');
-    errDiv.textContent = "";
-
-    if (!name) { errDiv.textContent = "נא לבחור שם מתפלל"; return; }
-    
-    const user = usersData[name];
-    if (user && (user.code === pass || pass === "19602026" || pass === "1234")) {
-      showDashboard(name, user);
-    } else {
-      errDiv.textContent = "קוד אישי שגוי";
-    }
-  }
-
-  function showDashboard(name, user) {
-    document.getElementById('loginCard').style.display = 'none';
-    document.getElementById('dispName').textContent = "שלום, " + name;
-
-    document.getElementById('statCredit').textContent = "₪ " + (user.summary.credit || 0).toLocaleString();
-    document.getElementById('statDebit').textContent = "₪ " + (user.summary.debit || 0).toLocaleString();
-    document.getElementById('statBalance').textContent = "₪ " + (user.summary.balance || 0).toLocaleString();
-
-    const pTable = document.getElementById('purchasesTable');
-    pTable.innerHTML = '';
-    if (user.purchases && user.purchases.length > 0) {
-      user.purchases.forEach(item => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${item.date}</td><td>${item.parasha}</td><td>${item.item}</td><td>${item.minyan}</td><td>₪ ${item.price.toLocaleString()}</td>`;
-        pTable.appendChild(tr);
-      });
-    } else {
-      pTable.innerHTML = '<tr><td colspan="5" style="text-align:center;">אין רשימת קניות</td></tr>';
-    }
-
-    const payTable = document.getElementById('paymentsTable');
-    payTable.innerHTML = '';
-    if (user.payments && user.payments.length > 0) {
-      user.payments.forEach(item => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${item.date}</td><td>${item.receiptNo}</td><td>₪ ${item.totalAmount.toLocaleString()}</td>`;
-        payTable.appendChild(tr);
-      });
-    } else {
-      payTable.innerHTML = '<tr><td colspan="3" style="text-align:center;">אין תשלומים רשומים</td></tr>';
-    }
-
-    document.getElementById('dashboard').style.display = 'block';
-  }
-</script>
-
 </body>
 </html>
