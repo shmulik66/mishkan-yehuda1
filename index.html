@@ -38,7 +38,6 @@
 
     .user-title { text-align: center; font-size: 28px; color: #1a3b8b; margin-top: 0; margin-bottom: 25px; font-weight: 800; }
     
-    /* קוביות סיכום - גופן מוגדל */
     .stats-grid { display: flex; gap: 15px; justify-content: space-between; margin-bottom: 10px; }
     .stat-box { flex: 1; border-radius: 16px; padding: 20px 10px; text-align: center; }
     .stat-label { font-size: 18px; margin-bottom: 8px; font-weight: 700; }
@@ -48,7 +47,6 @@
     .box-debit { background-color: #fef2f2; color: #b91c1c; border: 2px solid #fecaca; }
     .box-balance { background-color: #eff6ff; color: #1d4ed8; border: 2px solid #bfdbfe; }
 
-    /* טבלאות - גופן מוגדל */
     .section-title {
       font-size: 24px; color: #1a3b8b; margin: 10px 0 20px; text-align: right;
       border-right: 6px solid #1a3b8b; padding-right: 12px; font-weight: bold;
@@ -58,7 +56,7 @@
     th { padding: 16px 12px; color: #1e293b; font-size: 18px; border-bottom: 3px solid #e2e8f0; background: #f8fafc; font-weight: 800; }
     td { padding: 16px 12px; border-bottom: 1px solid #e2e8f0; font-size: 18px; color: #1e293b; font-weight: 500; }
     
-    .loader { text-align: center; color: #1e293b; padding: 30px; font-size: 22px; font-weight: 700; }
+    .loader { text-align: center; color: #1e293b; padding: 20px; font-size: 20px; font-weight: 700; }
     .error-msg { color: #dc2626; text-align: center; margin-bottom: 15px; font-size: 18px; font-weight: 700; }
 
     @media (max-width: 600px) {
@@ -81,7 +79,7 @@
 
   <!-- טופס התחברות -->
   <div class="card" id="loginCard">
-    <div id="loader" class="loader">טוען נתונים, נא להמתין...</div>
+    <div id="loader" class="loader">טוען רשימת מתפללים...</div>
     
     <div id="loginForm" style="display:none;">
       <div id="errMsg" class="error-msg"></div>
@@ -93,14 +91,12 @@
       <label for="passInput">הזן קוד אישי:</label>
       <input type="password" id="passInput" placeholder="הזן קוד..." />
 
-      <button class="btn-submit" onclick="login()">כניסה למערכת</button>
+      <button class="btn-submit" id="btnSubmit" onclick="login()">כניסה למערכת</button>
     </div>
   </div>
 
   <!-- אזור נתונים אישי -->
   <div id="dashboard" style="display:none;">
-    
-    <!-- סיכום מאזן שמי -->
     <div class="card">
       <h2 id="dispName" class="user-title"></h2>
       <div class="stats-grid">
@@ -119,7 +115,6 @@
       </div>
     </div>
 
-    <!-- פירוט קניות ומכירות -->
     <div class="card">
       <div class="section-title">פירוט קניות ועליות (מכירות)</div>
       <div class="table-responsive">
@@ -138,7 +133,6 @@
       </div>
     </div>
 
-    <!-- פירוט תשלומים -->
     <div class="card">
       <div class="section-title">פירוט תשלומים (זכות)</div>
       <div class="table-responsive">
@@ -154,25 +148,23 @@
         </table>
       </div>
     </div>
-
   </div>
 </div>
 
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwOjcj-bb-Nn1Bqrhh1UY2RkxyouUqAfzScA-oUlEBiFlfdHxvZ5vE1OGDG3zfrLGwa2Q/exec";
-  let usersData = {};
 
+  // 1. בטעינת העמוד מביאים רק את רשימת השמות
   window.onload = function() {
     fetch(SCRIPT_URL)
       .then(res => res.json())
       .then(data => {
-        if(data && data.users) {
-          usersData = data.users;
-          populateUsers();
+        if(data && data.names) {
+          populateUsers(data.names);
           document.getElementById('loader').style.display = 'none';
           document.getElementById('loginForm').style.display = 'block';
         } else {
-          document.getElementById('loader').innerText = "שגיאה בטעינת נתונים";
+          document.getElementById('loader').innerText = "שגיאה בטעינת רשימת שמות";
         }
       })
       .catch(err => {
@@ -180,10 +172,10 @@
       });
   };
 
-  function populateUsers() {
+  function populateUsers(names) {
     const select = document.getElementById('userSelect');
     select.innerHTML = '<option value="">-- בחר שם --</option>';
-    Object.keys(usersData).sort().forEach(name => {
+    names.forEach(name => {
       const opt = document.createElement('option');
       opt.value = name;
       opt.textContent = name;
@@ -191,20 +183,39 @@
     });
   }
 
+  // 2. בלחיצה על כניסה - פונים לשרת ומאמתים את הקוד עבור השם הנבחר בלבד
   function login() {
     const name = document.getElementById('userSelect').value;
     const pass = document.getElementById('passInput').value;
     const errDiv = document.getElementById('errMsg');
+    const btn = document.getElementById('btnSubmit');
     errDiv.textContent = "";
 
     if (!name) { errDiv.textContent = "נא לבחור שם מתפלל"; return; }
-    
-    const user = usersData[name];
-    if (user && (user.code === pass || pass === "19602026" || pass === "1234")) {
-      showDashboard(name, user);
-    } else {
-      errDiv.textContent = "קוד אישי שגוי";
-    }
+    if (!pass) { errDiv.textContent = "נא להזין קוד אישי"; return; }
+
+    btn.disabled = true;
+    btn.textContent = "מאמת נתונים...";
+
+    const requestUrl = `${SCRIPT_URL}?name=${encodeURIComponent(name)}&pass=${encodeURIComponent(pass)}`;
+
+    fetch(requestUrl)
+      .then(res => res.json())
+      .then(data => {
+        btn.disabled = false;
+        btn.textContent = "כניסה למערכת";
+
+        if (data.success && data.userData) {
+          showDashboard(data.userData.name, data.userData);
+        } else {
+          errDiv.textContent = data.message || "קוד אישי שגוי";
+        }
+      })
+      .catch(err => {
+        btn.disabled = false;
+        btn.textContent = "כניסה למערכת";
+        errDiv.textContent = "שגיאה בתקשורת מול השרת";
+      });
   }
 
   function showDashboard(name, user) {
