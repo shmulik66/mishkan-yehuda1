@@ -36,6 +36,14 @@
     }
     .btn-submit:hover { background: #2563eb; }
 
+    .btn-logout {
+      background-color: #f1f5f9; color: #475569; border: 2px solid #cbd5e0;
+      padding: 10px 20px; font-size: 16px; font-weight: 700; border-radius: 10px;
+      cursor: pointer; margin-bottom: 20px; transition: all 0.2s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-logout:hover { background-color: #e2e8f0; color: #1e293b; }
+
     .user-title { text-align: center; font-size: 28px; color: #1a3b8b; margin-top: 0; margin-bottom: 25px; font-weight: 800; }
     
     .stats-grid { display: flex; gap: 15px; justify-content: space-between; margin-bottom: 10px; }
@@ -95,6 +103,10 @@
   </div>
 
   <div id="dashboard" style="display:none;">
+    
+    <!-- כפתור יציאה / חזרה לבדיקת מתפלל אחר -->
+    <button class="btn-logout" onclick="logout()">➡️ יציאה / בדיקת מתפלל אחר</button>
+
     <div class="card">
       <h2 id="dispName" class="user-title"></h2>
       <div class="stats-grid">
@@ -182,7 +194,6 @@
     });
   }
 
-  // פונקציה לבדיקת לחיצה על מקש Enter
   function checkEnter(event) {
     if (event.key === "Enter" || event.keyCode === 13) {
       login();
@@ -238,6 +249,17 @@
     }
 
     document.getElementById('dashboard').style.display = 'block';
+  }
+
+  // פונקציית יציאה וחזרה למסך הכניסה
+  function logout() {
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('loginCard').style.display = 'block';
+    
+    // ניקוי השדות לבדיקה חדשה
+    document.getElementById('userInput').value = '';
+    document.getElementById('passInput').value = '';
+    document.getElementById('errMsg').textContent = '';
   }
 </script>
 
