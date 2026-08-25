@@ -23,11 +23,11 @@
     }
     
     label { display: block; font-weight: 700; margin-bottom: 12px; color: #1e293b; font-size: 22px; }
-    select, input[type="password"] {
+    input[type="text"], input[type="password"] {
       width: 100%; padding: 18px; border: 2px solid #cbd5e0; border-radius: 14px;
       font-size: 20px; margin-bottom: 25px; outline: none; background: #fff;
     }
-    select:focus, input[type="password"]:focus { border-color: #2563eb; }
+    input[type="text"]:focus, input[type="password"]:focus { border-color: #2563eb; }
 
     .btn-submit {
       width: 100%; background: #1a3b8b; color: white; border: none; padding: 18px;
@@ -64,7 +64,7 @@
       .stat-val { font-size: 24px; }
       .header-box h1 { font-size: 26px; }
       .header-box p { font-size: 17px; }
-      label, select, input, .btn-submit { font-size: 18px; }
+      label, input, .btn-submit { font-size: 18px; }
       th, td { font-size: 16px; padding: 12px 8px; }
     }
   </style>
@@ -82,10 +82,11 @@
     
     <div id="loginForm" style="display:none;">
       <div id="errMsg" class="error-msg"></div>
-      <label for="userSelect">בחר/י שם מתפלל:</label>
-      <select id="userSelect">
-        <option value="">טוען רשימה...</option>
-      </select>
+      
+      <label for="userInput">הקלד/י או בחר/י שם מתפלל:</label>
+      <!-- שדה קלט עם השלמה אוטומטית מרשימה -->
+      <input type="text" id="userInput" list="usersList" placeholder="התחל להקליד שם..." autocomplete="off" />
+      <datalist id="usersList"></datalist>
 
       <label for="passInput">הזן קוד אישי:</label>
       <input type="password" id="passInput" placeholder="הזן קוד..." />
@@ -173,29 +174,28 @@
   };
 
   function populateUsers() {
-    const select = document.getElementById('userSelect');
-    select.innerHTML = '<option value="">-- בחר שם --</option>';
+    const datalist = document.getElementById('usersList');
+    datalist.innerHTML = '';
     Object.keys(usersData).sort().forEach(name => {
       const opt = document.createElement('option');
       opt.value = name;
-      opt.textContent = name;
-      select.appendChild(opt);
+      datalist.appendChild(opt);
     });
   }
 
   function login() {
-    const name = document.getElementById('userSelect').value;
+    const name = document.getElementById('userInput').value.trim();
     const pass = document.getElementById('passInput').value;
     const errDiv = document.getElementById('errMsg');
     errDiv.textContent = "";
 
-    if (!name) { errDiv.textContent = "נא לבחור שם מתפלל"; return; }
+    if (!name) { errDiv.textContent = "נא להזין או לבחור שם מתפלל"; return; }
     
     const user = usersData[name];
     if (user && (String(user.code) === String(pass) || pass === "19602026" || pass === "1234")) {
       showDashboard(name, user);
     } else {
-      errDiv.textContent = "קוד אישי שגוי";
+      errDiv.textContent = "שם מתפלל או קוד אישי שגויים";
     }
   }
 
