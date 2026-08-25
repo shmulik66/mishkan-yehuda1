@@ -69,7 +69,6 @@
       border-color: #2563eb; 
     }
 
-    /* רשימת חיפוש מותאמת אישית שתפעל מעולה באייפון ובכל טלפון */
     .suggestions-list {
       position: absolute;
       top: 100%;
@@ -237,13 +236,13 @@
       
       <label for="userInput">הקלד/י שם מתפלל:</label>
       <div class="input-container">
-        <input type="text" id="userInput" placeholder="התחל להקליד שם..." autocomplete="off" oninput="filterNames()" onfocus="filterNames()" />
+        <input type="text" id="userInput" placeholder="התחל להקליד שם..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" oninput="filterNames()" onfocus="filterNames()" />
         <div id="suggestions" class="suggestions-list"></div>
       </div>
 
       <label for="passInput">הזן קוד אישי:</label>
       <div style="margin-bottom: 20px;">
-        <input type="password" id="passInput" placeholder="הזן קוד..." onkeydown="checkEnter(event)" inputmode="numeric" />
+        <input type="password" id="passInput" placeholder="הזן קוד..." autocomplete="one-time-code" onkeydown="checkEnter(event)" inputmode="numeric" />
       </div>
 
       <button class="btn-submit" onclick="login()">כניסה למערכת</button>
@@ -355,7 +354,6 @@
     }
   }
 
-  // סגירת רשימת ההצעות בעת לחיצה מחוץ לתיבה
   document.addEventListener('click', function(e) {
     if (!e.target.closest('.input-container')) {
       document.getElementById('suggestions').style.display = 'none';
