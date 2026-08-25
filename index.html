@@ -84,12 +84,11 @@
       <div id="errMsg" class="error-msg"></div>
       
       <label for="userInput">הקלד/י או בחר/י שם מתפלל:</label>
-      <!-- שדה קלט עם השלמה אוטומטית מרשימה -->
-      <input type="text" id="userInput" list="usersList" placeholder="התחל להקליד שם..." autocomplete="off" />
+      <input type="text" id="userInput" list="usersList" placeholder="התחל להקליד שם..." autocomplete="off" onkeydown="checkEnter(event)" />
       <datalist id="usersList"></datalist>
 
       <label for="passInput">הזן קוד אישי:</label>
-      <input type="password" id="passInput" placeholder="הזן קוד..." />
+      <input type="password" id="passInput" placeholder="הזן קוד..." onkeydown="checkEnter(event)" />
 
       <button class="btn-submit" onclick="login()">כניסה למערכת</button>
     </div>
@@ -181,6 +180,13 @@
       opt.value = name;
       datalist.appendChild(opt);
     });
+  }
+
+  // פונקציה לבדיקת לחיצה על מקש Enter
+  function checkEnter(event) {
+    if (event.key === "Enter" || event.keyCode === 13) {
+      login();
+    }
   }
 
   function login() {
