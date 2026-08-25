@@ -1,4 +1,4 @@
 # בית הכנסת משכן יהודה - אזור אישי למתפלל
 
 להרצת האתר והתחברות למערכת:
-[לחץ כאן לפתיחת האתר](https://shmulik66.github.io/mishkan-yehuda1/)
+<a href="https://shmulik66.github.io/mishkan-yehuda1/" target="_blank">לחץ כאן לפתיחת האתר בלשונית חדשה</a>
