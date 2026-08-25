@@ -54,7 +54,7 @@
       margin-bottom: 20px;
     }
 
-    input[type="text"], input[type="password"] {
+    input[type="search"], input[type="password"], input[type="text"] {
       width: 100%; 
       padding: 14px; 
       border: 2px solid #cbd5e0; 
@@ -65,7 +65,7 @@
       color: #1e293b;
       -webkit-appearance: none;
     }
-    input[type="text"]:focus, input[type="password"]:focus { 
+    input[type="search"]:focus, input[type="password"]:focus, input[type="text"]:focus { 
       border-color: #2563eb; 
     }
 
@@ -208,7 +208,7 @@
       .header-box p { font-size: 20px; }
       .card { padding: 30px 20px; border-radius: 20px; }
       label { font-size: 22px; }
-      input[type="text"], input[type="password"] { font-size: 20px; }
+      input[type="search"], input[type="password"], input[type="text"] { font-size: 20px; }
       .btn-submit { font-size: 22px; }
       .btn-logout { width: auto; display: inline-flex; }
       .user-title { font-size: 28px; }
@@ -231,22 +231,23 @@
   <div class="card" id="loginCard">
     <div id="loader" class="loader">טוען נתונים, נא להמתין...</div>
     
-    <div id="loginForm" style="display:none;">
+    <!-- שימוש בטופס ללא מנגנון השלמה אוטומטית של דפדפנים -->
+    <form id="loginForm" style="display:none;" action="javascript:void(0);" autocomplete="off">
       <div id="errMsg" class="error-msg"></div>
       
       <label for="userInput">הקלד/י שם מתפלל:</label>
       <div class="input-container">
-        <input type="text" id="userInput" placeholder="התחל להקליד שם..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" oninput="filterNames()" onfocus="filterNames()" />
+        <input type="search" id="userInput" name="search_member_name" placeholder="התחל להקליד שם..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" oninput="filterNames()" onfocus="filterNames()" />
         <div id="suggestions" class="suggestions-list"></div>
       </div>
 
       <label for="passInput">הזן קוד אישי:</label>
       <div style="margin-bottom: 20px;">
-        <input type="password" id="passInput" placeholder="הזן קוד..." autocomplete="one-time-code" onkeydown="checkEnter(event)" inputmode="numeric" />
+        <input type="password" id="passInput" name="member_pin_code" placeholder="הזן קוד..." autocomplete="new-password" onkeydown="checkEnter(event)" inputmode="numeric" />
       </div>
 
-      <button class="btn-submit" onclick="login()">כניסה למערכת</button>
-    </div>
+      <button type="button" class="btn-submit" onclick="login()">כניסה למערכת</button>
+    </form>
   </div>
 
   <div id="dashboard" style="display:none;">
