@@ -49,14 +49,17 @@
       font-size: 18px; 
     }
 
-    /* פונט 16px מונע זום-אין אוטומטי ומציק בניידים */
+    .input-container {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
     input[type="text"], input[type="password"] {
       width: 100%; 
       padding: 14px; 
       border: 2px solid #cbd5e0; 
       border-radius: 12px;
       font-size: 16px; 
-      margin-bottom: 20px; 
       outline: none; 
       background: #fff;
       color: #1e293b;
@@ -64,6 +67,38 @@
     }
     input[type="text"]:focus, input[type="password"]:focus { 
       border-color: #2563eb; 
+    }
+
+    /* רשימת חיפוש מותאמת אישית שתפעל מעולה באייפון ובכל טלפון */
+    .suggestions-list {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      left: 0;
+      background: white;
+      border: 2px solid #2563eb;
+      border-top: none;
+      border-radius: 0 0 12px 12px;
+      max-height: 200px;
+      overflow-y: auto;
+      z-index: 1000;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      display: none;
+    }
+    .suggestion-item {
+      padding: 12px 16px;
+      cursor: pointer;
+      font-size: 16px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #1e293b;
+    }
+    .suggestion-item:last-child {
+      border-bottom: none;
+    }
+    .suggestion-item:active, .suggestion-item:hover {
+      background-color: #eff6ff;
+      color: #2563eb;
+      font-weight: bold;
     }
 
     .btn-submit {
@@ -200,12 +235,16 @@
     <div id="loginForm" style="display:none;">
       <div id="errMsg" class="error-msg"></div>
       
-      <label for="userInput">הקלד/י או בחר/י שם מתפלל:</label>
-      <input type="text" id="userInput" list="usersList" placeholder="התחל להקליד שם..." autocomplete="off" onkeydown="checkEnter(event)" onclick="this.value=''" />
-      <datalist id="usersList"></datalist>
+      <label for="userInput">הקלד/י שם מתפלל:</label>
+      <div class="input-container">
+        <input type="text" id="userInput" placeholder="התחל להקליד שם..." autocomplete="off" oninput="filterNames()" onfocus="filterNames()" />
+        <div id="suggestions" class="suggestions-list"></div>
+      </div>
 
       <label for="passInput">הזן קוד אישי:</label>
-      <input type="password" id="passInput" placeholder="הזן קוד..." onkeydown="checkEnter(event)" inputmode="numeric" />
+      <div style="margin-bottom: 20px;">
+        <input type="password" id="passInput" placeholder="הזן קוד..." onkeydown="checkEnter(event)" inputmode="numeric" />
+      </div>
 
       <button class="btn-submit" onclick="login()">כניסה למערכת</button>
     </div>
@@ -272,6 +311,7 @@
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwOjcj-bb-Nn1Bqrhh1UY2RkxyouUqAfzScA-oUlEBiFlfdHxvZ5vE1OGDG3zfrLGwa2Q/exec";
   let usersData = {};
+  let namesList = [];
 
   window.onload = function() {
     fetch(SCRIPT_URL)
@@ -279,7 +319,7 @@
       .then(data => {
         if(data && data.users) {
           usersData = data.users;
-          populateUsers();
+          namesList = Object.keys(usersData).sort();
           document.getElementById('loader').style.display = 'none';
           document.getElementById('loginForm').style.display = 'block';
         } else {
@@ -291,15 +331,36 @@
       });
   };
 
-  function populateUsers() {
-    const datalist = document.getElementById('usersList');
-    datalist.innerHTML = '';
-    Object.keys(usersData).sort().forEach(name => {
-      const opt = document.createElement('option');
-      opt.value = name;
-      datalist.appendChild(opt);
-    });
+  function filterNames() {
+    const input = document.getElementById('userInput').value.trim().toLowerCase();
+    const suggestionsBox = document.getElementById('suggestions');
+    suggestionsBox.innerHTML = '';
+
+    const matches = namesList.filter(name => name.toLowerCase().includes(input));
+
+    if (matches.length > 0) {
+      matches.forEach(name => {
+        const item = document.createElement('div');
+        item.className = 'suggestion-item';
+        item.textContent = name;
+        item.onclick = function() {
+          document.getElementById('userInput').value = name;
+          suggestionsBox.style.display = 'none';
+        };
+        suggestionsBox.appendChild(item);
+      });
+      suggestionsBox.style.display = 'block';
+    } else {
+      suggestionsBox.style.display = 'none';
+    }
   }
+
+  // סגירת רשימת ההצעות בעת לחיצה מחוץ לתיבה
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.input-container')) {
+      document.getElementById('suggestions').style.display = 'none';
+    }
+  });
 
   function checkEnter(event) {
     if (event.key === "Enter" || event.keyCode === 13) {
@@ -365,6 +426,7 @@
     document.getElementById('userInput').value = '';
     document.getElementById('passInput').value = '';
     document.getElementById('errMsg').textContent = '';
+    document.getElementById('suggestions').style.display = 'none';
   }
 </script>
 
