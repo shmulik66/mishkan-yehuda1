@@ -7,45 +7,100 @@
   <style>
     * { 
       box-sizing: border-box; 
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
     }
     body { 
-      background-color: #f0f2f5; 
+      background-color: #f7f5f0; /* גוון קלף/קרם עדין וחם */
       margin: 0; 
       padding: 15px 10px; 
       display: flex; 
       justify-content: center; 
+      color: #1a202c;
     }
     .wrapper { 
       width: 100%; 
       max-width: 850px; 
     }
     
-    .header-box {
-      background: linear-gradient(135deg, #1a3b8b, #2563eb);
-      color: white; 
-      text-align: center; 
-      padding: 20px 15px;
-      border-radius: 16px; 
-      margin-bottom: 20px; 
-      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+    /* בס"ד בפינה */
+    .bsd {
+      text-align: left;
+      font-size: 14px;
+      font-weight: bold;
+      color: #8c6d31;
+      margin-bottom: 5px;
+      padding-left: 5px;
     }
-    .header-box h1 { margin: 0; font-size: 26px; font-weight: 800; }
-    .header-box p { margin: 8px 0 0; opacity: 0.95; font-size: 16px; }
+
+    /* כותרת ראשית בסגנון בית כנסת */
+    .header-box {
+      background: linear-gradient(135deg, #0d233a, #1a3b8b); /* כחול עמוק יוקרתי */
+      color: #ffffff; 
+      text-align: center; 
+      padding: 25px 15px;
+      border-radius: 16px; 
+      margin-bottom: 15px; 
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      border-bottom: 4px solid #d4af37; /* פלח זהב בתחתית */
+      position: relative;
+    }
+    .header-box h1 { 
+      margin: 0; 
+      font-size: 28px; 
+      font-weight: 800; 
+      letter-spacing: 0.5px;
+      color: #fef08a; /* כותרת בגוון זהב מעודן */
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+    }
+    .header-box p { 
+      margin: 8px 0 0; 
+      opacity: 0.9; 
+      font-size: 16px; 
+    }
+
+    /* קוביית לעילוי נשמת */
+    .memorial-card {
+      background: linear-gradient(180deg, #fffdfa 0%, #fefce8 100%);
+      border: 2px solid #eab308; /* גבול זהב */
+      border-radius: 14px;
+      padding: 15px;
+      margin-bottom: 20px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(234, 179, 8, 0.15);
+      position: relative;
+    }
+    .memorial-title {
+      color: #854d0e;
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .memorial-text {
+      color: #451a03;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.4;
+      margin: 0;
+    }
 
     .card {
-      background: white; 
+      background: #ffffff; 
       border-radius: 16px; 
       padding: 20px 15px;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.06); 
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
       margin-bottom: 20px;
+      border: 1px solid #e2e8f0;
     }
     
     label { 
       display: block; 
       font-weight: 700; 
       margin-bottom: 8px; 
-      color: #1e293b; 
+      color: #0d233a; 
       font-size: 18px; 
     }
 
@@ -66,7 +121,7 @@
       -webkit-appearance: none;
     }
     input[type="search"]:focus, input[type="password"]:focus, input[type="text"]:focus { 
-      border-color: #2563eb; 
+      border-color: #1a3b8b; 
     }
 
     .suggestions-list {
@@ -75,7 +130,7 @@
       right: 0;
       left: 0;
       background: white;
-      border: 2px solid #2563eb;
+      border: 2px solid #1a3b8b;
       border-top: none;
       border-radius: 0 0 12px 12px;
       max-height: 200px;
@@ -95,28 +150,31 @@
       border-bottom: none;
     }
     .suggestion-item:active, .suggestion-item:hover {
-      background-color: #eff6ff;
-      color: #2563eb;
+      background-color: #f0f4ff;
+      color: #1a3b8b;
       font-weight: bold;
     }
 
     .btn-submit {
       width: 100%; 
-      background: #1a3b8b; 
-      color: white; 
+      background: linear-gradient(135deg, #0d233a, #1a3b8b); 
+      color: #ffffff; 
       border: none; 
       padding: 16px;
       font-size: 18px; 
       font-weight: bold; 
       border-radius: 12px; 
       cursor: pointer;
-      transition: background 0.2s;
+      box-shadow: 0 3px 10px rgba(13, 35, 58, 0.2);
+      transition: all 0.2s;
     }
-    .btn-submit:hover { background: #2563eb; }
+    .btn-submit:hover { 
+      background: linear-gradient(135deg, #1a3b8b, #2563eb); 
+    }
 
     .btn-logout {
-      background-color: #f1f5f9; 
-      color: #475569; 
+      background-color: #ffffff; 
+      color: #0d233a; 
       border: 2px solid #cbd5e0;
       padding: 12px 18px; 
       font-size: 16px; 
@@ -131,12 +189,12 @@
       gap: 8px;
       width: 100%;
     }
-    .btn-logout:hover { background-color: #e2e8f0; color: #1e293b; }
+    .btn-logout:hover { background-color: #f1f5f9; }
 
     .user-title { 
       text-align: center; 
       font-size: 22px; 
-      color: #1a3b8b; 
+      color: #0d233a; 
       margin-top: 0; 
       margin-bottom: 20px; 
       font-weight: 800; 
@@ -162,10 +220,10 @@
 
     .section-title {
       font-size: 20px; 
-      color: #1a3b8b; 
+      color: #0d233a; 
       margin: 5px 0 15px; 
       text-align: right;
-      border-right: 5px solid #1a3b8b; 
+      border-right: 5px solid #d4af37; /* קו הפרדה בגוון זהב */
       padding-right: 10px; 
       font-weight: bold;
     }
@@ -183,10 +241,10 @@
     }
     th { 
       padding: 12px 8px; 
-      color: #1e293b; 
+      color: #0d233a; 
       font-size: 15px; 
-      border-bottom: 2px solid #e2e8f0; 
-      background: #f8fafc; 
+      border-bottom: 2px solid #d4af37; 
+      background: #fdfbf7; 
       font-weight: 800; 
       white-space: nowrap;
     }
@@ -198,7 +256,7 @@
       font-weight: 500; 
     }
     
-    .loader { text-align: center; color: #1e293b; padding: 25px; font-size: 18px; font-weight: 700; }
+    .loader { text-align: center; color: #0d233a; padding: 25px; font-size: 18px; font-weight: 700; }
     .error-msg { color: #dc2626; text-align: center; margin-bottom: 15px; font-size: 16px; font-weight: 700; }
 
     @media (min-width: 640px) {
@@ -223,15 +281,28 @@
 <body>
 
 <div class="wrapper">
+  <div class="bsd">בס"ד</div>
+
   <div class="header-box">
     <h1>בית הכנסת משכן יהודה</h1>
     <p>בירור מצב חשבון אישי למתפלל</p>
   </div>
 
+  <!-- קוביית לעילוי נשמת - קבועה בכל המסכים -->
+  <div class="memorial-card">
+    <div class="memorial-title">
+      🕯️ לעילוי נשמת
+    </div>
+    <div class="memorial-text">
+      <!-- תוכל לשנות את הטקסט כאן לפי הצורך -->
+      פלוני בן פלוני ז"ל ופלונית בת פלוני ע"ה<br>
+      <span style="font-size: 14px; font-weight: normal; color: #713f12;">ת.נ.צ.ב.ה.</span>
+    </div>
+  </div>
+
   <div class="card" id="loginCard">
     <div id="loader" class="loader">טוען נתונים, נא להמתין...</div>
     
-    <!-- שימוש בטופס ללא מנגנון השלמה אוטומטית של דפדפנים -->
     <form id="loginForm" style="display:none;" action="javascript:void(0);" autocomplete="off">
       <div id="errMsg" class="error-msg"></div>
       
