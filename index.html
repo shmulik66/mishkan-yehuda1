@@ -4,13 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>בית הכנסת משכן יהודה - אזור אישי</title>
+  <!-- טעינת פונטים מתאימים: Frank Ruhl Hofshi לכותרות ו-Assistant לטקסט קריא -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Hofshi:wght@600;800;900&display=swap" rel="stylesheet">
+  
   <style>
     * { 
       box-sizing: border-box; 
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+      font-family: 'Assistant', -apple-system, BlinkMacSystemFont, sans-serif; 
     }
     body { 
-      background-color: #f7f5f0; 
+      background-color: #fcf8f2; /* גוון קלף רך ומכובד */
       margin: 0; 
       padding: 15px 10px; 
       display: flex; 
@@ -22,40 +27,59 @@
       max-width: 850px; 
     }
     
-    /* בס"ד בצד ימין */
+    /* בס"ד בצד ימין בפונט מסורתי */
     .bsd {
       text-align: right;
-      font-size: 14px;
-      font-weight: bold;
+      font-size: 16px;
+      font-weight: 700;
       color: #8c6d31;
       margin-bottom: 5px;
       padding-right: 5px;
+      font-family: 'Frank Ruhl Hofshi', serif;
     }
 
-    /* כותרת ראשית */
+    /* כותרת ראשית עם מסגרת זהב כפולה ועיטור */
     .header-box {
-      background: linear-gradient(135deg, #0d233a, #1a3b8b); 
+      background: linear-gradient(135deg, #0a192f, #1e3a8a); /* כחול מלכותי עמוק */
       color: #ffffff; 
       text-align: center; 
-      padding: 25px 15px;
+      padding: 30px 20px;
       border-radius: 16px; 
-      margin-bottom: 15px; 
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-      border-bottom: 4px solid #d4af37; 
+      margin-bottom: 20px; 
+      box-shadow: 0 6px 20px rgba(10, 25, 47, 0.25);
+      border: 2px solid #c5a059; /* מסגרת זהב חיצונית */
+      outline: 2px solid #c5a059; /* מסגרת זהב כפולה */
+      outline-offset: -7px;
       position: relative;
     }
+    
+    /* עיטור מעוין קלאסי במרכז הכותרת */
+    .header-box::after {
+      content: "◆";
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fcf8f2;
+      color: #c5a059;
+      padding: 0 8px;
+      font-size: 14px;
+    }
+
     .header-box h1 { 
       margin: 0; 
-      font-size: 28px; 
-      font-weight: 800; 
+      font-size: 32px; 
+      font-weight: 900; 
       letter-spacing: 0.5px;
-      color: #fef08a; 
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+      color: #fef08a; /* זהב עדין */
+      font-family: 'Frank Ruhl Hofshi', serif; /* פונט מסורתי מרשים */
+      text-shadow: 1px 2px 4px rgba(0,0,0,0.5);
     }
     .header-box p { 
       margin: 8px 0 0; 
-      opacity: 0.9; 
-      font-size: 16px; 
+      opacity: 0.95; 
+      font-size: 17px; 
+      color: #e2e8f0;
     }
 
     /* מעטפת לשתי קוביות לעילוי נשמת */
@@ -66,45 +90,48 @@
       margin-bottom: 20px;
     }
 
-    /* קוביית לעילוי נשמת */
+    /* קוביית לעילוי נשמת בעלת עיצוב יוקרתי */
     .memorial-card {
       flex: 1;
       background: linear-gradient(180deg, #fffdfa 0%, #fefce8 100%);
-      border: 2px solid #eab308; 
-      border-radius: 14px;
-      padding: 12px 15px;
+      border: 1.5px solid #d4af37; 
+      border-radius: 12px;
+      padding: 14px;
       text-align: center;
-      box-shadow: 0 2px 8px rgba(234, 179, 8, 0.15);
+      box-shadow: 0 3px 10px rgba(212, 175, 55, 0.12);
+      position: relative;
     }
     .memorial-title {
       color: #854d0e;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 800;
       margin-bottom: 4px;
+      font-family: 'Frank Ruhl Hofshi', serif;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
     }
     .memorial-text {
-      color: #451a03;
-      font-size: 17px;
+      color: #3b1a03;
+      font-size: 18px;
       font-weight: 700;
       line-height: 1.3;
       margin: 0;
+      font-family: 'Frank Ruhl Hofshi', serif;
     }
     .memorial-date {
-      font-size: 13px;
-      font-weight: normal;
+      font-size: 13.5px;
+      font-weight: 600;
       color: #713f12;
-      margin-top: 3px;
+      margin-top: 4px;
     }
 
     .card {
       background: #ffffff; 
       border-radius: 16px; 
-      padding: 20px 15px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+      padding: 22px 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.04); 
       margin-bottom: 20px;
       border: 1px solid #e2e8f0;
     }
@@ -113,7 +140,7 @@
       display: block; 
       font-weight: 700; 
       margin-bottom: 8px; 
-      color: #0d233a; 
+      color: #0a192f; 
       font-size: 18px; 
     }
 
@@ -134,7 +161,7 @@
       -webkit-appearance: none;
     }
     input[type="search"]:focus, input[type="password"]:focus, input[type="text"]:focus { 
-      border-color: #1a3b8b; 
+      border-color: #1e3a8a; 
     }
 
     .suggestions-list {
@@ -143,7 +170,7 @@
       right: 0;
       left: 0;
       background: white;
-      border: 2px solid #1a3b8b;
+      border: 2px solid #1e3a8a;
       border-top: none;
       border-radius: 0 0 12px 12px;
       max-height: 200px;
@@ -164,13 +191,13 @@
     }
     .suggestion-item:active, .suggestion-item:hover {
       background-color: #f0f4ff;
-      color: #1a3b8b;
+      color: #1e3a8a;
       font-weight: bold;
     }
 
     .btn-submit {
       width: 100%; 
-      background: linear-gradient(135deg, #0d233a, #1a3b8b); 
+      background: linear-gradient(135deg, #0a192f, #1e3a8a); 
       color: #ffffff; 
       border: none; 
       padding: 16px;
@@ -178,16 +205,16 @@
       font-weight: bold; 
       border-radius: 12px; 
       cursor: pointer;
-      box-shadow: 0 3px 10px rgba(13, 35, 58, 0.2);
+      box-shadow: 0 4px 12px rgba(10, 25, 47, 0.25);
       transition: all 0.2s;
     }
     .btn-submit:hover { 
-      background: linear-gradient(135deg, #1a3b8b, #2563eb); 
+      background: linear-gradient(135deg, #1e3a8a, #2563eb); 
     }
 
     .btn-logout {
       background-color: #ffffff; 
-      color: #0d233a; 
+      color: #0a192f; 
       border: 2px solid #cbd5e0;
       padding: 12px 18px; 
       font-size: 16px; 
@@ -206,11 +233,12 @@
 
     .user-title { 
       text-align: center; 
-      font-size: 22px; 
-      color: #0d233a; 
+      font-size: 24px; 
+      color: #0a192f; 
       margin-top: 0; 
       margin-bottom: 20px; 
       font-weight: 800; 
+      font-family: 'Frank Ruhl Hofshi', serif;
     }
     
     .stats-grid { 
@@ -232,13 +260,14 @@
     .box-balance { background-color: #eff6ff; color: #1d4ed8; border: 2px solid #bfdbfe; }
 
     .section-title {
-      font-size: 20px; 
-      color: #0d233a; 
+      font-size: 21px; 
+      color: #0a192f; 
       margin: 5px 0 15px; 
       text-align: right;
-      border-right: 5px solid #d4af37; 
+      border-right: 5px solid #c5a059; /* קו הפרדה זהב עמוק */
       padding-right: 10px; 
-      font-weight: bold;
+      font-weight: 800;
+      font-family: 'Frank Ruhl Hofshi', serif;
     }
 
     .table-responsive { 
@@ -254,12 +283,13 @@
     }
     th { 
       padding: 12px 8px; 
-      color: #0d233a; 
-      font-size: 15px; 
-      border-bottom: 2px solid #d4af37; 
-      background: #fdfbf7; 
+      color: #0a192f; 
+      font-size: 16px; 
+      border-bottom: 2px solid #c5a059; 
+      background: #fcf8f2; 
       font-weight: 800; 
       white-space: nowrap;
+      font-family: 'Frank Ruhl Hofshi', serif;
     }
     td { 
       padding: 12px 8px; 
@@ -269,15 +299,15 @@
       font-weight: 500; 
     }
     
-    .loader { text-align: center; color: #0d233a; padding: 25px; font-size: 18px; font-weight: 700; }
+    .loader { text-align: center; color: #0a192f; padding: 25px; font-size: 18px; font-weight: 700; }
     .error-msg { color: #dc2626; text-align: center; margin-bottom: 15px; font-size: 16px; font-weight: 700; }
 
     @media (min-width: 640px) {
       body { padding: 20px 10px; }
-      .header-box { padding: 30px 20px; border-radius: 20px; }
-      .header-box h1 { font-size: 34px; }
+      .header-box { padding: 35px 20px; border-radius: 20px; }
+      .header-box h1 { font-size: 38px; }
       .header-box p { font-size: 20px; }
-      .memorial-container { flex-direction: row; } /* מעבר לשתי עמודות במסך רחב */
+      .memorial-container { flex-direction: row; }
       .card { padding: 30px 20px; border-radius: 20px; }
       label { font-size: 22px; }
       input[type="search"], input[type="password"], input[type="text"] { font-size: 20px; }
@@ -302,7 +332,7 @@
     <p>בירור מצב חשבון אישי למתפלל</p>
   </div>
 
-  <!-- שתי קוביות לעילוי נשמת -->
+  <!-- שתי קוביות לעילוי נשמת בעיצוב מסורתי -->
   <div class="memorial-container">
     <div class="memorial-card">
       <div class="memorial-title">🕯️ לעילוי נשמת</div>
