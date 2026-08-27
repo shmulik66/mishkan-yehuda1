@@ -10,7 +10,7 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
     }
     body { 
-      background-color: #f7f5f0; /* גוון קלף/קרם עדין וחם */
+      background-color: #f7f5f0; 
       margin: 0; 
       padding: 15px 10px; 
       display: flex; 
@@ -22,26 +22,26 @@
       max-width: 850px; 
     }
     
-    /* בס"ד בפינה */
+    /* בס"ד בצד ימין */
     .bsd {
-      text-align: left;
+      text-align: right;
       font-size: 14px;
       font-weight: bold;
       color: #8c6d31;
       margin-bottom: 5px;
-      padding-left: 5px;
+      padding-right: 5px;
     }
 
-    /* כותרת ראשית בסגנון בית כנסת */
+    /* כותרת ראשית */
     .header-box {
-      background: linear-gradient(135deg, #0d233a, #1a3b8b); /* כחול עמוק יוקרתי */
+      background: linear-gradient(135deg, #0d233a, #1a3b8b); 
       color: #ffffff; 
       text-align: center; 
       padding: 25px 15px;
       border-radius: 16px; 
       margin-bottom: 15px; 
       box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-      border-bottom: 4px solid #d4af37; /* פלח זהב בתחתית */
+      border-bottom: 4px solid #d4af37; 
       position: relative;
     }
     .header-box h1 { 
@@ -49,7 +49,7 @@
       font-size: 28px; 
       font-weight: 800; 
       letter-spacing: 0.5px;
-      color: #fef08a; /* כותרת בגוון זהב מעודן */
+      color: #fef08a; 
       text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
     }
     .header-box p { 
@@ -58,22 +58,29 @@
       font-size: 16px; 
     }
 
+    /* מעטפת לשתי קוביות לעילוי נשמת */
+    .memorial-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
     /* קוביית לעילוי נשמת */
     .memorial-card {
+      flex: 1;
       background: linear-gradient(180deg, #fffdfa 0%, #fefce8 100%);
-      border: 2px solid #eab308; /* גבול זהב */
+      border: 2px solid #eab308; 
       border-radius: 14px;
-      padding: 15px;
-      margin-bottom: 20px;
+      padding: 12px 15px;
       text-align: center;
       box-shadow: 0 2px 8px rgba(234, 179, 8, 0.15);
-      position: relative;
     }
     .memorial-title {
       color: #854d0e;
-      font-size: 17px;
+      font-size: 15px;
       font-weight: 800;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -81,10 +88,16 @@
     }
     .memorial-text {
       color: #451a03;
-      font-size: 16px;
-      font-weight: 600;
-      line-height: 1.4;
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
       margin: 0;
+    }
+    .memorial-date {
+      font-size: 13px;
+      font-weight: normal;
+      color: #713f12;
+      margin-top: 3px;
     }
 
     .card {
@@ -223,7 +236,7 @@
       color: #0d233a; 
       margin: 5px 0 15px; 
       text-align: right;
-      border-right: 5px solid #d4af37; /* קו הפרדה בגוון זהב */
+      border-right: 5px solid #d4af37; 
       padding-right: 10px; 
       font-weight: bold;
     }
@@ -264,6 +277,7 @@
       .header-box { padding: 30px 20px; border-radius: 20px; }
       .header-box h1 { font-size: 34px; }
       .header-box p { font-size: 20px; }
+      .memorial-container { flex-direction: row; } /* מעבר לשתי עמודות במסך רחב */
       .card { padding: 30px 20px; border-radius: 20px; }
       label { font-size: 22px; }
       input[type="search"], input[type="password"], input[type="text"] { font-size: 20px; }
@@ -288,15 +302,18 @@
     <p>בירור מצב חשבון אישי למתפלל</p>
   </div>
 
-  <!-- קוביית לעילוי נשמת - קבועה בכל המסכים -->
-  <div class="memorial-card">
-    <div class="memorial-title">
-      🕯️ לעילוי נשמת
+  <!-- שתי קוביות לעילוי נשמת -->
+  <div class="memorial-container">
+    <div class="memorial-card">
+      <div class="memorial-title">🕯️ לעילוי נשמת</div>
+      <div class="memorial-text">ציון בן תאג'י</div>
+      <div class="memorial-date">נלב״ע כ"ח באדר א' תשע"ו</div>
     </div>
-    <div class="memorial-text">
-      <!-- תוכל לשנות את הטקסט כאן לפי הצורך -->
-      פלוני בן פלוני ז"ל ופלונית בת פלוני ע"ה<br>
-      <span style="font-size: 14px; font-weight: normal; color: #713f12;">ת.נ.צ.ב.ה.</span>
+
+    <div class="memorial-card">
+      <div class="memorial-title">🕯️ לעילוי נשמת</div>
+      <div class="memorial-text">ויולט בת שרה</div>
+      <div class="memorial-date">נלב״ע ה' סיוון תשפ"ה</div>
     </div>
   </div>
 
