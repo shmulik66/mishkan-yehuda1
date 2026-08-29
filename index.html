@@ -25,7 +25,7 @@
     
     .wrapper { 
       width: 100%; 
-      max-width: 100%; 
+      max-width: 900px; 
       margin: 0 auto;
       flex: 1;
       display: flex;
@@ -53,12 +53,11 @@
       border: 2px solid #c5a059; 
       outline: 2px solid #c5a059; 
       outline-offset: -6px;
-      position: relative;
     }
 
     .header-box h1 { 
       margin: 0; 
-      font-size: 30px; 
+      font-size: 28px; 
       font-weight: 900; 
       color: #fef08a; 
       font-family: 'Frank Ruhl Hofshi', serif;
@@ -71,17 +70,16 @@
       color: #e2e8f0;
     }
 
-    /* כרטיס הכניסה - מוגבל לרוחב קומפקטי וממורכז */
     .login-card-container {
       max-width: 450px;
-      margin: 30px auto;
+      margin: 20px auto;
       width: 100%;
     }
 
     .card {
       background: #ffffff; 
       border-radius: 14px; 
-      padding: 22px 20px;
+      padding: 20px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.03); 
       margin-bottom: 20px;
       border: 1px solid #e8e2d5;
@@ -153,7 +151,6 @@
       cursor: pointer;
       box-shadow: 0 4px 12px rgba(10, 25, 47, 0.2);
     }
-    .btn-submit:hover { background: linear-gradient(135deg, #1e3a8a, #2563eb); }
 
     .top-bar-controls {
       display: flex;
@@ -167,7 +164,7 @@
       background-color: #ffffff; 
       color: #1e3a8a; 
       border: 1.5px solid #c5a059;
-      padding: 8px 16px; 
+      padding: 8px 14px; 
       font-size: 14px; 
       font-weight: 700; 
       border-radius: 8px;
@@ -178,15 +175,12 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.04);
       text-decoration: none;
     }
-    .btn-action:hover { background-color: #fefce8; border-color: #b8860b; }
     .btn-pdf { color: #047857; border-color: #10b981; }
-    .btn-pdf:hover { background-color: #ecfdf5; border-color: #059669; }
     .btn-whatsapp { color: #15803d; border-color: #22c55e; background-color: #f0fdf4; }
-    .btn-whatsapp:hover { background-color: #dcfce7; border-color: #16a34a; }
 
     .user-title { 
       text-align: center; 
-      font-size: 26px; 
+      font-size: 24px; 
       color: #0a192f; 
       margin-top: 0; 
       margin-bottom: 15px; 
@@ -195,25 +189,25 @@
     }
     
     .stats-grid { 
-      display: flex; 
-      gap: 15px; 
+      display: grid; 
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px; 
       margin-bottom: 10px; 
     }
     .stat-box { 
-      flex: 1;
       border-radius: 12px; 
-      padding: 15px 10px; 
+      padding: 12px 8px; 
       text-align: center; 
     }
-    .stat-label { font-size: 15px; margin-bottom: 4px; font-weight: 700; }
-    .stat-val { font-size: 24px; font-weight: 900; }
+    .stat-label { font-size: 14px; margin-bottom: 4px; font-weight: 700; }
+    .stat-val { font-size: 20px; font-weight: 900; }
     
     .box-credit { background-color: #ecfdf5; color: #047857; border: 1.5px solid #a7f3d0; }
     .box-debit { background-color: #fef2f2; color: #b91c1c; border: 1.5px solid #fecaca; }
     .box-balance { background-color: #eff6ff; color: #1d4ed8; border: 1.5px solid #bfdbfe; }
 
     .section-title {
-      font-size: 20px; 
+      font-size: 19px; 
       color: #0a192f; 
       margin: 5px 0 12px; 
       text-align: right;
@@ -223,42 +217,48 @@
       font-family: 'Frank Ruhl Hofshi', serif;
     }
 
-    .table-responsive { 
+    /* Grid Layout עבור טבלת מכירות וקניות */
+    .grid-table {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
       width: 100%;
-      overflow-x: auto; 
-      margin-bottom: 10px;
-      border-radius: 8px;
-      border: 1px solid #e2e8f0;
     }
-    table { 
-      width: 100%; 
-      border-collapse: collapse; 
-      text-align: right; 
-      background-color: #ffffff;
-    }
-    th { 
-      padding: 12px 10px; 
-      color: #0a192f; 
-      font-size: 16px; 
-      border-bottom: 2px solid #c5a059; 
-      background: #fcf8f2; 
-      font-weight: 800; 
-      white-space: nowrap;
+
+    .grid-header {
+      display: grid;
+      background: #fcf8f2;
+      border-bottom: 2px solid #c5a059;
+      font-weight: 800;
+      color: #0a192f;
+      padding: 10px 8px;
       font-family: 'Frank Ruhl Hofshi', serif;
+      font-size: 15px;
     }
-    td { 
-      padding: 12px 10px; 
-      border-bottom: 1px solid #f1f5f9; 
-      font-size: 15px; 
-      color: #1e293b; 
-      font-weight: 500; 
+    .purchases-grid-cols {
+      grid-template-columns: 1.2fr 1.5fr 2fr 1.2fr 1.2fr;
     }
-    
+    .payments-grid-cols {
+      grid-template-columns: 1.5fr 2fr 1.5fr;
+    }
+
+    .grid-row {
+      display: grid;
+      padding: 10px 8px;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 14px;
+      color: #1e293b;
+      align-items: center;
+    }
+    .grid-row:nth-child(even) {
+      background-color: #fafafa;
+    }
+
     .pagination-controls {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 10px;
+      margin-top: 12px;
     }
     .page-btn {
       background: #f1f5f9;
@@ -273,20 +273,20 @@
     .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
     .page-info { font-size: 14px; font-weight: 700; color: #475569; }
 
-    /* כרטיסי הנצחה בחלק התחתון ביותר - תופסים את כל רוחב המסך */
+    /* כרטיסי הנצחה בתחתית העמוד */
     .memorial-footer {
       width: 100%;
       margin-top: auto;
-      padding-top: 25px;
+      padding-top: 20px;
       padding-bottom: 5px;
     }
     .memorial-cards-row {
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 10px;
       width: 100%;
     }
     .memorial-card-bottom {
-      flex: 1;
       background: #ffffff;
       border: 1px solid #e2d1a6; 
       border-radius: 8px;
@@ -305,19 +305,56 @@
     .loader { text-align: center; color: #0a192f; padding: 25px; font-size: 18px; font-weight: 700; }
     .error-msg { color: #dc2626; text-align: center; margin-bottom: 15px; font-size: 16px; font-weight: 700; }
 
+    /* התאמה לנייד (Mobile View) */
+    @media (max-width: 640px) {
+      body { padding: 8px; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .memorial-cards-row { grid-template-columns: 1fr; }
+      .top-bar-controls { flex-direction: column; align-items: stretch; }
+      .btn-action { justify-content: center; }
+
+      /* הגדרת גריד מותאם לנייד - כרטיסי מידע קריאים */
+      .grid-header { display: none; } /* הסרת הכותרת העליונה בטלפון */
+
+      .purchases-grid-cols.grid-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        margin-bottom: 8px;
+        padding: 12px;
+      }
+      .purchases-grid-cols.grid-row div:nth-child(1) { font-weight: bold; color: #1e3a8a; } /* תאריך */
+      .purchases-grid-cols.grid-row div:nth-child(2) { text-align: left; color: #8c6d31; font-weight: bold; } /* פרשה */
+      .purchases-grid-cols.grid-row div:nth-child(3) { grid-column: span 2; font-size: 15px; font-weight: bold; color: #0a192f; margin: 4px 0; } /* תיאור */
+      .purchases-grid-cols.grid-row div:nth-child(4) { color: #64748b; font-size: 13px; } /* מניין */
+      .purchases-grid-cols.grid-row div:nth-child(5) { text-align: left; font-weight: bold; color: #b91c1c; font-size: 16px; } /* מחיר */
+
+      .payments-grid-cols.grid-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        margin-bottom: 8px;
+        padding: 12px;
+      }
+      .payments-grid-cols.grid-row div:nth-child(1) { font-weight: bold; color: #1e3a8a; } /* תאריך */
+      .payments-grid-cols.grid-row div:nth-child(2) { color: #64748b; font-size: 13px; } /* מס קבלה */
+      .payments-grid-cols.grid-row div:nth-child(3) { grid-column: span 2; text-align: left; font-weight: bold; color: #047857; font-size: 16px; } /* סכום */
+    }
+
     /* התאמה להדפסה ולייצוא PDF */
     @media print {
       body { background-color: #fff; padding: 0; }
       .top-bar-controls, .pagination-controls, .login-card-container { display: none !important; }
-      .card { box-shadow: none; border: 1px solid #ccc; margin-bottom: 15px; break-inside: avoid; }
-      .table-responsive { overflow: visible; }
-      tr { break-inside: avoid; }
-    }
-
-    @media (max-width: 640px) {
-      body { padding: 10px; }
-      .stats-grid { flex-direction: column; }
-      .memorial-cards-row { flex-direction: column; }
+      .card { box-shadow: none; border: 1px solid #ccc; margin-bottom: 15px; page-break-inside: avoid; }
+      .grid-header { display: grid !important; }
+      .grid-row { grid-template-columns: repeat(auto-fit, minmax(50px, 1fr)) !important; display: grid !important; page-break-inside: avoid; }
+      .purchases-grid-cols { grid-template-columns: 1.2fr 1.5fr 2fr 1.2fr 1.2fr !important; }
+      .payments-grid-cols { grid-template-columns: 1.5fr 2fr 1.5fr !important; }
+      .purchases-grid-cols.grid-row div, .payments-grid-cols.grid-row div { text-align: right !important; margin: 0 !important; font-size: 13px !important; }
     }
   </style>
 </head>
@@ -326,11 +363,13 @@
 <div class="wrapper">
   <div class="bsd">בס"ד</div>
 
+  <!-- באנר ראשי -->
   <div class="header-box">
     <h1>בית הכנסת משכן יהודה</h1>
     <p>בירור מצב חשבון אישי למתפלל</p>
   </div>
 
+  <!-- מסך הכניסה -->
   <div class="login-card-container">
     <div class="card" id="loginCard">
       <div id="loader" class="loader">טוען נתונים, נא להמתין...</div>
@@ -354,9 +393,10 @@
     </div>
   </div>
 
+  <!-- מסך הנתונים -->
   <div id="dashboard" style="display:none;">
     <div class="top-bar-controls">
-      <div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
         <button class="btn-action" onclick="logout()">↪ יציאה / מתפלל אחר</button>
         <button class="btn-action btn-pdf" onclick="downloadPDF()">📄 שמור / הדפס PDF מלא</button>
       </div>
@@ -381,21 +421,18 @@
       </div>
     </div>
 
+    <!-- טבלת מכירות (גריד) -->
     <div class="card">
       <div class="section-title">פירוט קניות ועליות (מכירות)</div>
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th>תאריך</th>
-              <th>פרשה</th>
-              <th>תיאור</th>
-              <th>מניין</th>
-              <th>מחיר</th>
-            </tr>
-          </thead>
-          <tbody id="purchasesTable"></tbody>
-        </table>
+      <div class="grid-table">
+        <div class="grid-header purchases-grid-cols">
+          <div>תאריך</div>
+          <div>פרשה</div>
+          <div>תיאור</div>
+          <div>מניין</div>
+          <div>מחיר</div>
+        </div>
+        <div id="purchasesGrid"></div>
       </div>
       <div class="pagination-controls" id="purchasesPagination">
         <button class="page-btn" id="pPrev" onclick="changePage('purchases', -1)">הקודם</button>
@@ -404,19 +441,16 @@
       </div>
     </div>
 
+    <!-- טבלת תשלומים (גריד) -->
     <div class="card">
       <div class="section-title">פירוט תשלומים (זכות)</div>
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th>תאריך</th>
-              <th>מס' קבלה</th>
-              <th>סכום</th>
-            </tr>
-          </thead>
-          <tbody id="paymentsTable"></tbody>
-        </table>
+      <div class="grid-table">
+        <div class="grid-header payments-grid-cols">
+          <div>תאריך</div>
+          <div>מס' קבלה</div>
+          <div>סכום</div>
+        </div>
+        <div id="paymentsGrid"></div>
       </div>
       <div class="pagination-controls" id="paymentsPagination">
         <button class="page-btn" id="payPrev" onclick="changePage('payments', -1)">הקודם</button>
@@ -426,13 +460,14 @@
     </div>
   </div>
 
+  <!-- כרטיסי לעילוי נשמת בתחתית העמוד -->
   <footer class="memorial-footer">
     <div class="memorial-cards-row">
       <div class="memorial-card-bottom">
-        🕯️ לעילוי נשמת <strong>ציון בן טאג'י</strong> ז"ל (נלב״ע כ"ח באדר א' תשע"ו)
+        🕯️ לעילוי נשמת <strong>ציון בן טאג'י</strong> ז"ל נלב״ע כ"ח באדר א' תשע"ו
       </div>
       <div class="memorial-card-bottom">
-        🕯️ לעילוי נשמת <strong>ויולט בת שרה</strong> ז"ל (נלב״ע ה' סיוון תשפ"ה)
+        🕯️ לעילוי נשמת <strong>ויולט בת שרה</strong> ז"ל נלב״ע ה' סיוון תשפ"ה
       </div>
     </div>
   </footer>
@@ -535,13 +570,13 @@
     const waText = encodeURIComponent(`שלום, אני פונה בנוגע לחשבון של ${name} בבית הכנסת משכן יהודה.`);
     document.getElementById('whatsappBtn').href = `https://wa.me/${TREASURER_PHONE}?text=${waText}`;
 
-    renderTable('purchases');
-    renderTable('payments');
+    renderGrid('purchases');
+    renderGrid('payments');
 
     document.getElementById('dashboard').style.display = 'block';
   }
 
-  function renderTable(type, showAll = false) {
+  function renderGrid(type, showAll = false) {
     if (!currentUserData) return;
 
     if (type === 'purchases') {
@@ -551,16 +586,23 @@
       
       const pageItems = showAll ? items : items.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
 
-      const pTable = document.getElementById('purchasesTable');
-      pTable.innerHTML = '';
+      const pGrid = document.getElementById('purchasesGrid');
+      pGrid.innerHTML = '';
       if (pageItems.length > 0) {
         pageItems.forEach(item => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `<td>${item.date}</td><td>${item.parasha}</td><td>${item.item}</td><td>${item.minyan}</td><td>₪ ${item.price.toLocaleString()}</td>`;
-          pTable.appendChild(tr);
+          const row = document.createElement('div');
+          row.className = 'grid-row purchases-grid-cols';
+          row.innerHTML = `
+            <div>${item.date}</div>
+            <div>${item.parasha || '-'}</div>
+            <div>${item.item}</div>
+            <div>${item.minyan || '-'}</div>
+            <div>₪ ${item.price.toLocaleString()}</div>
+          `;
+          pGrid.appendChild(row);
         });
       } else {
-        pTable.innerHTML = '<tr><td colspan="5" style="text-align:center;">אין רשימת קניות</td></tr>';
+        pGrid.innerHTML = '<div style="text-align:center; padding: 15px;">אין רשימת קניות</div>';
       }
 
       document.getElementById('pInfo').textContent = `עמוד ${page} מתוך ${totalPages}`;
@@ -575,16 +617,21 @@
       
       const pageItems = showAll ? items : items.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
 
-      const payTable = document.getElementById('paymentsTable');
-      payTable.innerHTML = '';
+      const payGrid = document.getElementById('paymentsGrid');
+      payGrid.innerHTML = '';
       if (pageItems.length > 0) {
         pageItems.forEach(item => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `<td>${item.date}</td><td>${item.receiptNo}</td><td>₪ ${item.totalAmount.toLocaleString()}</td>`;
-          payTable.appendChild(tr);
+          const row = document.createElement('div');
+          row.className = 'grid-row payments-grid-cols';
+          row.innerHTML = `
+            <div>${item.date}</div>
+            <div>${item.receiptNo ? 'קבלה ' + item.receiptNo : '-'}</div>
+            <div>₪ ${item.totalAmount.toLocaleString()}</div>
+          `;
+          payGrid.appendChild(row);
         });
       } else {
-        payTable.innerHTML = '<tr><td colspan="3" style="text-align:center;">אין תשלומים רשומים</td></tr>';
+        payGrid.innerHTML = '<div style="text-align:center; padding: 15px;">אין תשלומים רשומים</div>';
       }
 
       document.getElementById('payInfo').textContent = `עמוד ${page} מתוך ${totalPages}`;
@@ -597,10 +644,10 @@
   function changePage(type, direction) {
     if (type === 'purchases') {
       currentPages.purchases += direction;
-      renderTable('purchases');
+      renderGrid('purchases');
     } else if (type === 'payments') {
       currentPages.payments += direction;
-      renderTable('payments');
+      renderGrid('payments');
     }
   }
 
@@ -616,20 +663,21 @@
     currentUserName = "";
   }
 
-  /* פריסה מלאה של כל הנתונים לצורך הדפסה / PDF והחזרה למצב עמודים לאחר מכן */
+  /* הדפסה וייצוא PDF בטוח מותאם גם לטלפון */
   function downloadPDF() {
-    // 1. פריסת כל השורות בטבלאות
-    renderTable('purchases', true);
-    renderTable('payments', true);
+    // פריסת כל השורות בטבלאות
+    renderGrid('purchases', true);
+    renderGrid('payments', true);
 
-    // 2. פתיחת חלון ההדפסה/שמירת PDF
     setTimeout(() => {
       window.print();
       
-      // 3. החזרת הטבלאות למצב עמודים רגיל
-      renderTable('purchases', false);
-      renderTable('payments', false);
-    }, 100);
+      // החזרת הטבלאות למצב עמודים לאחר הדפסה
+      setTimeout(() => {
+        renderGrid('purchases', false);
+        renderGrid('payments', false);
+      }, 500);
+    }, 200);
   }
 </script>
 
