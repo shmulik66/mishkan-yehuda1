@@ -79,11 +79,9 @@
       color: #166534;
       background-color: #f0fdf4;
     }
-    .btn-action:hover {
-      opacity: 0.9;
-    }
+    .btn-action:hover { opacity: 0.9; }
 
-    /* User Greeting & Stats */
+    /* User Overview Box */
     .user-card {
       background: #ffffff;
       border-radius: 8px;
@@ -121,12 +119,13 @@
     .box-debit { background-color: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
     .box-balance { background-color: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
 
-    /* Content Card */
+    /* Content Cards */
     .main-card {
       background: #ffffff;
       border-radius: 8px;
       padding: 16px;
       border: 1px solid #e2e8f0;
+      margin-bottom: 16px;
     }
     .card-title {
       font-size: 16px;
@@ -138,7 +137,7 @@
       padding-right: 8px;
     }
 
-    /* Search and Filter Inputs */
+    /* Filters */
     .filters-row {
       display: flex;
       gap: 10px;
@@ -186,9 +185,7 @@
       border-bottom: 1px solid #f1f5f9;
       color: #334155;
     }
-    tr:nth-child(even) td {
-      background-color: #fafafa;
-    }
+    tr:nth-child(even) td { background-color: #fafafa; }
 
     .memorial-section {
       margin-top: 20px;
@@ -246,7 +243,7 @@
     </div>
   </div>
 
-  <!-- Table & Filters Section -->
+  <!-- Table 1: Purchases & Aliyot -->
   <div class="main-card">
     <div class="card-title">פירוט קניות ועליות (מכירות)</div>
 
@@ -311,6 +308,39 @@
     </div>
   </div>
 
+  <!-- Table 2: Payments -->
+  <div class="main-card">
+    <div class="card-title">פירוט תשלומים וקבלה</div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>תאריך 🔻▲</th>
+            <th>אמצעי תשלום 🔻▲</th>
+            <th>מס' קבלה / אסמכתא 🔻▲</th>
+            <th>סכום 🔻▲</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>05/07/2026</td>
+            <td>כרטיס אשראי</td>
+            <td>REC-10492</td>
+            <td>₪ 1,000</td>
+          </tr>
+          <tr>
+            <td>12/07/2026</td>
+            <td>העברה בנקאית</td>
+            <td>REC-10518</td>
+            <td>₪ 1,218</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Memorial Section -->
   <div class="memorial-section">
     <div class="memorial-card">🕯️ לעילוי נשמת <strong>ציון בן טאג׳י</strong> ז"ל</div>
     <div class="memorial-card">🕯️ לעילוי נשמת <strong>ויולט בת שרה</strong> ז"ל</div>
