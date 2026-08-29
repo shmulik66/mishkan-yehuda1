@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Hofshi:wght@600;800;900&display=swap" rel="stylesheet">
   
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <style>
     * { 
       box-sizing: border-box !important; 
@@ -142,40 +144,4 @@
     }
 
     .top-bar-controls {
-      display: flex !important;
-      flex-direction: column !important;
-      gap: 8px !important;
-      margin-bottom: 14px !important;
-      width: 100% !important;
-    }
-    
-    @media (min-width: 600px) {
-      .top-bar-controls {
-        flex-direction: row !important;
-      }
-    }
-
-    .btn-action {
-      background-color: #ffffff; 
-      color: #1e3a8a; 
-      border: 2px solid #c5a059;
-      padding: 12px; 
-      font-size: 15px; 
-      font-weight: 700; 
-      border-radius: 8px;
-      cursor: pointer; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center;
-      gap: 6px;
-      text-decoration: none;
-      width: 100%;
-    }
-    .btn-pdf { color: #047857; border-color: #10b981; }
-    .btn-whatsapp { color: #15803d; border-color: #22c55e; background-color: #f0fdf4; }
-
-    .user-title { 
-      text-align: center; 
-      font-size: 22px; 
-      color: #0a192f; 
-      margin: 0 0 12px 0;
+      display: flex
