@@ -309,8 +309,9 @@
     @media print {
       body { background-color: #fff; padding: 0; }
       .top-bar-controls, .pagination-controls, .login-card-container { display: none !important; }
-      .card { box-shadow: none; border: 1px solid #ccc; margin-bottom: 15px; }
+      .card { box-shadow: none; border: 1px solid #ccc; margin-bottom: 15px; break-inside: avoid; }
       .table-responsive { overflow: visible; }
+      tr { break-inside: avoid; }
     }
 
     @media (max-width: 640px) {
@@ -325,13 +326,11 @@
 <div class="wrapper">
   <div class="bsd">בס"ד</div>
 
-  <!-- באנר ראשי (תופס את כל רוחב המסך) -->
   <div class="header-box">
     <h1>בית הכנסת משכן יהודה</h1>
     <p>בירור מצב חשבון אישי למתפלל</p>
   </div>
 
-  <!-- מסך הכניסה -->
   <div class="login-card-container">
     <div class="card" id="loginCard">
       <div id="loader" class="loader">טוען נתונים, נא להמתין...</div>
@@ -355,12 +354,11 @@
     </div>
   </div>
 
-  <!-- מסך הנתונים (אזור החשבון האישי) -->
   <div id="dashboard" style="display:none;">
     <div class="top-bar-controls">
       <div>
         <button class="btn-action" onclick="logout()">↪ יציאה / מתפלל אחר</button>
-        <button class="btn-action btn-pdf" onclick="downloadPDF()">📄 שמור / הדפס PDF</button>
+        <button class="btn-action btn-pdf" onclick="downloadPDF()">📄 שמור / הדפס PDF מלא</button>
       </div>
       <a id="whatsappBtn" href="#" target="_blank" class="btn-action btn-whatsapp">💬 פנייה לגזבר ב-WhatsApp</a>
     </div>
@@ -383,7 +381,6 @@
       </div>
     </div>
 
-    <!-- טבלת מכירות -->
     <div class="card">
       <div class="section-title">פירוט קניות ועליות (מכירות)</div>
       <div class="table-responsive">
@@ -407,7 +404,6 @@
       </div>
     </div>
 
-    <!-- טבלת תשלומים -->
     <div class="card">
       <div class="section-title">פירוט תשלומים (זכות)</div>
       <div class="table-responsive">
@@ -430,7 +426,6 @@
     </div>
   </div>
 
-  <!-- כרטיסי לעילוי נשמת בתחתית העמוד שמתפרסים על כל רוחב המסך -->
   <footer class="memorial-footer">
     <div class="memorial-cards-row">
       <div class="memorial-card-bottom">
@@ -446,8 +441,6 @@
 
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwOjcj-bb-Nn1Bqrhh1UY2RkxyouUqAfzScA-oUlEBiFlfdHxvZ5vE1OGDG3zfrLGwa2Q/exec";
-  
-  // מספר טלפון של הגזבר לפנייה בווצאפ
   const TREASURER_PHONE = "972506775829";
 
   let usersData = {};
@@ -539,7 +532,6 @@
     document.getElementById('statDebit').textContent = "₪ " + (user.summary.debit || 0).toLocaleString();
     document.getElementById('statBalance').textContent = "₪ " + (user.summary.balance || 0).toLocaleString();
 
-    // עדכון קישור הווצאפ למספר 0506775829 עם שם המתפלל
     const waText = encodeURIComponent(`שלום, אני פונה בנוגע לחשבון של ${name} בבית הכנסת משכן יהודה.`);
     document.getElementById('whatsappBtn').href = `https://wa.me/${TREASURER_PHONE}?text=${waText}`;
 
@@ -549,15 +541,15 @@
     document.getElementById('dashboard').style.display = 'block';
   }
 
-  function renderTable(type) {
+  function renderTable(type, showAll = false) {
     if (!currentUserData) return;
 
     if (type === 'purchases') {
       const items = currentUserData.purchases || [];
       const page = currentPages.purchases;
       const totalPages = Math.ceil(items.length / ITEMS_PER_PAGE) || 1;
-      const start = (page - 1) * ITEMS_PER_PAGE;
-      const pageItems = items.slice(start, start + ITEMS_PER_PAGE);
+      
+      const pageItems = showAll ? items : items.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
 
       const pTable = document.getElementById('purchasesTable');
       pTable.innerHTML = '';
@@ -574,14 +566,14 @@
       document.getElementById('pInfo').textContent = `עמוד ${page} מתוך ${totalPages}`;
       document.getElementById('pPrev').disabled = (page <= 1);
       document.getElementById('pNext').disabled = (page >= totalPages);
-      document.getElementById('purchasesPagination').style.display = (items.length > ITEMS_PER_PAGE) ? 'flex' : 'none';
+      document.getElementById('purchasesPagination').style.display = (!showAll && items.length > ITEMS_PER_PAGE) ? 'flex' : 'none';
 
     } else if (type === 'payments') {
       const items = currentUserData.payments || [];
       const page = currentPages.payments;
       const totalPages = Math.ceil(items.length / ITEMS_PER_PAGE) || 1;
-      const start = (page - 1) * ITEMS_PER_PAGE;
-      const pageItems = items.slice(start, start + ITEMS_PER_PAGE);
+      
+      const pageItems = showAll ? items : items.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
 
       const payTable = document.getElementById('paymentsTable');
       payTable.innerHTML = '';
@@ -598,7 +590,7 @@
       document.getElementById('payInfo').textContent = `עמוד ${page} מתוך ${totalPages}`;
       document.getElementById('payPrev').disabled = (page <= 1);
       document.getElementById('payNext').disabled = (page >= totalPages);
-      document.getElementById('paymentsPagination').style.display = (items.length > ITEMS_PER_PAGE) ? 'flex' : 'none';
+      document.getElementById('paymentsPagination').style.display = (!showAll && items.length > ITEMS_PER_PAGE) ? 'flex' : 'none';
     }
   }
 
@@ -624,8 +616,20 @@
     currentUserName = "";
   }
 
+  /* פריסה מלאה של כל הנתונים לצורך הדפסה / PDF והחזרה למצב עמודים לאחר מכן */
   function downloadPDF() {
-    window.print();
+    // 1. פריסת כל השורות בטבלאות
+    renderTable('purchases', true);
+    renderTable('payments', true);
+
+    // 2. פתיחת חלון ההדפסה/שמירת PDF
+    setTimeout(() => {
+      window.print();
+      
+      // 3. החזרת הטבלאות למצב עמודים רגיל
+      renderTable('purchases', false);
+      renderTable('payments', false);
+    }, 100);
   }
 </script>
 
