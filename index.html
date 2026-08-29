@@ -253,9 +253,29 @@
       text-align: right;
     }
 
+    /* כותרות ניתנות למיון */
+    .sortable-header {
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .sortable-header:hover {
+      color: #c5a059;
+    }
+    .sort-icon {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+    .sort-icon.active {
+      color: #b45309;
+      font-weight: bold;
+    }
+
     .purchases-grid-cols {
-      grid-template-columns: 85px 100px 1fr 80px 80px;
-      min-width: 440px;
+      grid-template-columns: 95px 100px 1fr 80px 80px;
+      min-width: 450px;
     }
     .payments-grid-cols {
       grid-template-columns: 95px 1fr 95px;
@@ -393,7 +413,7 @@
       
       <!-- סרגל חיפוש וסינון -->
       <div class="filter-bar">
-        <input type="text" id="purchaseSearchInput" placeholder="🔍 חפש לפי פרשה, תיאור ענייה..." oninput="onPurchaseFilterChange()" />
+        <input type="text" id="purchaseSearchInput" placeholder="🔍 חפש לפי פרשה, תיאור עלייה..." oninput="onPurchaseFilterChange()" />
         <select id="minyanFilterSelect" onchange="onPurchaseFilterChange()">
           <option value="">כל המניינים</option>
         </select>
@@ -401,11 +421,21 @@
 
       <div class="table-container">
         <div class="grid-header purchases-grid-cols">
-          <div>תאריך</div>
-          <div>פרשה</div>
-          <div>תיאור</div>
-          <div>מניין</div>
-          <div>מחיר</div>
+          <div class="sortable-header" onclick="toggleSort('date')">
+            <span>תאריך</span><span id="sort-date" class="sort-icon">▲▼</span>
+          </div>
+          <div class="sortable-header" onclick="toggleSort('parasha')">
+            <span>פרשה</span><span id="sort-parasha" class="sort-icon">▲▼</span>
+          </div>
+          <div class="sortable-header" onclick="toggleSort('item')">
+            <span>תיאור</span><span id="sort-item" class="sort-icon">▲▼</span>
+          </div>
+          <div class="sortable-header" onclick="toggleSort('minyan')">
+            <span>מניין</span><span id="sort-minyan" class="sort-icon">▲▼</span>
+          </div>
+          <div class="sortable-header" onclick="toggleSort('price')">
+            <span>מחיר</span><span id="sort-price" class="sort-icon">▲▼</span>
+          </div>
         </div>
         <div id="purchasesGrid"></div>
       </div>
@@ -457,6 +487,9 @@
   const ITEMS_PER_PAGE = 7;
   let currentUserData = null;
   let currentPages = { purchases: 1, payments: 1 };
+
+  // ניהול מיון
+  let currentSort = { field: null, asc: true };
 
   window.onload = function() {
     fetch(SCRIPT_URL)
@@ -524,8 +557,8 @@
     if (user && (String(user.code) === String(pass) || pass === "19602026" || pass === "1234")) {
       currentUserData = user;
       currentPages = { purchases: 1, payments: 1 };
+      currentSort = { field: null, asc: true };
       
-      // איפוס סרגלי סינון
       document.getElementById('purchaseSearchInput').value = '';
       populateMinyanOptions(user.purchases || []);
 
@@ -552,8 +585,34 @@
     });
   }
 
+  function toggleSort(field) {
+    if (currentSort.field === field) {
+      currentSort.asc = !currentSort.asc;
+    } else {
+      currentSort.field = field;
+      currentSort.asc = true;
+    }
+    updateSortIcons();
+    renderGrid('purchases');
+  }
+
+  function updateSortIcons() {
+    ['date', 'parasha', 'item', 'minyan', 'price'].forEach(f => {
+      const icon = document.getElementById('sort-' + f);
+      if (icon) {
+        if (currentSort.field === f) {
+          icon.textContent = currentSort.asc ? '▲' : '▼';
+          icon.classList.add('active');
+        } else {
+          icon.textContent = '▲▼';
+          icon.classList.remove('active');
+        }
+      }
+    });
+  }
+
   function onPurchaseFilterChange() {
-    currentPages.purchases = 1; // חזרה לעמוד ראשון בעת שינוי סינון
+    currentPages.purchases = 1;
     renderGrid('purchases');
   }
 
@@ -563,7 +622,7 @@
     const searchText = document.getElementById('purchaseSearchInput').value.trim().toLowerCase();
     const selectedMinyan = document.getElementById('minyanFilterSelect').value;
 
-    return currentUserData.purchases.filter(item => {
+    let filtered = currentUserData.purchases.filter(item => {
       const matchesText = !searchText || 
         (item.parasha && item.parasha.toLowerCase().includes(searchText)) ||
         (item.item && item.item.toLowerCase().includes(searchText)) ||
@@ -573,6 +632,23 @@
 
       return matchesText && matchesMinyan;
     });
+
+    if (currentSort.field) {
+      filtered.sort((a, b) => {
+        let valA = a[currentSort.field] || '';
+        let valB = b[currentSort.field] || '';
+        
+        if (typeof valA === 'number' && typeof valB === 'number') {
+          return currentSort.asc ? valA - valB : valB - valA;
+        }
+        
+        valA = String(valA);
+        valB = String(valB);
+        return currentSort.asc ? valA.localeCompare(valB, 'he') : valB.localeCompare(valA, 'he');
+      });
+    }
+
+    return filtered;
   }
 
   function showDashboard(name, user) {
@@ -586,6 +662,7 @@
     const waText = encodeURIComponent(`שלום, אני פונה בנוגע לחשבון של ${name} בבית הכנסת משכן יהודה.`);
     document.getElementById('whatsappBtn').href = `https://wa.me/${TREASURER_PHONE}?text=${waText}`;
 
+    updateSortIcons();
     renderGrid('purchases');
     renderGrid('payments');
 
