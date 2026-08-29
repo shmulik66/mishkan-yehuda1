@@ -4,94 +4,191 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>בית הכנסת משכן יהודה - בירור מצב חשבון</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Assistant', sans-serif;
+    }
     body {
-      font-family: Arial, sans-serif;
-      background-color: #fcf8f2;
+      background-color: #fdfaf4;
       margin: 0;
       padding: 15px;
       direction: rtl;
+      color: #1e293b;
     }
     .container {
-      max-width: 600px;
+      max-width: 900px;
       margin: 0 auto;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      border: 1px solid #e2d1a6;
     }
     .bsd {
-      text-align: right;
-      font-weight: bold;
-      color: #8c6d31;
+      text-align: left;
+      font-weight: 700;
+      color: #785e2d;
+      font-size: 14px;
+      margin-bottom: 4px;
+      padding-left: 10px;
     }
     .header {
       text-align: center;
-      background-color: #0a192f;
+      background-color: #0d2247;
       color: white;
-      padding: 15px;
-      border-radius: 6px;
-      margin-bottom: 20px;
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid #b89752;
+      margin-bottom: 12px;
     }
-    .header h1 { margin: 0; font-size: 22px; color: #fef08a; }
-    .header p { margin: 5px 0 0; font-size: 14px; }
-    
-    .form-group {
-      margin-bottom: 15px;
+    .header h1 {
+      margin: 0;
+      font-size: 22px;
+      color: #fef08a;
+      font-weight: 800;
     }
-    label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
+    .header p {
+      margin: 4px 0 0;
+      font-size: 13px;
+      color: #cbd5e1;
     }
-    input {
-      width: 100%;
-      padding: 10px;
-      box-sizing: border-box;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    button {
-      width: 100%;
-      background-color: #0a192f;
-      color: white;
-      padding: 12px;
-      border: none;
-      border-radius: 4px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    button:hover { background-color: #1e3a8a; }
 
-    .summary-box {
+    /* Action Buttons Row */
+    .action-row {
       display: flex;
-      justify-content: space-between;
-      margin-bottom: 20px;
       gap: 10px;
+      margin-bottom: 12px;
     }
-    .card {
+    .btn-action {
       flex: 1;
+      padding: 10px 8px;
+      border-radius: 8px;
+      background: #ffffff;
+      border: 1px solid #d1d5db;
+      font-weight: 700;
+      font-size: 13px;
+      color: #1e3a8a;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+    .btn-whatsapp {
+      border-color: #86efac;
+      color: #166534;
+      background-color: #f0fdf4;
+    }
+    .btn-action:hover {
+      opacity: 0.9;
+    }
+
+    /* User Greeting & Stats */
+    .user-card {
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 16px;
+      border: 1px solid #e2e8f0;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .user-greeting {
+      font-size: 20px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 14px;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .stat-box {
+      border-radius: 8px;
       padding: 10px;
       text-align: center;
-      border-radius: 6px;
-      font-weight: bold;
     }
-    .credit { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
-    .debit { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
-    .balance { background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+    .stat-label {
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .stat-val {
+      font-size: 18px;
+      font-weight: 800;
+    }
+    .box-credit { background-color: #ecfdf5; color: #166534; border: 1px solid #bbf7d0; }
+    .box-debit { background-color: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+    .box-balance { background-color: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
 
+    /* Content Card */
+    .main-card {
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 16px;
+      border: 1px solid #e2e8f0;
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-top: 0;
+      margin-bottom: 14px;
+      border-right: 4px solid #b89752;
+      padding-right: 8px;
+    }
+
+    /* Search and Filter Inputs */
+    .filters-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .search-input {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 13px;
+      outline: none;
+      text-align: right;
+    }
+    .select-input {
+      width: 180px;
+      padding: 8px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 13px;
+      outline: none;
+      background-color: #fff;
+    }
+
+    /* Table Styling */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 20px;
+      font-size: 13px;
     }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
+    th {
+      background-color: #fafafa;
+      color: #475569;
+      font-weight: 700;
+      padding: 10px 8px;
+      border-bottom: 2px solid #e2e8f0;
       text-align: right;
     }
-    th { background-color: #fcf8f2; }
+    td {
+      padding: 10px 8px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+    }
+    tr:nth-child(even) td {
+      background-color: #fafafa;
+    }
 
     .memorial-section {
       margin-top: 20px;
@@ -116,47 +213,102 @@
 
 <div class="container">
   <div class="bsd">בס"ד</div>
+
+  <!-- Header -->
   <div class="header">
     <h1>בית הכנסת משכן יהודה</h1>
-    <p>אזור אישי למתפלל</p>
+    <p>בירור מצב חשבון אישי למתפלל</p>
   </div>
 
-  <div id="loginSection">
-    <div class="form-group">
-      <label>שם מתפלל:</label>
-      <input type="text" id="nameInput" placeholder="הכנס שם...">
-    </div>
-    <div class="form-group">
-      <label>קוד אישי:</label>
-      <input type="password" id="passInput" placeholder="הכנס קוד...">
-    </div>
-    <button onclick="login()">כניסה</button>
+  <!-- Action Buttons Row -->
+  <div class="action-row">
+    <button class="btn-action" onclick="location.reload()">↪ יציאה / מתפלל אחר</button>
+    <button class="btn-action" onclick="window.print()">📄 שמור / הדפס PDF מלא</button>
+    <a href="https://wa.me/" target="_blank" class="btn-action btn-whatsapp">💬 פנייה לגזבר ב-WhatsApp</a>
   </div>
 
-  <div id="dataSection" style="display:none;">
-    <h3 id="welcomeMsg"></h3>
-    
-    <div class="summary-box">
-      <div class="card credit">זכות: <br><span id="valCredit">₪ 0</span></div>
-      <div class="card debit">חובה: <br><span id="valDebit">₪ 0</span></div>
-      <div class="card balance">יתרה: <br><span id="valBalance">₪ 0</span></div>
+  <!-- User Overview Box -->
+  <div class="user-card">
+    <div class="user-greeting">שלום אביה</div>
+    <div class="stats-grid">
+      <div class="stat-box box-credit">
+        <div class="stat-label">זכות (שולם)</div>
+        <div class="stat-val">₪ 2,218</div>
+      </div>
+      <div class="stat-box box-debit">
+        <div class="stat-label">חובה (חיובים)</div>
+        <div class="stat-val">₪ 2,215</div>
+      </div>
+      <div class="stat-box box-balance">
+        <div class="stat-label">יתרה לתשלום</div>
+        <div class="stat-val">₪ 3</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table & Filters Section -->
+  <div class="main-card">
+    <div class="card-title">פירוט קניות ועליות (מכירות)</div>
+
+    <div class="filters-row">
+      <input type="text" id="searchInput" class="search-input" placeholder="🔍 חפש לפי פרשה, תיאור עלייה..." onkeyup="filterTable()">
+      <select id="minyanSelect" class="select-input" onchange="filterTable()">
+        <option value="">כל המניינים</option>
+        <option value="מרכזי">מרכזי</option>
+        <option value="נץ">נץ</option>
+      </select>
     </div>
 
-    <h4>פירוט חיובים ועליות</h4>
-    <table>
-      <thead>
-        <tr><th>תאריך</th><th>פרשה</th><th>תיאור</th><th>סכום</th></tr>
-      </thead>
-      <tbody id="debitsTable"></tbody>
-    </table>
-
-    <h4>פירוט תשלומים</h4>
-    <table>
-      <thead>
-        <tr><th>תאריך</th><th>מס' קבלה</th><th>סכום</th></tr>
-      </thead>
-      <tbody id="creditsTable"></tbody>
-    </table>
+    <div class="table-container">
+      <table id="purchasesTable">
+        <thead>
+          <tr>
+            <th>תאריך 🔻▲</th>
+            <th>פרשה 🔻▲</th>
+            <th>תיאור 🔻▲</th>
+            <th>מניין 🔻▲</th>
+            <th>מחיר 🔻▲</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>04/07/2026</td>
+            <td>פנחס</td>
+            <td>עליית מפטיר</td>
+            <td>מרכזי</td>
+            <td>₪ 36</td>
+          </tr>
+          <tr>
+            <td>04/07/2026</td>
+            <td>פנחס</td>
+            <td>הקמת ספר תורה 1</td>
+            <td>נץ</td>
+            <td>₪ 180</td>
+          </tr>
+          <tr>
+            <td>11/07/2026</td>
+            <td>מטות מסעי</td>
+            <td>הקמת ספר תורה 1</td>
+            <td>מרכזי</td>
+            <td>₪ 36</td>
+          </tr>
+          <tr>
+            <td>11/07/2026</td>
+            <td>מטות מסעי</td>
+            <td>פרנס יומי לכולל ילדים תשפ"ו</td>
+            <td>מרכזי</td>
+            <td>₪ 252</td>
+          </tr>
+          <tr>
+            <td>11/07/2026</td>
+            <td>מטות מסעי</td>
+            <td>עליית לוי</td>
+            <td>מרכזי</td>
+            <td>₪ 36</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <div class="memorial-section">
@@ -166,29 +318,26 @@
 </div>
 
 <script>
-  function login() {
-    var name = document.getElementById('nameInput').value;
-    if(!name) { alert('נא להזין שם'); return; }
-    
-    document.getElementById('loginSection').style.display = 'none';
-    document.getElementById('dataSection').style.display = 'block';
-    document.getElementById('welcomeMsg').innerText = 'שלום, ' + name;
+  function filterTable() {
+    var searchVal = document.getElementById('searchInput').value.toLowerCase();
+    var minyanVal = document.getElementById('minyanSelect').value;
+    var rows = document.querySelectorAll('#purchasesTable tbody tr');
 
-    // נתוני דוגמה פשוטים ויציבים ללא תלות בשרת חיצוני
-    document.getElementById('valCredit').innerText = '₪ 1,200';
-    document.getElementById('valDebit').innerText = '₪ 1,500';
-    document.getElementById('valBalance').innerText = '₪ 300';
+    rows.forEach(function(row) {
+      var text = row.textContent.toLowerCase();
+      var minyanCell = row.cells[3].textContent.trim();
 
-    document.getElementById('debitsTable').innerHTML = 
-      '<tr><td>05/04/2026</td><td>צו</td><td>עלייה שלישית</td><td>₪ 150</td></tr>' +
-      '<tr><td>12/04/2026</td><td>שמיני</td><td>פתיחת ההיכל</td><td>₪ 200</td></tr>';
+      var matchesSearch = text.includes(searchVal);
+      var matchesMinyan = (minyanVal === "" || minyanCell === minyanVal);
 
-    document.getElementById('creditsTable').innerHTML = 
-      '<tr><td>10/04/2026</td><td>1042</td><td>₪ 500</td></tr>' +
-      '<tr><td>25/04/2026</td><td>1089</td><td>₪ 700</td></tr>';
+      if (matchesSearch && matchesMinyan) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
   }
 </script>
 
 </body>
 </html>
-```[cite: 3]
