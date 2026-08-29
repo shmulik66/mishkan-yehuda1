@@ -2,175 +2,191 @@
 <html dir="rtl" lang="he">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <title>בית הכנסת משכן יהודה - אזור אישי</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Hofshi:wght@600;800;900&display=swap" rel="stylesheet">
-  
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>בית הכנסת משכן יהודה - בירור מצב חשבון</title>
   <style>
-    * { box-sizing: border-box !important; font-family: 'Assistant', sans-serif; }
-    body { background-color: #fcf8f2; margin: 0; padding: 12px; color: #1a202c; }
-    .wrapper { max-width: 900px; margin: 0 auto; }
-    .bsd { text-align: right; font-size: 16px; font-weight: 700; color: #8c6d31; margin-bottom: 5px; font-family: 'Frank Ruhl Hofshi', serif; }
-    .header-box { background: linear-gradient(135deg, #0a192f, #1e3a8a); color: #fff; text-align: center; padding: 18px; border-radius: 12px; border: 2px solid #c5a059; margin-bottom: 15px; }
-    .header-box h1 { margin: 0; font-size: 24px; color: #fef08a; font-family: 'Frank Ruhl Hofshi', serif; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fcf8f2;
+      margin: 0;
+      padding: 15px;
+      direction: rtl;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border: 1px solid #e2d1a6;
+    }
+    .bsd {
+      text-align: right;
+      font-weight: bold;
+      color: #8c6d31;
+    }
+    .header {
+      text-align: center;
+      background-color: #0a192f;
+      color: white;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+    .header h1 { margin: 0; font-size: 22px; color: #fef08a; }
+    .header p { margin: 5px 0 0; font-size: 14px; }
     
-    .card { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 15px; border: 1px solid #e8e2d5; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
-    label { font-weight: 700; color: #0a192f; display: block; margin-bottom: 6px; }
-    input, select { width: 100%; padding: 10px; border: 2px solid #cbd5e0; border-radius: 8px; font-size: 15px; margin-bottom: 12px; }
-    
-    .btn-submit { width: 100%; background: #0a192f; color: #fff; border: none; padding: 12px; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 16px; }
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 15px; }
-    .stat-box { border-radius: 8px; padding: 12px; text-align: center; }
-    .stat-label { font-size: 13px; font-weight: bold; }
-    .stat-val { font-size: 18px; font-weight: 900; }
-    
-    .box-credit { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
-    .box-debit { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
-    .box-balance { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
-    
-    .chart-container { height: 250px; position: relative; margin-top: 15px; }
-    .table-container { width: 100%; overflow-x: auto; border: 1px solid #cbd5e0; border-radius: 8px; }
-    table { width: 100%; border-collapse: collapse; text-align: right; font-size: 14px; }
-    th { background: #fcf8f2; border-bottom: 2px solid #c5a059; padding: 10px; color: #0a192f; }
-    td { padding: 10px; border-bottom: 1px solid #f1f5f9; }
-    
-    .memorial-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; text-align: center; font-size: 13px; }
-    .memorial-card { background: #fff; border: 1px solid #e2d1a6; border-radius: 8px; padding: 10px; }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      width: 100%;
+      background-color: #0a192f;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover { background-color: #1e3a8a; }
+
+    .summary-box {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      gap: 10px;
+    }
+    .card {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+    .credit { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+    .debit { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+    .balance { background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: right;
+    }
+    th { background-color: #fcf8f2; }
+
+    .memorial-section {
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 2px solid #c5a059;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 13px;
+    }
+    .memorial-card {
+      flex: 1;
+      background: #fafafa;
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #eee;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
 
-<div class="wrapper">
+<div class="container">
   <div class="bsd">בס"ד</div>
-  <div class="header-box">
+  <div class="header">
     <h1>בית הכנסת משכן יהודה</h1>
-    <p>בירור מצב חשבון אישי למתפלל</p>
+    <p>אזור אישי למתפלל</p>
   </div>
 
-  <div id="loginCard" class="card" style="max-width: 400px; margin: 0 auto;">
-    <div id="loader" style="text-align: center; font-weight: bold; padding: 10px;">טוען מנגנון להתחברות...</div>
-    <form id="loginForm" style="display:none;" onsubmit="event.preventDefault(); login();">
-      <label for="userInput">שם מתפלל:</label>
-      <input type="text" id="userInput" placeholder="הכנס שם..." required />
-
-      <label for="passInput">קוד אישי:</label>
-      <input type="password" id="passInput" placeholder="הכנס קוד..." required />
-
-      <div id="errMsg" style="color:red; font-size:13px; margin-bottom:10px;"></div>
-      <button type="submit" class="btn-submit">כניסה למערכת</button>
-    </form>
+  <div id="loginSection">
+    <div class="form-group">
+      <label>שם מתפלל:</label>
+      <input type="text" id="nameInput" placeholder="הכנס שם...">
+    </div>
+    <div class="form-group">
+      <label>קוד אישי:</label>
+      <input type="password" id="passInput" placeholder="הכנס קוד...">
+    </div>
+    <button onclick="login()">כניסה</button>
   </div>
 
-  <div id="dashboard" style="display:none;">
-    <div class="card">
-      <h2 id="dispName" style="margin-top:0; text-align:center;"></h2>
-      <div class="stats-grid">
-        <div class="stat-box box-credit"><div class="stat-label">זכות (שולם)</div><div id="statCredit" class="stat-val">₪ 0</div></div>
-        <div class="stat-box box-debit"><div class="stat-label">חובה (חיובים)</div><div id="statDebit" class="stat-val">₪ 0</div></div>
-        <div class="stat-box box-balance"><div class="stat-label">יתרה לתשלום</div><div id="statBalance" class="stat-val">₪ 0</div></div>
-      </div>
-
-      <!-- גרף מדד גרפי לפי חודשים -->
-      <div class="chart-container">
-        <canvas id="monthlyChart"></canvas>
-      </div>
+  <div id="dataSection" style="display:none;">
+    <h3 id="welcomeMsg"></h3>
+    
+    <div class="summary-box">
+      <div class="card credit">זכות: <br><span id="valCredit">₪ 0</span></div>
+      <div class="card debit">חובה: <br><span id="valDebit">₪ 0</span></div>
+      <div class="card balance">יתרה: <br><span id="valBalance">₪ 0</span></div>
     </div>
 
-    <div class="card">
-      <h3 style="margin-top:0; border-right: 4px solid #c5a059; padding-right:8px;">פירוט קניות ועליות</h3>
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr><th>תאריך</th><th>פרשה</th><th>תיאור עלייה</th><th>מניין</th><th>מחיר</th></tr>
-          </thead>
-          <tbody id="purchasesBody"></tbody>
-        </table>
-      </div>
-    </div>
+    <h4>פירוט חיובים ועליות</h4>
+    <table>
+      <thead>
+        <tr><th>תאריך</th><th>פרשה</th><th>תיאור</th><th>סכום</th></tr>
+      </thead>
+      <tbody id="debitsTable"></tbody>
+    </table>
 
-    <div class="card">
-      <h3 style="margin-top:0; border-right: 4px solid #c5a059; padding-right:8px;">פירוט תשלומים</h3>
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr><th>תאריך</th><th>מס' קבלה</th><th>סכום</th></tr>
-          </thead>
-          <tbody id="paymentsBody"></tbody>
-        </table>
-      </div>
-    </div>
+    <h4>פירוט תשלומים</h4>
+    <table>
+      <thead>
+        <tr><th>תאריך</th><th>מס' קבלה</th><th>סכום</th></tr>
+      </thead>
+      <tbody id="creditsTable"></tbody>
+    </table>
   </div>
 
-  <div class="memorial-row">
-    <div class="memorial-card">🕯️ לעילוי נשמת <strong>ציון בן טאג׳י</strong> ז"ל נלב״ע כ"ח באדר א' תשע"ו</div>
-    <div class="memorial-card">🕯️ לעילוי נשמת <strong>ויולט בת שרה</strong> ז"ל נלב״ע ה' סיוון תשפ"ה</div>
+  <div class="memorial-section">
+    <div class="memorial-card">🕯️ לעילוי נשמת <strong>ציון בן טאג׳י</strong> ז"ל</div>
+    <div class="memorial-card">🕯️ לעילוי נשמת <strong>ויולט בת שרה</strong> ז"ל</div>
   </div>
 </div>
 
 <script>
-  let dummyUserData = {
-    summary: { credit: 1200, debit: 1500, balance: 300 },
-    purchases: [
-      { date: '05/04/2026', parasha: 'צו', item: 'עלייה שלישית', minyan: 'שחרית ראשון', price: 150 },
-      { date: '12/04/2026', parasha: 'שמיני', item: 'פתיחת ההיכל', minyan: 'שחרית שני', price: 200 }
-    ],
-    payments: [
-      { date: '10/04/2026', receiptNo: '1042', totalAmount: 500 }
-    ]
-  };
-
-  window.onload = function() {
-    document.getElementById('loader').style.display = 'none';
-    document.getElementById('loginForm').style.display = 'block';
-  };
-
   function login() {
-    document.getElementById('loginCard').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'block';
-    document.getElementById('dispName').textContent = "שלום " + (document.getElementById('userInput').value || "מתפלל");
+    var name = document.getElementById('nameInput').value;
+    if(!name) { alert('נא להזין שם'); return; }
+    
+    document.getElementById('loginSection').style.display = 'none';
+    document.getElementById('dataSection').style.display = 'block';
+    document.getElementById('welcomeMsg').innerText = 'שלום, ' + name;
 
-    document.getElementById('statCredit').textContent = "₪ " + dummyUserData.summary.credit;
-    document.getElementById('statDebit').textContent = "₪ " + dummyUserData.summary.debit;
-    document.getElementById('statBalance').textContent = "₪ " + dummyUserData.summary.balance;
+    document.getElementById('valCredit').innerText = '₪ 1,200';
+    document.getElementById('valDebit').innerText = '₪ 1,500';
+    document.getElementById('valBalance').innerText = '₪ 300';
 
-    renderTable('purchasesBody', dummyUserData.purchases, ['date', 'parasha', 'item', 'minyan', 'price']);
-    renderTable('paymentsBody', dummyUserData.payments, ['date', 'receiptNo', 'totalAmount']);
-    initChart();
-  }
+    document.getElementById('debitsTable').innerHTML = 
+      '<tr><td>05/04/2026</td><td>צו</td><td>עלייה שלישית</td><td>₪ 150</td></tr>' +
+      '<tr><td>12/04/2026</td><td>שמיני</td><td>פתיחת ההיכל</td><td>₪ 200</td></tr>';
 
-  function renderTable(id, data, fields) {
-    const tbody = document.getElementById(id);
-    tbody.innerHTML = '';
-    data.forEach(row => {
-      let tr = document.createElement('tr');
-      fields.forEach(f => {
-        let td = document.createElement('td');
-        td.textContent = row[f] || '-';
-        tr.appendChild(td);
-      });
-      tbody.appendChild(tr);
-    });
-  }
-
-  function initChart() {
-    const ctx = document.getElementById('monthlyChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['01/2026', '02/2026', '03/2026', '04/2026'],
-        datasets: [
-          { label: 'חובות', data: [300, 450, 200, 550], backgroundColor: '#dc2626' },
-          { label: 'תשלומים', data: [250, 400, 250, 500], backgroundColor: '#059669' }
-        ]
-      },
-      options: { responsive: true, maintainAspectRatio: false }
-    });
+    document.getElementById('creditsTable').innerHTML = 
+      '<tr><td>10/04/2026</td><td>1042</td><td>₪ 500</td></tr>' +
+      '<tr><td>25/04/2026</td><td>1089</td><td>₪ 700</td></tr>';
   }
 </script>
+
 </body>
 </html>
