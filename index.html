@@ -2,7 +2,7 @@
 <html dir="rtl" lang="he">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>בית הכנסת משכן יהודה - אזור אישי</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,20 +16,15 @@
     html, body {
       background-color: #fcf8f2;
       margin: 0; 
-      padding: 10px 12px; 
+      padding: 10px; 
       color: #1a202c;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
     
     .wrapper { 
       width: 100%; 
       max-width: 900px; 
       margin: 0 auto;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
     }
     
     .bsd {
@@ -38,7 +33,6 @@
       font-weight: 700;
       color: #8c6d31;
       margin-bottom: 5px;
-      padding-right: 5px;
       font-family: 'Frank Ruhl Hofshi', serif;
     }
 
@@ -46,41 +40,36 @@
       background: linear-gradient(135deg, #0a192f, #1e3a8a); 
       color: #ffffff; 
       text-align: center; 
-      padding: 18px 12px;
-      border-radius: 14px; 
+      padding: 15px 10px;
+      border-radius: 12px; 
       margin-bottom: 15px; 
-      box-shadow: 0 4px 15px rgba(10, 25, 47, 0.15);
       border: 2px solid #c5a059; 
-      outline: 2px solid #c5a059; 
-      outline-offset: -6px;
     }
 
     .header-box h1 { 
       margin: 0; 
-      font-size: 26px; 
+      font-size: 24px; 
       font-weight: 900; 
       color: #fef08a; 
       font-family: 'Frank Ruhl Hofshi', serif;
-      text-shadow: 1px 2px 4px rgba(0,0,0,0.5);
     }
     .header-box p { 
       margin: 4px 0 0; 
-      opacity: 0.95; 
-      font-size: 15px; 
+      font-size: 14px; 
       color: #e2e8f0;
     }
 
     .login-card-container {
-      max-width: 450px;
+      max-width: 400px;
       margin: 20px auto;
       width: 100%;
     }
 
     .card {
       background: #ffffff; 
-      border-radius: 14px; 
-      padding: 16px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.03); 
+      border-radius: 12px; 
+      padding: 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
       margin-bottom: 15px;
       border: 1px solid #e8e2d5;
       width: 100%;
@@ -89,28 +78,26 @@
     label { 
       display: block; 
       font-weight: 700; 
-      margin-bottom: 8px; 
+      margin-bottom: 6px; 
       color: #0a192f; 
-      font-size: 16px; 
+      font-size: 15px; 
     }
 
     .input-container {
       position: relative;
-      margin-bottom: 16px;
+      margin-bottom: 15px;
     }
 
-    input[type="search"], input[type="password"], input[type="text"] {
+    input[type="search"], input[type="password"] {
       width: 100%; 
-      padding: 12px 14px; 
+      padding: 10px 12px; 
       border: 2px solid #cbd5e0; 
-      border-radius: 10px;
+      border-radius: 8px;
       font-size: 16px; 
       outline: none; 
       background: #fff;
-      color: #1e293b;
-      -webkit-appearance: none;
     }
-    input[type="search"]:focus, input[type="password"]:focus, input[type="text"]:focus { 
+    input[type="search"]:focus, input[type="password"]:focus { 
       border-color: #1e3a8a; 
     }
 
@@ -122,118 +109,130 @@
       background: white;
       border: 2px solid #1e3a8a;
       border-top: none;
-      border-radius: 0 0 10px 10px;
-      max-height: 200px;
+      border-radius: 0 0 8px 8px;
+      max-height: 180px;
       overflow-y: auto;
       z-index: 1000;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
       display: none;
     }
     .suggestion-item {
-      padding: 10px 14px;
+      padding: 10px;
       cursor: pointer;
-      font-size: 15px;
+      font-size: 14px;
       border-bottom: 1px solid #f1f5f9;
-      color: #1e293b;
     }
-    .suggestion-item:last-child { border-bottom: none; }
-    .suggestion-item:hover { background-color: #f0f4ff; color: #1e3a8a; font-weight: bold; }
 
     .btn-submit {
       width: 100%; 
       background: linear-gradient(135deg, #0a192f, #1e3a8a); 
       color: #ffffff; 
       border: none; 
-      padding: 14px;
-      font-size: 18px; 
+      padding: 12px;
+      font-size: 16px; 
       font-weight: bold; 
-      border-radius: 10px; 
+      border-radius: 8px; 
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(10, 25, 47, 0.2);
     }
 
-    /* סרגל כפתורים עליון */
+    /* סרגל כפתורים עליון - תצוגה מובטחת לנייד */
     .top-bar-controls {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .btn-group-actions {
-      display: flex;
+      flex-direction: column;
       gap: 8px;
-      flex-wrap: wrap;
+      margin-bottom: 15px;
       width: 100%;
     }
+    
+    @media (min-width: 600px) {
+      .top-bar-controls {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+
     .btn-action {
       background-color: #ffffff; 
       color: #1e3a8a; 
       border: 1.5px solid #c5a059;
-      padding: 9px 12px; 
+      padding: 10px; 
       font-size: 14px; 
       font-weight: 700; 
       border-radius: 8px;
       cursor: pointer; 
-      display: inline-flex; 
+      display: flex; 
       align-items: center; 
       justify-content: center;
       gap: 6px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.04);
       text-decoration: none;
-      flex: 1 1 auto;
-      text-align: center;
+      width: 100%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
     .btn-pdf { color: #047857; border-color: #10b981; }
     .btn-whatsapp { color: #15803d; border-color: #22c55e; background-color: #f0fdf4; }
 
     .user-title { 
       text-align: center; 
-      font-size: 24px; 
+      font-size: 22px; 
       color: #0a192f; 
-      margin-top: 0; 
-      margin-bottom: 15px; 
+      margin: 0 0 12px 0; 
       font-weight: 800; 
       font-family: 'Frank Ruhl Hofshi', serif;
     }
     
     .stats-grid { 
       display: grid; 
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px; 
-      margin-bottom: 5px; 
+      grid-template-columns: 1fr;
+      gap: 8px; 
     }
+    @media (min-width: 500px) {
+      .stats-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
     .stat-box { 
-      border-radius: 12px; 
-      padding: 12px 6px; 
+      border-radius: 8px; 
+      padding: 10px; 
       text-align: center; 
     }
-    .stat-label { font-size: 13px; margin-bottom: 4px; font-weight: 700; }
+    .stat-label { font-size: 13px; margin-bottom: 2px; font-weight: 700; }
     .stat-val { font-size: 18px; font-weight: 900; }
     
-    .box-credit { background-color: #ecfdf5; color: #047857; border: 1.5px solid #a7f3d0; }
-    .box-debit { background-color: #fef2f2; color: #b91c1c; border: 1.5px solid #fecaca; }
-    .box-balance { background-color: #eff6ff; color: #1d4ed8; border: 1.5px solid #bfdbfe; }
+    .box-credit { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+    .box-debit { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+    .box-balance { background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
 
     .section-title {
-      font-size: 19px; 
+      font-size: 18px; 
       color: #0a192f; 
-      margin: 5px 0 12px; 
+      margin: 0 0 10px 0; 
       text-align: right;
       border-right: 4px solid #c5a059; 
-      padding-right: 10px; 
+      padding-right: 8px; 
       font-weight: 800;
       font-family: 'Frank Ruhl Hofshi', serif;
     }
 
-    /* מבנה הגריד של הטבלאות */
-    .grid-table-container {
+    /* תיבת גלילה פנימית לטבלאות + פס גלילה */
+    .table-scroll-container {
       width: 100%;
+      max-height: 280px; /* גובה מקסימלי שיוצר פס גלילה אנכי */
+      overflow-y: auto;  /* מאפשר גלילה למטה */
+      overflow-x: auto;  /* גלילה אופקית אם הטבלה רחבה בטלפון */
       border: 1px solid #e2e8f0;
       border-radius: 8px;
-      overflow: hidden;
       background: #fff;
+    }
+
+    /* עיצוב נראה לעין של פס הגלילה */
+    .table-scroll-container::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    .table-scroll-container::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .table-scroll-container::-webkit-scrollbar-thumb {
+      background: #c5a059;
+      border-radius: 4px;
     }
 
     .grid-header {
@@ -242,128 +241,82 @@
       border-bottom: 2px solid #c5a059;
       font-weight: 800;
       color: #0a192f;
-      padding: 10px 8px;
-      font-family: 'Frank Ruhl Hofshi', serif;
-      font-size: 15px;
-      text-align: right;
-    }
-
-    /* תיבת גלילה אנכית + אופקית במידת הצורך */
-    .grid-body-scroll {
-      max-height: 320px;
-      overflow-y: auto;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    /* עיצוב פס גלילה מותאם */
-    .grid-body-scroll::-webkit-scrollbar {
-      width: 7px;
-      height: 7px;
-    }
-    .grid-body-scroll::-webkit-scrollbar-track {
-      background: #f1f5f9;
-    }
-    .grid-body-scroll::-webkit-scrollbar-thumb {
-      background: #cbd5e0;
-      border-radius: 4px;
-    }
-    .grid-body-scroll::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
+      padding: 8px;
+      font-size: 14px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
     .purchases-grid-cols {
-      grid-template-columns: 1.1fr 1.3fr 2fr 1.1fr 1.1fr;
-      min-width: 480px;
+      grid-template-columns: 80px 100px 1fr 80px 80px;
+      min-width: 450px;
     }
     .payments-grid-cols {
-      grid-template-columns: 1.2fr 1.8fr 1.2fr;
-      min-width: 320px;
+      grid-template-columns: 100px 1fr 100px;
+      min-width: 300px;
     }
 
     .grid-row {
       display: grid;
-      padding: 10px 8px;
+      padding: 8px;
       border-bottom: 1px solid #f1f5f9;
-      font-size: 14px;
+      font-size: 13px;
       color: #1e293b;
       align-items: center;
-      text-align: right;
     }
-    .grid-row:nth-child(even) {
-      background-color: #fafafa;
-    }
+    .grid-row:nth-child(even) { background-color: #fafafa; }
 
+    /* כפתורי פגינציה - נראים בבירור בטלפון */
     .pagination-controls {
-      display: flex;
+      display: flex !important;
       justify-content: space-between;
       align-items: center;
-      margin-top: 12px;
+      margin-top: 10px;
+      padding-top: 5px;
     }
     .page-btn {
-      background: #f1f5f9;
+      background: #ffffff;
       color: #1e3a8a;
-      border: 1px solid #cbd5e0;
-      padding: 7px 16px;
+      border: 1.5px solid #1e3a8a;
+      padding: 6px 14px;
       border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
-      font-size: 14px;
+      font-size: 13px;
     }
-    .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-    .page-info { font-size: 14px; font-weight: 700; color: #475569; }
+    .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .page-info { font-size: 13px; font-weight: 700; color: #475569; }
 
-    /* כרטיסי הנצחה בתחתית העמוד */
-    .memorial-footer {
-      width: 100%;
-      margin-top: auto;
-      padding-top: 15px;
-      padding-bottom: 5px;
-    }
+    /* כרטיסי הנצחה בתחתית */
     .memorial-cards-row {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      width: 100%;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin-top: 15px;
+    }
+    @media (min-width: 500px) {
+      .memorial-cards-row { grid-template-columns: 1fr 1fr; }
     }
     .memorial-card-bottom {
       background: #ffffff;
       border: 1px solid #e2d1a6; 
       border-radius: 8px;
-      padding: 8px 10px;
+      padding: 8px;
       text-align: center;
-      font-size: 13px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+      font-size: 12px;
     }
     .memorial-card-bottom strong {
       color: #3b1a03;
-      font-size: 14px;
-      font-family: 'Frank Ruhl Hofshi', serif;
-      margin: 0 4px;
+      font-size: 13px;
     }
 
-    .loader { text-align: center; color: #0a192f; padding: 25px; font-size: 18px; font-weight: 700; }
-    .error-msg { color: #dc2626; text-align: center; margin-bottom: 15px; font-size: 16px; font-weight: 700; }
+    .loader { text-align: center; color: #0a192f; padding: 20px; font-size: 16px; font-weight: 700; }
+    .error-msg { color: #dc2626; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: 700; }
 
-    /* התאמות לנייד - הבטחת תצוגה מלאה ללא רכיבים נסתרים */
-    @media (max-width: 640px) {
-      body { padding: 6px; }
-      .stats-grid { grid-template-columns: 1fr; }
-      .memorial-cards-row { grid-template-columns: 1fr; }
-      .btn-group-actions { flex-direction: column; }
-      .btn-action { width: 100%; }
-      .stat-val { font-size: 22px; }
-    }
-
-    /* התאמה להדפסה ולייצוא PDF */
     @media print {
-      body { background-color: #fff; padding: 0; }
       .top-bar-controls, .pagination-controls, .login-card-container { display: none !important; }
-      .card { box-shadow: none; border: 1px solid #ccc; margin-bottom: 15px; page-break-inside: avoid; }
-      .grid-body-scroll { max-height: none !important; overflow: visible !important; }
-      .grid-header, .grid-row { min-width: 0 !important; }
-      .purchases-grid-cols { grid-template-columns: 1.1fr 1.3fr 2fr 1.1fr 1.1fr !important; }
-      .payments-grid-cols { grid-template-columns: 1.2fr 1.8fr 1.2fr !important; }
+      .table-scroll-container { max-height: none !important; overflow: visible !important; }
     }
   </style>
 </head>
@@ -372,13 +325,12 @@
 <div class="wrapper">
   <div class="bsd">בס"ד</div>
 
-  <!-- באנר ראשי -->
   <div class="header-box">
     <h1>בית הכנסת משכן יהודה</h1>
     <p>בירור מצב חשבון אישי למתפלל</p>
   </div>
 
-  <!-- מסך הכניסה -->
+  <!-- מסך כניסה -->
   <div class="login-card-container">
     <div class="card" id="loginCard">
       <div id="loader" class="loader">טוען נתונים, נא להמתין...</div>
@@ -388,13 +340,13 @@
         
         <label for="userInput">הקלד/י שם מתפלל:</label>
         <div class="input-container">
-          <input type="search" id="userInput" name="search_member_name" placeholder="התחל להקליד שם..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" oninput="filterNames()" onfocus="filterNames()" />
+          <input type="search" id="userInput" name="search_member_name" placeholder="התחל להקליד שם..." autocomplete="off" oninput="filterNames()" onfocus="filterNames()" />
           <div id="suggestions" class="suggestions-list"></div>
         </div>
 
         <label for="passInput">הזן קוד אישי:</label>
-        <div style="margin-bottom: 20px;">
-          <input type="password" id="passInput" name="member_pin_code" placeholder="הזן קוד..." autocomplete="new-password" onkeydown="checkEnter(event)" inputmode="numeric" />
+        <div style="margin-bottom: 15px;">
+          <input type="password" id="passInput" name="member_pin_code" placeholder="הזן קוד..." onkeydown="checkEnter(event)" inputmode="numeric" />
         </div>
 
         <button type="button" class="btn-submit" onclick="login()">כניסה למערכת</button>
@@ -402,14 +354,12 @@
     </div>
   </div>
 
-  <!-- מסך הנתונים -->
+  <!-- מסך נתונים -->
   <div id="dashboard" style="display:none;">
     <div class="top-bar-controls">
-      <div class="btn-group-actions">
-        <button class="btn-action" onclick="logout()">↪ יציאה / מתפלל אחר</button>
-        <button class="btn-action btn-pdf" onclick="downloadPDF()">📄 שמור / הדפס PDF מלא</button>
-        <a id="whatsappBtn" href="#" target="_blank" class="btn-action btn-whatsapp">💬 פנייה לגזבר ב-WhatsApp</a>
-      </div>
+      <button class="btn-action" onclick="logout()">↪ יציאה / מתפלל אחר</button>
+      <button class="btn-action btn-pdf" onclick="downloadPDF()">📄 שמור / הדפס PDF מלא</button>
+      <a id="whatsappBtn" href="#" target="_blank" class="btn-action btn-whatsapp">💬 פנייה לגזבר ב-WhatsApp</a>
     </div>
 
     <div class="card">
@@ -430,20 +380,18 @@
       </div>
     </div>
 
-    <!-- טבלת מכירות (גריד עם גלילה) -->
+    <!-- טבלת מכירות -->
     <div class="card">
       <div class="section-title">פירוט קניות ועליות (מכירות)</div>
-      <div class="grid-table-container">
-        <div class="grid-body-scroll">
-          <div class="grid-header purchases-grid-cols">
-            <div>תאריך</div>
-            <div>פרשה</div>
-            <div>תיאור</div>
-            <div>מניין</div>
-            <div>מחיר</div>
-          </div>
-          <div id="purchasesGrid"></div>
+      <div class="table-scroll-container">
+        <div class="grid-header purchases-grid-cols">
+          <div>תאריך</div>
+          <div>פרשה</div>
+          <div>תיאור</div>
+          <div>מניין</div>
+          <div>מחיר</div>
         </div>
+        <div id="purchasesGrid"></div>
       </div>
       <div class="pagination-controls" id="purchasesPagination">
         <button class="page-btn" id="pPrev" onclick="changePage('purchases', -1)">הקודם</button>
@@ -452,18 +400,16 @@
       </div>
     </div>
 
-    <!-- טבלת תשלומים (גריד עם גלילה) -->
+    <!-- טבלת תשלומים -->
     <div class="card">
       <div class="section-title">פירוט תשלומים (זכות)</div>
-      <div class="grid-table-container">
-        <div class="grid-body-scroll">
-          <div class="grid-header payments-grid-cols">
-            <div>תאריך</div>
-            <div>מס' קבלה</div>
-            <div>סכום</div>
-          </div>
-          <div id="paymentsGrid"></div>
+      <div class="table-scroll-container">
+        <div class="grid-header payments-grid-cols">
+          <div>תאריך</div>
+          <div>מס' קבלה</div>
+          <div>סכום</div>
         </div>
+        <div id="paymentsGrid"></div>
       </div>
       <div class="pagination-controls" id="paymentsPagination">
         <button class="page-btn" id="payPrev" onclick="changePage('payments', -1)">הקודם</button>
@@ -473,15 +419,13 @@
     </div>
   </div>
 
-  <!-- כרטיסי לעילוי נשמת בתחתית העמוד -->
-  <footer class="memorial-footer">
-    <div class="memorial-cards-row">
-      <div class="memorial-card-bottom">
-        🕯️ לעילוי נשמת <strong>ציון בן טאג'י</strong> ז"ל נלב״ע כ"ח באדר א' תשע"ו
-      </div>
-      <div class="memorial-card-bottom">
-        🕯️ לעילוי נשמת <strong>ויולט בת שרה</strong> ז"ל נלב״ע ה' סיוון תשפ"ה
-      </div>
+  <!-- הנצחה -->
+  <footer class="memorial-cards-row">
+    <div class="memorial-card-bottom">
+      🕯️ לעילוי נשמת <strong>ציון בן טאג'י</strong> ז"ל נלב״ע כ"ח באדר א' תשע"ו
+    </div>
+    <div class="memorial-card-bottom">
+      🕯️ לעילוי נשמת <strong>ויולט בת שרה</strong> ז"ל נלב״ע ה' סיוון תשפ"ה
     </div>
   </footer>
 
@@ -496,7 +440,6 @@
 
   const ITEMS_PER_PAGE = 7;
   let currentUserData = null;
-  let currentUserName = "";
   let currentPages = { purchases: 1, payments: 1 };
 
   window.onload = function() {
@@ -564,7 +507,6 @@
     const user = usersData[name];
     if (user && (String(user.code) === String(pass) || pass === "19602026" || pass === "1234")) {
       currentUserData = user;
-      currentUserName = name;
       currentPages = { purchases: 1, payments: 1 };
       showDashboard(name, user);
     } else {
@@ -621,7 +563,6 @@
       document.getElementById('pInfo').textContent = `עמוד ${page} מתוך ${totalPages}`;
       document.getElementById('pPrev').disabled = (page <= 1);
       document.getElementById('pNext').disabled = (page >= totalPages);
-      document.getElementById('purchasesPagination').style.display = (!showAll && items.length > ITEMS_PER_PAGE) ? 'flex' : 'none';
 
     } else if (type === 'payments') {
       const items = currentUserData.payments || [];
@@ -650,7 +591,6 @@
       document.getElementById('payInfo').textContent = `עמוד ${page} מתוך ${totalPages}`;
       document.getElementById('payPrev').disabled = (page <= 1);
       document.getElementById('payNext').disabled = (page >= totalPages);
-      document.getElementById('paymentsPagination').style.display = (!showAll && items.length > ITEMS_PER_PAGE) ? 'flex' : 'none';
     }
   }
 
@@ -673,10 +613,8 @@
     document.getElementById('errMsg').textContent = '';
     document.getElementById('suggestions').style.display = 'none';
     currentUserData = null;
-    currentUserName = "";
   }
 
-  /* פריסת הנתונים והדפסה/ייצוא PDF */
   function downloadPDF() {
     renderGrid('purchases', true);
     renderGrid('payments', true);
