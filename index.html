@@ -16,7 +16,7 @@
     html, body {
       background-color: #fcf8f2;
       margin: 0; 
-      padding: 10px 15px; 
+      padding: 10px 12px; 
       color: #1a202c;
       min-height: 100vh;
       display: flex;
@@ -46,9 +46,9 @@
       background: linear-gradient(135deg, #0a192f, #1e3a8a); 
       color: #ffffff; 
       text-align: center; 
-      padding: 20px 15px;
+      padding: 18px 12px;
       border-radius: 14px; 
-      margin-bottom: 20px; 
+      margin-bottom: 15px; 
       box-shadow: 0 4px 15px rgba(10, 25, 47, 0.15);
       border: 2px solid #c5a059; 
       outline: 2px solid #c5a059; 
@@ -57,16 +57,16 @@
 
     .header-box h1 { 
       margin: 0; 
-      font-size: 28px; 
+      font-size: 26px; 
       font-weight: 900; 
       color: #fef08a; 
       font-family: 'Frank Ruhl Hofshi', serif;
       text-shadow: 1px 2px 4px rgba(0,0,0,0.5);
     }
     .header-box p { 
-      margin: 5px 0 0; 
+      margin: 4px 0 0; 
       opacity: 0.95; 
-      font-size: 16px; 
+      font-size: 15px; 
       color: #e2e8f0;
     }
 
@@ -79,9 +79,9 @@
     .card {
       background: #ffffff; 
       border-radius: 14px; 
-      padding: 20px;
+      padding: 16px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.03); 
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       border: 1px solid #e8e2d5;
       width: 100%;
     }
@@ -91,12 +91,12 @@
       font-weight: 700; 
       margin-bottom: 8px; 
       color: #0a192f; 
-      font-size: 17px; 
+      font-size: 16px; 
     }
 
     .input-container {
       position: relative;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     input[type="search"], input[type="password"], input[type="text"] {
@@ -152,6 +152,7 @@
       box-shadow: 0 4px 12px rgba(10, 25, 47, 0.2);
     }
 
+    /* סרגל כפתורים עליון */
     .top-bar-controls {
       display: flex;
       justify-content: space-between;
@@ -160,20 +161,29 @@
       gap: 10px;
       flex-wrap: wrap;
     }
+    .btn-group-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
     .btn-action {
       background-color: #ffffff; 
       color: #1e3a8a; 
       border: 1.5px solid #c5a059;
-      padding: 8px 14px; 
+      padding: 9px 12px; 
       font-size: 14px; 
       font-weight: 700; 
       border-radius: 8px;
       cursor: pointer; 
       display: inline-flex; 
       align-items: center; 
+      justify-content: center;
       gap: 6px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.04);
       text-decoration: none;
+      flex: 1 1 auto;
+      text-align: center;
     }
     .btn-pdf { color: #047857; border-color: #10b981; }
     .btn-whatsapp { color: #15803d; border-color: #22c55e; background-color: #f0fdf4; }
@@ -191,16 +201,16 @@
     .stats-grid { 
       display: grid; 
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px; 
-      margin-bottom: 10px; 
+      gap: 10px; 
+      margin-bottom: 5px; 
     }
     .stat-box { 
       border-radius: 12px; 
-      padding: 12px 8px; 
+      padding: 12px 6px; 
       text-align: center; 
     }
-    .stat-label { font-size: 14px; margin-bottom: 4px; font-weight: 700; }
-    .stat-val { font-size: 20px; font-weight: 900; }
+    .stat-label { font-size: 13px; margin-bottom: 4px; font-weight: 700; }
+    .stat-val { font-size: 18px; font-weight: 900; }
     
     .box-credit { background-color: #ecfdf5; color: #047857; border: 1.5px solid #a7f3d0; }
     .box-debit { background-color: #fef2f2; color: #b91c1c; border: 1.5px solid #fecaca; }
@@ -217,12 +227,13 @@
       font-family: 'Frank Ruhl Hofshi', serif;
     }
 
-    /* Grid Layout עבור טבלת מכירות וקניות */
-    .grid-table {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    /* מבנה הגריד של הטבלאות */
+    .grid-table-container {
       width: 100%;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
     }
 
     .grid-header {
@@ -234,12 +245,40 @@
       padding: 10px 8px;
       font-family: 'Frank Ruhl Hofshi', serif;
       font-size: 15px;
+      text-align: right;
     }
+
+    /* תיבת גלילה אנכית + אופקית במידת הצורך */
+    .grid-body-scroll {
+      max-height: 320px;
+      overflow-y: auto;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* עיצוב פס גלילה מותאם */
+    .grid-body-scroll::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    .grid-body-scroll::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .grid-body-scroll::-webkit-scrollbar-thumb {
+      background: #cbd5e0;
+      border-radius: 4px;
+    }
+    .grid-body-scroll::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
     .purchases-grid-cols {
-      grid-template-columns: 1.2fr 1.5fr 2fr 1.2fr 1.2fr;
+      grid-template-columns: 1.1fr 1.3fr 2fr 1.1fr 1.1fr;
+      min-width: 480px;
     }
     .payments-grid-cols {
-      grid-template-columns: 1.5fr 2fr 1.5fr;
+      grid-template-columns: 1.2fr 1.8fr 1.2fr;
+      min-width: 320px;
     }
 
     .grid-row {
@@ -249,6 +288,7 @@
       font-size: 14px;
       color: #1e293b;
       align-items: center;
+      text-align: right;
     }
     .grid-row:nth-child(even) {
       background-color: #fafafa;
@@ -264,7 +304,7 @@
       background: #f1f5f9;
       color: #1e3a8a;
       border: 1px solid #cbd5e0;
-      padding: 6px 14px;
+      padding: 7px 16px;
       border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
@@ -277,7 +317,7 @@
     .memorial-footer {
       width: 100%;
       margin-top: auto;
-      padding-top: 20px;
+      padding-top: 15px;
       padding-bottom: 5px;
     }
     .memorial-cards-row {
@@ -290,7 +330,7 @@
       background: #ffffff;
       border: 1px solid #e2d1a6; 
       border-radius: 8px;
-      padding: 8px 12px;
+      padding: 8px 10px;
       text-align: center;
       font-size: 13px;
       box-shadow: 0 1px 4px rgba(0,0,0,0.03);
@@ -305,44 +345,14 @@
     .loader { text-align: center; color: #0a192f; padding: 25px; font-size: 18px; font-weight: 700; }
     .error-msg { color: #dc2626; text-align: center; margin-bottom: 15px; font-size: 16px; font-weight: 700; }
 
-    /* התאמה לנייד (Mobile View) */
+    /* התאמות לנייד - הבטחת תצוגה מלאה ללא רכיבים נסתרים */
     @media (max-width: 640px) {
-      body { padding: 8px; }
+      body { padding: 6px; }
       .stats-grid { grid-template-columns: 1fr; }
       .memorial-cards-row { grid-template-columns: 1fr; }
-      .top-bar-controls { flex-direction: column; align-items: stretch; }
-      .btn-action { justify-content: center; }
-
-      /* הגדרת גריד מותאם לנייד - כרטיסי מידע קריאים */
-      .grid-header { display: none; } /* הסרת הכותרת העליונה בטלפון */
-
-      .purchases-grid-cols.grid-row {
-        grid-template-columns: 1fr 1fr;
-        gap: 6px;
-        background: #fff;
-        border: 1px solid #e2e8f0;
-        border-radius: 8px;
-        margin-bottom: 8px;
-        padding: 12px;
-      }
-      .purchases-grid-cols.grid-row div:nth-child(1) { font-weight: bold; color: #1e3a8a; } /* תאריך */
-      .purchases-grid-cols.grid-row div:nth-child(2) { text-align: left; color: #8c6d31; font-weight: bold; } /* פרשה */
-      .purchases-grid-cols.grid-row div:nth-child(3) { grid-column: span 2; font-size: 15px; font-weight: bold; color: #0a192f; margin: 4px 0; } /* תיאור */
-      .purchases-grid-cols.grid-row div:nth-child(4) { color: #64748b; font-size: 13px; } /* מניין */
-      .purchases-grid-cols.grid-row div:nth-child(5) { text-align: left; font-weight: bold; color: #b91c1c; font-size: 16px; } /* מחיר */
-
-      .payments-grid-cols.grid-row {
-        grid-template-columns: 1fr 1fr;
-        gap: 6px;
-        background: #fff;
-        border: 1px solid #e2e8f0;
-        border-radius: 8px;
-        margin-bottom: 8px;
-        padding: 12px;
-      }
-      .payments-grid-cols.grid-row div:nth-child(1) { font-weight: bold; color: #1e3a8a; } /* תאריך */
-      .payments-grid-cols.grid-row div:nth-child(2) { color: #64748b; font-size: 13px; } /* מס קבלה */
-      .payments-grid-cols.grid-row div:nth-child(3) { grid-column: span 2; text-align: left; font-weight: bold; color: #047857; font-size: 16px; } /* סכום */
+      .btn-group-actions { flex-direction: column; }
+      .btn-action { width: 100%; }
+      .stat-val { font-size: 22px; }
     }
 
     /* התאמה להדפסה ולייצוא PDF */
@@ -350,11 +360,10 @@
       body { background-color: #fff; padding: 0; }
       .top-bar-controls, .pagination-controls, .login-card-container { display: none !important; }
       .card { box-shadow: none; border: 1px solid #ccc; margin-bottom: 15px; page-break-inside: avoid; }
-      .grid-header { display: grid !important; }
-      .grid-row { grid-template-columns: repeat(auto-fit, minmax(50px, 1fr)) !important; display: grid !important; page-break-inside: avoid; }
-      .purchases-grid-cols { grid-template-columns: 1.2fr 1.5fr 2fr 1.2fr 1.2fr !important; }
-      .payments-grid-cols { grid-template-columns: 1.5fr 2fr 1.5fr !important; }
-      .purchases-grid-cols.grid-row div, .payments-grid-cols.grid-row div { text-align: right !important; margin: 0 !important; font-size: 13px !important; }
+      .grid-body-scroll { max-height: none !important; overflow: visible !important; }
+      .grid-header, .grid-row { min-width: 0 !important; }
+      .purchases-grid-cols { grid-template-columns: 1.1fr 1.3fr 2fr 1.1fr 1.1fr !important; }
+      .payments-grid-cols { grid-template-columns: 1.2fr 1.8fr 1.2fr !important; }
     }
   </style>
 </head>
@@ -396,11 +405,11 @@
   <!-- מסך הנתונים -->
   <div id="dashboard" style="display:none;">
     <div class="top-bar-controls">
-      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+      <div class="btn-group-actions">
         <button class="btn-action" onclick="logout()">↪ יציאה / מתפלל אחר</button>
         <button class="btn-action btn-pdf" onclick="downloadPDF()">📄 שמור / הדפס PDF מלא</button>
+        <a id="whatsappBtn" href="#" target="_blank" class="btn-action btn-whatsapp">💬 פנייה לגזבר ב-WhatsApp</a>
       </div>
-      <a id="whatsappBtn" href="#" target="_blank" class="btn-action btn-whatsapp">💬 פנייה לגזבר ב-WhatsApp</a>
     </div>
 
     <div class="card">
@@ -421,18 +430,20 @@
       </div>
     </div>
 
-    <!-- טבלת מכירות (גריד) -->
+    <!-- טבלת מכירות (גריד עם גלילה) -->
     <div class="card">
       <div class="section-title">פירוט קניות ועליות (מכירות)</div>
-      <div class="grid-table">
-        <div class="grid-header purchases-grid-cols">
-          <div>תאריך</div>
-          <div>פרשה</div>
-          <div>תיאור</div>
-          <div>מניין</div>
-          <div>מחיר</div>
+      <div class="grid-table-container">
+        <div class="grid-body-scroll">
+          <div class="grid-header purchases-grid-cols">
+            <div>תאריך</div>
+            <div>פרשה</div>
+            <div>תיאור</div>
+            <div>מניין</div>
+            <div>מחיר</div>
+          </div>
+          <div id="purchasesGrid"></div>
         </div>
-        <div id="purchasesGrid"></div>
       </div>
       <div class="pagination-controls" id="purchasesPagination">
         <button class="page-btn" id="pPrev" onclick="changePage('purchases', -1)">הקודם</button>
@@ -441,16 +452,18 @@
       </div>
     </div>
 
-    <!-- טבלת תשלומים (גריד) -->
+    <!-- טבלת תשלומים (גריד עם גלילה) -->
     <div class="card">
       <div class="section-title">פירוט תשלומים (זכות)</div>
-      <div class="grid-table">
-        <div class="grid-header payments-grid-cols">
-          <div>תאריך</div>
-          <div>מס' קבלה</div>
-          <div>סכום</div>
+      <div class="grid-table-container">
+        <div class="grid-body-scroll">
+          <div class="grid-header payments-grid-cols">
+            <div>תאריך</div>
+            <div>מס' קבלה</div>
+            <div>סכום</div>
+          </div>
+          <div id="paymentsGrid"></div>
         </div>
-        <div id="paymentsGrid"></div>
       </div>
       <div class="pagination-controls" id="paymentsPagination">
         <button class="page-btn" id="payPrev" onclick="changePage('payments', -1)">הקודם</button>
@@ -663,16 +676,14 @@
     currentUserName = "";
   }
 
-  /* הדפסה וייצוא PDF בטוח מותאם גם לטלפון */
+  /* פריסת הנתונים והדפסה/ייצוא PDF */
   function downloadPDF() {
-    // פריסת כל השורות בטבלאות
     renderGrid('purchases', true);
     renderGrid('payments', true);
 
     setTimeout(() => {
       window.print();
       
-      // החזרת הטבלאות למצב עמודים לאחר הדפסה
       setTimeout(() => {
         renderGrid('purchases', false);
         renderGrid('payments', false);
