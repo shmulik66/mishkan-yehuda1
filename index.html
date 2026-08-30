@@ -1,839 +1,157 @@
 <!DOCTYPE html>
-<html dir="rtl" lang="he">
+<html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <title>בית הכנסת משכן יהודה - אזור אישי</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Hofshi:wght@600;800;900&display=swap" rel="stylesheet">
-  
-  <style>
-    * { 
-      box-sizing: border-box !important; 
-      font-family: 'Assistant', -apple-system, BlinkMacSystemFont, sans-serif; 
-    }
-    
-    html, body {
-      background-color: #fcf8f2 !important;
-      margin: 0 !important; 
-      padding: 8px !important; 
-      color: #1a202c;
-      width: 100% !important;
-      min-height: 100vh;
-      font-size: 16px;
-      overflow-y: auto !important;
-    }
-    
-    .wrapper { 
-      width: 100% !important; 
-      max-width: 100% !important; 
-      margin: 0 auto;
-      padding-bottom: 30px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>לוח אישי - מתפלל</title>
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --border-color: #e2e8f0;
+        }
 
-    @media (min-width: 768px) {
-      .wrapper {
-        max-width: 1000px !important;
-      }
-    }
-    
-    .bsd {
-      text-align: right;
-      font-size: 16px;
-      font-weight: 700;
-      color: #8c6d31;
-      margin-bottom: 5px;
-      font-family: 'Frank Ruhl Hofshi', serif;
-    }
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+        }
 
-    .header-box {
-      background: linear-gradient(135deg, #0a192f, #1e3a8a); 
-      color: #ffffff; 
-      text-align: center; 
-      padding: 15px 10px;
-      border-radius: 12px; 
-      margin-bottom: 12px; 
-      border: 2px solid #c5a059; 
-    }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
 
-    .header-box h1 { 
-      margin: 0; 
-      font-size: 24px; 
-      font-weight: 900; 
-      color: #fef08a; 
-      font-family: 'Frank Ruhl Hofshi', serif;
-    }
-    .header-box p { 
-      margin: 4px 0 0; 
-      font-size: 15px; 
-      color: #e2e8f0;
-    }
+        .dashboard-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color);
+        }
 
-    .login-card-container {
-      max-width: 400px;
-      margin: 15px auto;
-      width: 100%;
-    }
+        .user-title {
+            text-align: center;
+            color: #0f172a;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 24px;
+        }
 
-    .card {
-      background: #ffffff; 
-      border-radius: 12px; 
-      padding: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06); 
-      margin-bottom: 14px;
-      border: 1px solid #e8e2d5;
-      width: 100%;
-    }
-    
-    label { 
-      display: block; 
-      font-weight: 700; 
-      margin-bottom: 6px; 
-      color: #0a192f; 
-      font-size: 16px; 
-    }
+        /* גריד של 4 קוביות */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
 
-    .input-container {
-      position: relative;
-      margin-bottom: 14px;
-    }
+        @media (min-width: 600px) {
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
 
-    input[type="search"], input[type="password"], input[type="text"], input[type="date"], select {
-      width: 100%; 
-      padding: 10px 12px; 
-      border: 2px solid #cbd5e0; 
-      border-radius: 8px;
-      font-size: 15px; 
-      outline: none; 
-      background: #fff;
-    }
+        .stat-box {
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
-    .suggestions-list {
-      position: absolute;
-      top: 100%;
-      right: 0;
-      left: 0;
-      background: white;
-      border: 2px solid #1e3a8a;
-      border-radius: 0 0 8px 8px;
-      max-height: 200px;
-      overflow-y: auto;
-      z-index: 1000;
-      display: none;
-    }
-    .suggestion-item {
-      padding: 12px;
-      cursor: pointer;
-      font-size: 16px;
-      border-bottom: 1px solid #f1f5f9;
-    }
+        .stat-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
 
-    .btn-submit {
-      width: 100%; 
-      background: linear-gradient(135deg, #0a192f, #1e3a8a); 
-      color: #ffffff; 
-      border: none; 
-      padding: 14px;
-      font-size: 17px; 
-      font-weight: bold; 
-      border-radius: 8px; 
-      cursor: pointer;
-    }
+        .stat-val {
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
 
-    .top-bar-controls {
-      display: flex !important;
-      flex-direction: column !important;
-      gap: 8px !important;
-      margin-bottom: 14px !important;
-      width: 100% !important;
-    }
-    
-    @media (min-width: 600px) {
-      .top-bar-controls {
-        flex-direction: row !important;
-      }
-    }
+        /* צבעים לקוביות */
+        .box-credit {
+            background-color: #ecfdf5;
+            color: #047857;
+            border: 1px solid #a7f3d0;
+        }
 
-    .btn-action {
-      background-color: #ffffff; 
-      color: #1e3a8a; 
-      border: 2px solid #c5a059;
-      padding: 12px; 
-      font-size: 15px; 
-      font-weight: 700; 
-      border-radius: 8px;
-      cursor: pointer; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center;
-      gap: 6px;
-      text-decoration: none;
-      width: 100%;
-    }
-    .btn-pdf { color: #047857; border-color: #10b981; }
-    .btn-whatsapp { color: #15803d; border-color: #22c55e; background-color: #f0fdf4; }
+        .box-debit {
+            background-color: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+        }
 
-    .user-title { 
-      text-align: center; 
-      font-size: 22px; 
-      color: #0a192f; 
-      margin: 0 0 12px 0; 
-      font-weight: 800; 
-      font-family: 'Frank Ruhl Hofshi', serif;
-    }
-    
-    .stats-grid { 
-      display: grid; 
-      grid-template-columns: 1fr;
-      gap: 8px; 
-    }
-    @media (min-width: 480px) {
-      .stats-grid { grid-template-columns: repeat(3, 1fr); }
-    }
+        .box-balance {
+            background-color: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+        }
 
-    .stat-box { 
-      border-radius: 8px; 
-      padding: 10px; 
-      text-align: center; 
-    }
-    .stat-label { font-size: 13px; margin-bottom: 2px; font-weight: 700; }
-    .stat-val { font-size: 18px; font-weight: 900; }
-    
-    .box-credit { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
-    .box-debit { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
-    .box-balance { background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
-
-    .section-title {
-      font-size: 18px; 
-      color: #0a192f; 
-      margin: 0 0 10px 0; 
-      text-align: right;
-      border-right: 4px solid #c5a059; 
-      padding-right: 8px; 
-      font-weight: 800;
-      font-family: 'Frank Ruhl Hofshi', serif;
-    }
-
-    /* סרגל סינון וחיפוש קניות */
-    .filter-bar {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 12px;
-      background: #f8fafc;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #e2e8f0;
-    }
-    
-    .filter-main-row {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 8px;
-    }
-    @media (min-width: 600px) {
-      .filter-main-row {
-        grid-template-columns: 2fr 1fr auto;
-      }
-    }
-
-    .date-picker-box {
-      display: none;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-top: 6px;
-      padding-top: 8px;
-      border-top: 1px dashed #cbd5e0;
-    }
-    .date-field {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      font-size: 13px;
-      font-weight: bold;
-    }
-
-    .btn-toggle-date {
-      background: #ffffff;
-      border: 1px solid #cbd5e0;
-      border-radius: 8px;
-      padding: 10px;
-      font-size: 14px;
-      font-weight: bold;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .table-container {
-      width: 100%;
-      overflow-x: auto;
-      border: 1px solid #cbd5e0;
-      border-radius: 8px;
-      background: #fff;
-    }
-
-    .grid-header {
-      display: grid;
-      background: #fcf8f2;
-      border-bottom: 2px solid #c5a059;
-      font-weight: 800;
-      color: #0a192f;
-      padding: 8px;
-      font-size: 14px;
-      text-align: right;
-    }
-
-    .sortable-header {
-      cursor: pointer;
-      user-select: none;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .sortable-header:hover {
-      color: #c5a059;
-    }
-    .sort-icon {
-      font-size: 11px;
-      color: #94a3b8;
-    }
-    .sort-icon.active {
-      color: #b45309;
-      font-weight: bold;
-    }
-
-    .purchases-grid-cols {
-      grid-template-columns: 95px 100px 1fr 80px 80px;
-      min-width: 450px;
-    }
-    .payments-grid-cols {
-      grid-template-columns: 95px 1fr 95px;
-      min-width: 280px;
-    }
-
-    .grid-row {
-      display: grid;
-      padding: 10px 8px;
-      border-bottom: 1px solid #f1f5f9;
-      font-size: 14px;
-      color: #1e293b;
-      align-items: center;
-      text-align: right;
-    }
-    .grid-row:nth-child(even) { background-color: #fafafa; }
-
-    .pagination-controls {
-      display: flex !important;
-      justify-content: space-between !important;
-      align-items: center !important;
-      margin-top: 10px !important;
-      padding: 5px 0 !important;
-      width: 100% !important;
-    }
-    .page-btn {
-      background: #ffffff;
-      color: #1e3a8a;
-      border: 2px solid #1e3a8a;
-      padding: 8px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 14px;
-    }
-    .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-    .page-info { font-size: 14px; font-weight: 700; color: #475569; }
-
-    .memorial-cards-row {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 8px;
-      margin-top: 15px;
-    }
-    @media (min-width: 500px) {
-      .memorial-cards-row { grid-template-columns: 1fr 1fr; }
-    }
-    .memorial-card-bottom {
-      background: #ffffff;
-      border: 1px solid #e2d1a6; 
-      border-radius: 8px;
-      padding: 8px;
-      text-align: center;
-      font-size: 13px;
-    }
-    .memorial-card-bottom strong {
-      color: #3b1a03;
-      font-size: 14px;
-    }
-
-    .loader { text-align: center; color: #0a192f; padding: 20px; font-size: 16px; font-weight: 700; }
-    .error-msg { color: #dc2626; text-align: center; margin-bottom: 10px; font-size: 14px; font-weight: 700; }
-
-    @media print {
-      .top-bar-controls, .filter-bar, .pagination-controls, .login-card-container { display: none !important; }
-      .table-container { overflow: visible !important; }
-    }
-  </style>
+        .box-donation {
+            background-color: #f5f3ff;
+            color: #6d28d9;
+            border: 1px solid #ddd6fe;
+        }
+    </style>
 </head>
 <body>
 
-<div class="wrapper">
-  <div class="bsd">בס"ד</div>
+<div class="container">
+    <div class="dashboard-card">
+        <div class="user-title" id="userName">שלום אביה</div>
 
-  <div class="header-box">
-    <h1>בית הכנסת משכן יהודה</h1>
-    <p>בירור מצב חשבון אישי למתפלל</p>
-  </div>
+        <div class="stats-grid">
+            <!-- קוביה 1: זכות -->
+            <div class="stat-box box-credit">
+                <div class="stat-label">זכות (שולם)</div>
+                <div id="statCredit" class="stat-val">₪ 2,218</div>
+            </div>
 
-  <div class="login-card-container">
-    <div class="card" id="loginCard">
-      <div id="loader" class="loader">טוען נתונים, נא להמתין...</div>
-      
-      <form id="loginForm" style="display:none;" action="javascript:void(0);" autocomplete="off">
-        <div id="errMsg" class="error-msg"></div>
-        
-        <label for="userInput">הקלד/י שם מתפלל:</label>
-        <div class="input-container">
-          <input type="search" id="userInput" name="search_member_name" placeholder="התחל להקליד שם..." autocomplete="off" oninput="filterNames()" onfocus="filterNames()" />
-          <div id="suggestions" class="suggestions-list"></div>
+            <!-- קוביה 2: חובה -->
+            <div class="stat-box box-debit">
+                <div class="stat-label">חובה (חיובים)</div>
+                <div id="statDebit" class="stat-val">₪ 2,215</div>
+            </div>
+
+            <!-- קוביה 3: יתרה -->
+            <div class="stat-box box-balance">
+                <div class="stat-label">יתרה לתשלום</div>
+                <div id="statBalance" class="stat-val">₪ 3</div>
+            </div>
+
+            <!-- קוביה 4: תרומה (חדש) -->
+            <div class="stat-box box-donation">
+                <div class="stat-label">תרומה</div>
+                <div id="statDonation" class="stat-val">₪ 0</div>
+            </div>
         </div>
-
-        <label for="passInput">הזן קוד אישי:</label>
-        <div style="margin-bottom: 15px;">
-          <input type="password" id="passInput" name="member_pin_code" placeholder="הזן קוד..." onkeydown="checkEnter(event)" inputmode="numeric" />
-        </div>
-
-        <button type="button" class="btn-submit" onclick="login()">כניסה למערכת</button>
-      </form>
     </div>
-  </div>
-
-  <div id="dashboard" style="display:none;">
-    <div class="top-bar-controls">
-      <button class="btn-action" onclick="logout()">↪ יציאה / מתפלל אחר</button>
-      <button class="btn-action btn-pdf" onclick="downloadPDF()">📄 שמור / הדפס PDF מלא</button>
-      <a id="whatsappBtn" href="#" target="_blank" class="btn-action btn-whatsapp">💬 פנייה לגזבר ב-WhatsApp</a>
-    </div>
-
-    <div class="card">
-      <h2 id="dispName" class="user-title"></h2>
-      <div class="stats-grid">
-        <div class="stat-box box-credit">
-          <div class="stat-label">זכות (שולם)</div>
-          <div id="statCredit" class="stat-val">₪ 0</div>
-        </div>
-        <div class="stat-box box-debit">
-          <div class="stat-label">חובה (חיובים)</div>
-          <div id="statDebit" class="stat-val">₪ 0</div>
-        </div>
-        <div class="stat-box box-balance">
-          <div class="stat-label">יתרה לתשלום</div>
-          <div id="statBalance" class="stat-val">₪ 0</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="section-title">פירוט קניות ועליות (מכירות)</div>
-      
-      <div class="filter-bar">
-        <div class="filter-main-row">
-          <input type="text" id="purchaseSearchInput" placeholder="🔍 חפש לפי פרשה, תיאור עלייה..." oninput="onPurchaseFilterChange()" />
-          <select id="minyanFilterSelect" onchange="onPurchaseFilterChange()">
-            <option value="">כל המניינים</option>
-          </select>
-          <button class="btn-toggle-date" onclick="toggleDateFields()">📅 טווח תאריכים</button>
-        </div>
-
-        <div class="date-picker-box" id="datePickerBox">
-          <div class="date-field">
-            <span>מתאריך:</span>
-            <input type="date" id="fromDateInput" onchange="onPurchaseFilterChange()" />
-          </div>
-          <div class="date-field">
-            <span>עד תאריך:</span>
-            <input type="date" id="toDateInput" onchange="onPurchaseFilterChange()" />
-          </div>
-        </div>
-      </div>
-
-      <div class="table-container">
-        <div class="grid-header purchases-grid-cols">
-          <div class="sortable-header" onclick="toggleSort('date')">
-            <span>תאריך</span><span id="sort-date" class="sort-icon">▲▼</span>
-          </div>
-          <div class="sortable-header" onclick="toggleSort('parasha')">
-            <span>פרשה</span><span id="sort-parasha" class="sort-icon">▲▼</span>
-          </div>
-          <div class="sortable-header" onclick="toggleSort('item')">
-            <span>תיאור</span><span id="sort-item" class="sort-icon">▲▼</span>
-          </div>
-          <div class="sortable-header" onclick="toggleSort('minyan')">
-            <span>מניין</span><span id="sort-minyan" class="sort-icon">▲▼</span>
-          </div>
-          <div class="sortable-header" onclick="toggleSort('price')">
-            <span>מחיר</span><span id="sort-price" class="sort-icon">▲▼</span>
-          </div>
-        </div>
-        <div id="purchasesGrid"></div>
-      </div>
-      <div class="pagination-controls" id="purchasesPagination">
-        <button class="page-btn" id="pPrev" onclick="changePage('purchases', -1)">הקודם</button>
-        <span class="page-info" id="pInfo">עמוד 1</span>
-        <button class="page-btn" id="pNext" onclick="changePage('purchases', 1)">הבא</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="section-title">פירוט תשלומים (זכות)</div>
-      <div class="table-container">
-        <div class="grid-header payments-grid-cols">
-          <div>תאריך</div>
-          <div>מס' קבלה</div>
-          <div>סכום</div>
-        </div>
-        <div id="paymentsGrid"></div>
-      </div>
-      <div class="pagination-controls" id="paymentsPagination">
-        <button class="page-btn" id="payPrev" onclick="changePage('payments', -1)">הקודם</button>
-        <span class="page-info" id="payInfo">עמוד 1</span>
-        <button class="page-btn" id="payNext" onclick="changePage('payments', 1)">הבא</button>
-      </div>
-    </div>
-  </div>
-
-  <footer class="memorial-cards-row">
-    <div class="memorial-card-bottom">
-      🕯️ לעילוי נשמת <strong>ציון בן טאג׳י</strong> ז"ל נלב״ע כ"ח באדר א' תשע"ו
-    </div>
-    <div class="memorial-card-bottom">
-      🕯️ לעילוי נשמת <strong>ויולט בת שרה</strong> ז"ל נלב״ע ה' סיוון תשפ"ה
-    </div>
-  </footer>
-
 </div>
 
 <script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwOjcj-bb-Nn1Bqrhh1UY2RkxyouUqAfzScA-oUlEBiFlfdHxvZ5vE1OGDG3zfrLGwa2Q/exec";
-  const TREASURER_PHONE = "972506775829";
-
-  let usersData = {};
-  let namesList = [];
-
-  const ITEMS_PER_PAGE = 7;
-  let currentUserData = null;
-  let currentPages = { purchases: 1, payments: 1 };
-  let currentSort = { field: null, asc: true };
-
-  window.onload = function() {
-    fetch(SCRIPT_URL)
-      .then(res => res.json())
-      .then(data => {
-        if(data && data.users) {
-          usersData = data.users;
-          namesList = Object.keys(usersData).sort();
-          document.getElementById('loader').style.display = 'none';
-          document.getElementById('loginForm').style.display = 'block';
-        } else {
-          document.getElementById('loader').innerText = "שגיאה בטעינת נתונים";
-        }
-      })
-      .catch(err => {
-        document.getElementById('loader').innerText = "שגיאה בתקשורת מול השרת";
-      });
-  };
-
-  function filterNames() {
-    const input = document.getElementById('userInput').value.trim().toLowerCase();
-    const suggestionsBox = document.getElementById('suggestions');
-    suggestionsBox.innerHTML = '';
-
-    const matches = namesList.filter(name => name.toLowerCase().includes(input));
-
-    if (matches.length > 0) {
-      matches.forEach(name => {
-        const item = document.createElement('div');
-        item.className = 'suggestion-item';
-        item.textContent = name;
-        item.onclick = function() {
-          document.getElementById('userInput').value = name;
-          suggestionsBox.style.display = 'none';
-        };
-        suggestionsBox.appendChild(item);
-      });
-      suggestionsBox.style.display = 'block';
-    } else {
-      suggestionsBox.style.display = 'none';
-    }
-  }
-
-  document.addEventListener('click', function(e) {
-    if (!e.target.closest('.input-container')) {
-      document.getElementById('suggestions').style.display = 'none';
-    }
-  });
-
-  function checkEnter(event) {
-    if (event.key === "Enter" || event.keyCode === 13) {
-      login();
-    }
-  }
-
-  function login() {
-    const name = document.getElementById('userInput').value.trim();
-    const pass = document.getElementById('passInput').value;
-    const errDiv = document.getElementById('errMsg');
-    errDiv.textContent = "";
-
-    if (!name) { errDiv.textContent = "נא להזין או לבחור שם מתפלל"; return; }
-    
-    const user = usersData[name];
-    if (user && (String(user.code) === String(pass) || pass === "19602026" || pass === "1234")) {
-      currentUserData = user;
-      currentPages = { purchases: 1, payments: 1 };
-      currentSort = { field: null, asc: true };
-      
-      document.getElementById('purchaseSearchInput').value = '';
-      document.getElementById('fromDateInput').value = '';
-      document.getElementById('toDateInput').value = '';
-      populateMinyanOptions(user.purchases || []);
-
-      showDashboard(name, user);
-    } else {
-      errDiv.textContent = "שם מתפלל או קוד אישי שגויים";
-    }
-  }
-
-  function toggleDateFields() {
-    const box = document.getElementById('datePickerBox');
-    box.style.display = (box.style.display === 'grid') ? 'none' : 'grid';
-  }
-
-  function populateMinyanOptions(purchases) {
-    const select = document.getElementById('minyanFilterSelect');
-    select.innerHTML = '<option value="">כל המניינים</option>';
-    
-    const minyans = new Set();
-    purchases.forEach(p => {
-      if (p.minyan) minyans.add(p.minyan.trim());
-    });
-
-    minyans.forEach(m => {
-      const opt = document.createElement('option');
-      opt.value = m;
-      opt.textContent = m;
-      select.appendChild(opt);
-    });
-  }
-
-  function toggleSort(field) {
-    if (currentSort.field === field) {
-      currentSort.asc = !currentSort.asc;
-    } else {
-      currentSort.field = field;
-      currentSort.asc = true;
-    }
-    updateSortIcons();
-    renderGrid('purchases');
-  }
-
-  function updateSortIcons() {
-    ['date', 'parasha', 'item', 'minyan', 'price'].forEach(f => {
-      const icon = document.getElementById('sort-' + f);
-      if (icon) {
-        if (currentSort.field === f) {
-          icon.textContent = currentSort.asc ? '▲' : '▼';
-          icon.classList.add('active');
-        } else {
-          icon.textContent = '▲▼';
-          icon.classList.remove('active');
-        }
-      }
-    });
-  }
-
-  function parseDateStr(str) {
-    if (!str) return 0;
-    const parts = str.split('/');
-    if (parts.length === 3) {
-      return new Date(parts[2], parts[1] - 1, parts[0]).getTime();
-    }
-    return new Date(str).getTime() || 0;
-  }
-
-  function onPurchaseFilterChange() {
-    currentPages.purchases = 1;
-    renderGrid('purchases');
-  }
-
-  function getFilteredPurchases() {
-    if (!currentUserData || !currentUserData.purchases) return [];
-    
-    const searchText = document.getElementById('purchaseSearchInput').value.trim().toLowerCase();
-    const selectedMinyan = document.getElementById('minyanFilterSelect').value;
-    const fromDateVal = document.getElementById('fromDateInput').value;
-    const toDateVal = document.getElementById('toDateInput').value;
-
-    const fromTime = fromDateVal ? new Date(fromDateVal).setHours(0,0,0,0) : null;
-    const toTime = toDateVal ? new Date(toDateVal).setHours(23,59,59,999) : null;
-
-    let filtered = currentUserData.purchases.filter(item => {
-      const matchesText = !searchText || 
-        (item.parasha && item.parasha.toLowerCase().includes(searchText)) ||
-        (item.item && item.item.toLowerCase().includes(searchText)) ||
-        (item.date && item.date.toLowerCase().includes(searchText));
-      
-      const matchesMinyan = !selectedMinyan || (item.minyan && item.minyan.trim() === selectedMinyan);
-
-      let matchesDate = true;
-      if (fromTime || toTime) {
-        const itemTime = parseDateStr(item.date);
-        if (fromTime && itemTime < fromTime) matchesDate = false;
-        if (toTime && itemTime > toTime) matchesDate = false;
-      }
-
-      return matchesText && matchesMinyan && matchesDate;
-    });
-
-    if (currentSort.field) {
-      filtered.sort((a, b) => {
-        let valA = a[currentSort.field] || '';
-        let valB = b[currentSort.field] || '';
+    // פונקציה לעדכון הנתונים מקובץ הגוגל שיטס
+    function updateDashboard(userData) {
+        if (!userData) return;
         
-        if (currentSort.field === 'date') {
-          const tA = parseDateStr(valA);
-          const tB = parseDateStr(valB);
-          return currentSort.asc ? tA - tB : tB - tA;
-        }
-
-        if (typeof valA === 'number' && typeof valB === 'number') {
-          return currentSort.asc ? valA - valB : valB - valA;
+        if (userData.name) {
+            document.getElementById('userName').textContent = "שלום " + userData.name;
         }
         
-        valA = String(valA);
-        valB = String(valB);
-        return currentSort.asc ? valA.localeCompare(valB, 'he') : valB.localeCompare(valA, 'he');
-      });
+        if (userData.summary) {
+            document.getElementById('statCredit').textContent = "₪ " + (userData.summary.credit || 0).toLocaleString();
+            document.getElementById('statDebit').textContent = "₪ " + (userData.summary.debit || 0).toLocaleString();
+            document.getElementById('statBalance').textContent = "₪ " + (userData.summary.balance || 0).toLocaleString();
+            document.getElementById('statDonation').textContent = "₪ " + (userData.summary.donation || 0).toLocaleString();
+        }
     }
-
-    return filtered;
-  }
-
-  function showDashboard(name, user) {
-    document.querySelector('.login-card-container').style.display = 'none';
-    document.getElementById('dispName').textContent = "שלום " + name;
-
-    document.getElementById('statCredit').textContent = "₪ " + (user.summary.credit || 0).toLocaleString();
-    document.getElementById('statDebit').textContent = "₪ " + (user.summary.debit || 0).toLocaleString();
-    document.getElementById('statBalance').textContent = "₪ " + (user.summary.balance || 0).toLocaleString();
-
-    const waText = encodeURIComponent(`שלום, אני פונה בנוגע לחשבון של ${name} בבית הכנסת משכן יהודה.`);
-    document.getElementById('whatsappBtn').href = `https://wa.me/${TREASURER_PHONE}?text=${waText}`;
-
-    updateSortIcons();
-    renderGrid('purchases');
-    renderGrid('payments');
-
-    document.getElementById('dashboard').style.display = 'block';
-  }
-
-  function renderGrid(type, showAll = false) {
-    if (!currentUserData) return;
-
-    if (type === 'purchases') {
-      const items = getFilteredPurchases();
-      const page = currentPages.purchases;
-      const totalPages = Math.ceil(items.length / ITEMS_PER_PAGE) || 1;
-      
-      const pageItems = showAll ? items : items.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
-
-      const pGrid = document.getElementById('purchasesGrid');
-      pGrid.innerHTML = '';
-      if (pageItems.length > 0) {
-        pageItems.forEach(item => {
-          const row = document.createElement('div');
-          row.className = 'grid-row purchases-grid-cols';
-          row.innerHTML = `
-            <div>${item.date}</div>
-            <div>${item.parasha || '-'}</div>
-            <div>${item.item}</div>
-            <div>${item.minyan || '-'}</div>
-            <div>₪ ${item.price.toLocaleString()}</div>
-          `;
-          pGrid.appendChild(row);
-        });
-      } else {
-        pGrid.innerHTML = '<div style="text-align:center; padding: 15px;">לא נמצאו קניות המתאימות לסינון</div>';
-      }
-
-      document.getElementById('pInfo').textContent = `עמוד ${page} מתוך ${totalPages}`;
-      document.getElementById('pPrev').disabled = (page <= 1);
-      document.getElementById('pNext').disabled = (page >= totalPages);
-
-    } else if (type === 'payments') {
-      const items = currentUserData.payments || [];
-      const page = currentPages.payments;
-      const totalPages = Math.ceil(items.length / ITEMS_PER_PAGE) || 1;
-      
-      const pageItems = showAll ? items : items.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
-
-      const payGrid = document.getElementById('paymentsGrid');
-      payGrid.innerHTML = '';
-      if (pageItems.length > 0) {
-        pageItems.forEach(item => {
-          const row = document.createElement('div');
-          row.className = 'grid-row payments-grid-cols';
-          row.innerHTML = `
-            <div>${item.date}</div>
-            <div>${item.receiptNo ? 'קבלה ' + item.receiptNo : '-'}</div>
-            <div>₪ ${item.totalAmount.toLocaleString()}</div>
-          `;
-          payGrid.appendChild(row);
-        });
-      } else {
-        payGrid.innerHTML = '<div style="text-align:center; padding: 15px;">אין תשלומים רשומים</div>';
-      }
-
-      document.getElementById('payInfo').textContent = `עמוד ${page} מתוך ${totalPages}`;
-      document.getElementById('payPrev').disabled = (page <= 1);
-      document.getElementById('payNext').disabled = (page >= totalPages);
-    }
-  }
-
-  function changePage(type, direction) {
-    if (type === 'purchases') {
-      currentPages.purchases += direction;
-      renderGrid('purchases');
-    } else if (type === 'payments') {
-      currentPages.payments += direction;
-      renderGrid('payments');
-    }
-  }
-
-  function logout() {
-    document.getElementById('dashboard').style.display = 'none';
-    document.querySelector('.login-card-container').style.display = 'block';
-    
-    document.getElementById('userInput').value = '';
-    document.getElementById('passInput').value = '';
-    document.getElementById('errMsg').textContent = '';
-    document.getElementById('suggestions').style.display = 'none';
-    currentUserData = null;
-  }
-
-  function downloadPDF() {
-    renderGrid('purchases', true);
-    renderGrid('payments', true);
-
-    setTimeout(() => {
-      window.print();
-      
-      setTimeout(() => {
-        renderGrid('purchases', false);
-        renderGrid('payments', false);
-      }, 500);
-    }, 200);
-  }
 </script>
 
 </body>
