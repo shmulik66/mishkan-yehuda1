@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>לוח אישי - מתפלל</title>
+    <title>מערכת קהילתית ולוח זיכרון</title>
     <style>
         :root {
             --primary-color: #1e3a8a;
@@ -25,13 +25,17 @@
         .container {
             max-width: 900px;
             margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
         }
 
+        /* אזור לוח אישי / סיכום חשבון */
         .dashboard-card {
             background: var(--card-bg);
             border-radius: 16px;
             padding: 24px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
             border: 1px solid var(--border-color);
         }
 
@@ -40,20 +44,13 @@
             color: #0f172a;
             font-size: 1.8rem;
             font-weight: bold;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
-        /* גריד של 4 קוביות */
         .stats-grid {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 12px;
-        }
-
-        @media (min-width: 600px) {
-            .stats-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
         }
 
         .stat-box {
@@ -76,7 +73,6 @@
             font-weight: bold;
         }
 
-        /* צבעים לקוביות */
         .box-credit {
             background-color: #ecfdf5;
             color: #047857;
@@ -100,58 +96,161 @@
             color: #6d28d9;
             border: 1px solid #ddd6fe;
         }
+
+        /* אזור חיפוש וכרטיסים */
+        header {
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .search-box {
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--primary-color);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 15px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            margin: 0 0 8px 0;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        .card p {
+            margin: 0;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .no-results {
+            text-align: center;
+            color: #64748b;
+            grid-column: 1 / -1;
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
+
+    <!-- לוח סיכום אישי (4 קוביות) -->
     <div class="dashboard-card">
         <div class="user-title" id="userName">שלום אביה</div>
 
         <div class="stats-grid">
-            <!-- קוביה 1: זכות -->
             <div class="stat-box box-credit">
                 <div class="stat-label">זכות (שולם)</div>
                 <div id="statCredit" class="stat-val">₪ 2,218</div>
             </div>
-
-            <!-- קוביה 2: חובה -->
             <div class="stat-box box-debit">
                 <div class="stat-label">חובה (חיובים)</div>
                 <div id="statDebit" class="stat-val">₪ 2,215</div>
             </div>
-
-            <!-- קוביה 3: יתרה -->
             <div class="stat-box box-balance">
                 <div class="stat-label">יתרה לתשלום</div>
                 <div id="statBalance" class="stat-val">₪ 3</div>
             </div>
-
-            <!-- קוביה 4: תרומה (חדש) -->
             <div class="stat-box box-donation">
                 <div class="stat-label">תרומה</div>
                 <div id="statDonation" class="stat-val">₪ 0</div>
             </div>
         </div>
     </div>
+
+    <!-- לוח זיכרון וחיפוש שמות -->
+    <div>
+        <header>
+            <h1>לוח זיכרון קהילתי</h1>
+        </header>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="חיפוש לפי שם..." onkeyup="filterNames()">
+        </div>
+
+        <div class="cards-grid" id="namesGrid">
+            <!-- הכרטיסים יווצרו באמצעות JavaScript -->
+        </div>
+    </div>
+
 </div>
 
 <script>
-    // פונקציה לעדכון הנתונים מקובץ הגוגל שיטס
-    function updateDashboard(userData) {
-        if (!userData) return;
-        
-        if (userData.name) {
-            document.getElementById('userName').textContent = "שלום " + userData.name;
+    // רשימת הנתונים (כולל טאג׳י)
+    const members = [
+        { name: "טאג׳י", details: "נזכור ולא נשכח" },
+        { name: "אברהם לוי", details: "לזכרו היקר" },
+        { name: "רחל כהן", details: "שמורה בלבנו" }
+    ];
+
+    // הצגת הכרטיסים
+    function renderCards(data) {
+        const grid = document.getElementById('namesGrid');
+        grid.innerHTML = '';
+
+        if (data.length === 0) {
+            grid.innerHTML = '<div class="no-results">לא נמצאו תוצאות מתאימות</div>';
+            return;
         }
-        
-        if (userData.summary) {
-            document.getElementById('statCredit').textContent = "₪ " + (userData.summary.credit || 0).toLocaleString();
-            document.getElementById('statDebit').textContent = "₪ " + (userData.summary.debit || 0).toLocaleString();
-            document.getElementById('statBalance').textContent = "₪ " + (userData.summary.balance || 0).toLocaleString();
-            document.getElementById('statDonation').textContent = "₪ " + (userData.summary.donation || 0).toLocaleString();
-        }
+
+        data.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <h3>${item.name}</h3>
+                <p>${item.details}</p>
+            `;
+            grid.appendChild(card);
+        });
     }
+
+    // פונקציית סינון לפי חיפוש
+    function filterNames() {
+        const query = document.getElementById('searchInput').value.trim().toLowerCase();
+        const filtered = members.filter(item => 
+            item.name.toLowerCase().includes(query)
+        );
+        renderCards(filtered);
+    }
+
+    // טעינה ראשונית של השמות
+    renderCards(members);
 </script>
 
 </body>
