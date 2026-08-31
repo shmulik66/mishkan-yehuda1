@@ -1,180 +1,731 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>משכן יהודה - אזור אישי</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f9;
-            margin: 0;
-            padding: 20px;
-            direction: rtl;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        h2, h3 {
-            color: #333;
-            text-align: center;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .error {
-            color: red;
-            text-align: center;
-            margin-top: 10px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: right;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .hidden {
-            display: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>אזור אישי - בית הכנסת משכן יהודה</title>
+  <style>
+    :root {
+      --bg-color: #0d131a;
+      --card-bg: #16202c;
+      --card-border: #233346;
+      --text-main: #f0f4f8;
+      --text-muted: #94a3b8;
+      --accent-gold: #d4af37;
+      --accent-gold-hover: #f3ce58;
+      --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7);
+      --debit-color: #ef4444;
+      --credit-color: #10b981;
+      --font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 15px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Header & Branding */
+    header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .synagogue-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 5px;
+    }
+
+    .synagogue-subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Login Screen */
+    .login-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+      position: relative;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px 15px;
+      background: #090e14;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--accent-gold);
+    }
+
+    .suggestions-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #111923;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      max-height: 180px;
+      overflow-y: auto;
+      z-index: 100;
+      display: none;
+    }
+
+    .suggestion-item {
+      padding: 10px 15px;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .suggestion-item:hover {
+      background: var(--card-border);
+      color: var(--accent-gold);
+    }
+
+    .btn-gold {
+      width: 100%;
+      padding: 13px;
+      background: var(--gold-gradient);
+      border: none;
+      border-radius: 8px;
+      color: #000;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .btn-gold:hover {
+      opacity: 0.9;
+    }
+
+    .error-msg {
+      color: var(--debit-color);
+      font-size: 0.85rem;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    /* Dashboard */
+    .dashboard {
+      display: none;
+    }
+
+    .user-welcome {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      background: var(--card-bg);
+      padding: 15px 20px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+    }
+
+    .btn-logout {
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .btn-logout:hover {
+      color: var(--text-main);
+      border-color: var(--text-muted);
+    }
+
+    /* Summary Cards */
+    .summary-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .card-title {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .card-value {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .value-debit { color: var(--debit-color); }
+    .value-credit { color: var(--credit-color); }
+    .value-balance { color: var(--accent-gold); }
+
+    /* Tables & Grids */
+    .section-title {
+      font-size: 1.1rem;
+      color: var(--accent-gold);
+      margin: 25px 0 12px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .filters-container {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .filters-container input, .filters-container select {
+      flex: 1;
+      min-width: 120px;
+      padding: 8px 10px;
+      font-size: 0.85rem;
+    }
+
+    .grid-table {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      overflow-x: auto;
+    }
+
+    .grid-header, .grid-row {
+      display: grid;
+      padding: 12px 15px;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+
+    .purchases-grid-cols {
+      grid-template-columns: 85px 90px 1fr 70px 80px;
+      min-width: 450px;
+    }
+
+    .payments-grid-cols {
+      grid-template-columns: 85px 90px 1fr 80px;
+      min-width: 420px;
+    }
+
+    .grid-header {
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid var(--card-border);
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.8rem;
+    }
+
+    .grid-header > div {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .grid-header > div:hover {
+      color: var(--accent-gold);
+    }
+
+    .grid-row {
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+
+    .grid-row:last-child {
+      border-bottom: none;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 15px;
+      background: rgba(0,0,0,0.2);
+      border-top: 1px solid var(--card-border);
+      font-size: 0.85rem;
+    }
+
+    .page-btn {
+      background: var(--card-border);
+      border: none;
+      color: var(--text-main);
+      padding: 4px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .page-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    /* Actions & Footer */
+    .actions-bar {
+      display: flex;
+      gap: 10px;
+      margin-top: 25px;
+    }
+
+    .btn-action {
+      flex: 1;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+      color: var(--text-main);
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .btn-action:hover {
+      border-color: var(--accent-gold);
+    }
+
+    .memorial-cards {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .memorial-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px dashed var(--card-border);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .memorial-name {
+      color: var(--accent-gold);
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .loader {
+      display: none;
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(255,255,255,0.1);
+      border-radius: 50%;
+      border-top-color: var(--accent-gold);
+      animation: spin 0.8s linear infinite;
+      margin: 15px auto;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media print {
+      body { background: #fff; color: #000; }
+      .login-card, .btn-logout, .filters-container, .pagination, .actions-bar { display: none !important; }
+      .dashboard { display: block !important; }
+      .card, .grid-table { border: 1px solid #ccc; background: #fff; color: #000; }
+      .grid-header { background: #eee; color: #000; }
+      .synagogue-title { -webkit-text-fill-color: #000; }
+    }
+  </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>משכן יהודה - כניסה לחברים</h2>
-    
-    <!-- טופס התחברות -->
-    <div id="login-form">
-        <div class="form-group">
-            <label for="username">שם משתמש (ת"ז):</label>
-            <input type="text" id="username" placeholder="הכנס תעודת זהות">
-        </div>
-        <div class="form-group">
-            <label for="password">סיסמה:</label>
-            <input type="password" id="password" placeholder="הכנס סיסמה">
-        </div>
-        <button onclick="login()">התחבר</button>
-        <div id="error-msg" class="error"></div>
+  <div class="container">
+    <header>
+      <div class="synagogue-title">בית הכנסת משכן יהודה</div>
+      <div class="synagogue-subtitle">אזור אישי למתפלל</div>
+    </header>
+
+    <!-- מסך התחברות -->
+    <div id="loginCard" class="login-card">
+      <div class="form-group">
+        <label for="nameInput">שם המתפלל</label>
+        <input type="text" id="nameInput" placeholder="הקלד שם להתאמה..." autocomplete="off">
+        <div id="suggestionsList" class="suggestions-list"></div>
+      </div>
+      <div class="form-group">
+        <label for="passInput">קוד אישי</label>
+        <input type="password" id="passInput" placeholder="הזן קוד אישי">
+      </div>
+      <button class="btn-gold" onclick="login()">כניסה למידע האישי</button>
+      <div id="loader" class="loader"></div>
+      <div id="errorMsg" class="error-msg"></div>
     </div>
 
-    <!-- אזור נתונים לאחר התחברות -->
-    <div id="user-data" class="hidden">
-        <h3 id="welcome-msg"></h3>
-        <h4>היסטוריית תשלומים ותרומות</h4>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>תאריך</th>
-                    <th>סכום</th>
-                    <th>אמצעי תשלום</th>
-                    <th>פירוט / תרומה</th>
-                </tr>
-            </thead>
-            <tbody id="payments-table-body">
-            </tbody>
-        </table>
-        
-        <br>
-        <button onclick="logout()" style="background-color: #dc3545;">התנתק</button>
+    <!-- לוח בקרה / אזור אישי -->
+    <div id="dashboard" class="dashboard">
+      <div class="user-welcome">
+        <div>שלום, <strong id="userNameDisplay" style="color:var(--accent-gold);"></strong></div>
+        <button class="btn-logout" onclick="logout()">יציאה</button>
+      </div>
+
+      <!-- כרטיסי סיכום -->
+      <div class="summary-cards">
+        <div class="card">
+          <div class="card-title">סה"כ חובה</div>
+          <div id="debitVal" class="card-value value-debit">₪ 0</div>
+        </div>
+        <div class="card">
+          <div class="card-title">סה"כ זכות</div>
+          <div id="creditVal" class="card-value value-credit">₪ 0</div>
+        </div>
+        <div class="card">
+          <div class="card-title">יתרה לתשלום</div>
+          <div id="balanceVal" class="card-value value-balance">₪ 0</div>
+        </div>
+      </div>
+
+      <!-- טבלת קניות -->
+      <div class="section-title">
+        <span>פירוט קניות ומכירות</span>
+      </div>
+      <div class="filters-container">
+        <input type="text" id="purchasesSearch" placeholder="חיפוש חופשי..." oninput="filterPurchases()">
+        <select id="minyanFilter" onchange="filterPurchases()">
+          <option value="">כל המניינים</option>
+        </select>
+      </div>
+      <div class="grid-table">
+        <div class="grid-header purchases-grid-cols">
+          <div onclick="sortGrid('purchases', 'date')">תאריך ⇅</div>
+          <div onclick="sortGrid('purchases', 'parasha')">פרשה ⇅</div>
+          <div onclick="sortGrid('purchases', 'item')">תיאור ⇅</div>
+          <div onclick="sortGrid('purchases', 'minyan')">מניין ⇅</div>
+          <div onclick="sortGrid('purchases', 'price')">מחיר ⇅</div>
+        </div>
+        <div id="purchasesBody"></div>
+        <div class="pagination">
+          <button id="prevPurchases" class="page-btn" onclick="changePage('purchases', -1)">הקודם</button>
+          <span id="pageInfoPurchases">עמוד 1 מתוך 1</span>
+          <button id="nextPurchases" class="page-btn" onclick="changePage('purchases', 1)">הבא</button>
+        </div>
+      </div>
+
+      <!-- טבלת תשלומים -->
+      <div class="section-title">
+        <span>פירוט תשלומים</span>
+      </div>
+      <div class="grid-table">
+        <div class="grid-header payments-grid-cols">
+          <div onclick="sortGrid('payments', 'date')">תאריך ⇅</div>
+          <div onclick="sortGrid('payments', 'receiptNo')">מס' קבלה ⇅</div>
+          <div onclick="sortGrid('payments', 'donation')">תרומה / תיאור ⇅</div>
+          <div onclick="sortGrid('payments', 'totalAmount')">סכום ⇅</div>
+        </div>
+        <div id="paymentsBody"></div>
+        <div class="pagination">
+          <button id="prevPayments" class="page-btn" onclick="changePage('payments', -1)">הקודם</button>
+          <span id="pageInfoPayments">עמוד 1 מתוך 1</span>
+          <button id="nextPayments" class="page-btn" onclick="changePage('payments', 1)">הבא</button>
+        </div>
+      </div>
+
+      <!-- כפתורי פעולה -->
+      <div class="actions-bar">
+        <a id="whatsappBtn" class="btn-action" href="#" target="_blank">
+          💬 פנייה לגזבר ב-WhatsApp
+        </a>
+        <button class="btn-action" onclick="window.print()">
+          🖨️ הדפסה / שמירה כ-PDF
+        </button>
+      </div>
+
+      <!-- כרטיסי זיכרון -->
+      <div class="memorial-cards">
+        <div class="memorial-card">
+          לעילוי נשמת
+          <div class="memorial-name">נפטר/ת פלוני/ת בן/בת פלוני</div>
+          ת.נ.צ.ב.ה
+        </div>
+        <div class="memorial-card">
+          לעילוי נשמת
+          <div class="memorial-name">נפטר/ת פלוני/ת בן/בת פלוני</div>
+          ת.נ.צ.ב.ה
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 
-<script>
-    // הקישור המעודכן ל-Google Apps Script שלך:
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxRPd7etipYL5UpxExgafSd7-aSFDf1kJzigmA-b1bQzqohLjct2TbmSFKyts9xW154Lg/exec";
+  <script>
+    // הקישור החדש מושתל כאן:
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxRPd7etipYL5UpxExgafSd7-aSFDf1kJzigmA-b1bQzqohLjct2TbmSFKyts9xW154Lg/exec"; 
 
-    function login() {
-        const usernameInput = document.getElementById('username').value.trim();
-        const passwordInput = document.getElementById('password').value.trim();
-        const errorMsg = document.getElementById('error-msg');
-        
-        errorMsg.innerText = "מתחבר, אנא המתן...";
+    let allNames = [];
+    let currentUserData = null;
 
-        fetch(`${SCRIPT_URL}?action=login&username=${encodeURIComponent(usernameInput)}&password=${encodeURIComponent(passwordInput)}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === "success") {
-                    errorMsg.innerText = "";
-                    showUserData(data);
-                } else {
-                    errorMsg.innerText = data.message || "פרטי התחברות שגויים";
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                errorMsg.innerText = "אירעה שגיאה בתקשורת עם השרת";
-            });
+    const state = {
+      purchases: { rawData: [], filteredData: [], page: 1, limit: 7, sortCol: '', sortDir: 'asc' },
+      payments: { rawData: [], filteredData: [], page: 1, limit: 7, sortCol: '', sortDir: 'asc' }
+    };
+
+    window.addEventListener('DOMContentLoaded', () => {
+      fetchNames();
+      setupAutocomplete();
+    });
+
+    function fetchNames() {
+      fetch(SCRIPT_URL)
+        .then(res => res.json())
+        .then(data => {
+          if (data.success && data.names) {
+            allNames = data.names;
+          }
+        })
+        .catch(err => console.error("שגיאה בטעינת שמות:", err));
     }
 
-    function showUserData(data) {
-        document.getElementById('login-form').classList.add('hidden');
-        document.getElementById('user-data').classList.remove('hidden');
-        document.getElementById('welcome-msg').innerText = `שלום, ${data.user.name}`;
+    function setupAutocomplete() {
+      const input = document.getElementById('nameInput');
+      const list = document.getElementById('suggestionsList');
 
-        const tbody = document.getElementById('payments-table-body');
-        tbody.innerHTML = "";
+      input.addEventListener('input', () => {
+        const val = input.value.trim().toLowerCase();
+        list.innerHTML = '';
+        if (!val) { list.style.display = 'none'; return; }
 
-        if (data.payments && data.payments.length > 0) {
-            data.payments.forEach(payment => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${payment.date || ''}</td>
-                    <td>${payment.amount || ''}</td>
-                    <td>${payment.method || ''}</td>
-                    <td>${payment.description || ''}</td>
-                `;
-                tbody.appendChild(tr);
-            });
+        const matches = allNames.filter(n => n.toLowerCase().includes(val));
+        if (matches.length > 0) {
+          matches.forEach(name => {
+            const item = document.createElement('div');
+            item.className = 'suggestion-item';
+            item.textContent = name;
+            item.onclick = () => {
+              input.value = name;
+              list.style.display = 'none';
+            };
+            list.appendChild(item);
+          });
+          list.style.display = 'block';
         } else {
-            tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;">לא נמצאו תשלומים</td></tr>`;
+          list.style.display = 'none';
         }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (e.target !== input) list.style.display = 'none';
+      });
+    }
+
+    function login() {
+      const name = document.getElementById('nameInput').value.trim();
+      const pass = document.getElementById('passInput').value.trim();
+      const errorMsg = document.getElementById('errorMsg');
+      const loader = document.getElementById('loader');
+
+      errorMsg.textContent = '';
+      if (!name || !pass) {
+        errorMsg.textContent = 'נא להזין שם וקוד אישי';
+        return;
+      }
+
+      loader.style.display = 'block';
+
+      const url = `${SCRIPT_URL}?name=${encodeURIComponent(name)}&pass=${encodeURIComponent(pass)}`;
+      fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          loader.style.display = 'none';
+          if (data.success) {
+            currentUserData = data.userData;
+            initDashboard();
+          } else {
+            errorMsg.textContent = data.message || 'פרטי התחברות שגויים';
+          }
+        })
+        .catch(err => {
+          loader.style.display = 'none';
+          errorMsg.textContent = 'שגיאה בהתחברות לשרת';
+        });
+    }
+
+    function initDashboard() {
+      document.getElementById('loginCard').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      document.getElementById('userNameDisplay').textContent = currentUserData.name;
+
+      const s = currentUserData.summary;
+      document.getElementById('debitVal').textContent = `₪ ${s.debit.toLocaleString()}`;
+      document.getElementById('creditVal').textContent = `₪ ${s.credit.toLocaleString()}`;
+      document.getElementById('balanceVal').textContent = `₪ ${s.balance.toLocaleString()}`;
+
+      const waBtn = document.getElementById('whatsappBtn');
+      const msg = encodeURIComponent(`שלום גזבר, פנייה מאת ${currentUserData.name} בנוגע לחשבון אישי.`);
+      waBtn.href = `https://wa.me/972500000000?text=${msg}`;
+
+      state.purchases.rawData = currentUserData.purchases || [];
+      state.purchases.filteredData = [...state.purchases.rawData];
+      
+      state.payments.rawData = currentUserData.payments || [];
+      state.payments.filteredData = [...state.payments.rawData];
+
+      populateMinyanOptions();
+      filterPurchases();
+      renderGrid('payments');
+    }
+
+    function populateMinyanOptions() {
+      const select = document.getElementById('minyanFilter');
+      select.innerHTML = '<option value="">כל המניינים</option>';
+      const minyans = [...new Set(state.purchases.rawData.map(p => p.minyan).filter(Boolean))];
+      minyans.forEach(m => {
+        const opt = document.createElement('option');
+        opt.value = m;
+        opt.textContent = m;
+        select.appendChild(opt);
+      });
+    }
+
+    function filterPurchases() {
+      const search = document.getElementById('purchasesSearch').value.toLowerCase();
+      const minyan = document.getElementById('minyanFilter').value;
+
+      state.purchases.filteredData = state.purchases.rawData.filter(p => {
+        const matchSearch = !search || p.item.toLowerCase().includes(search) || p.parasha.toLowerCase().includes(search);
+        const matchMinyan = !minyan || p.minyan === minyan;
+        return matchSearch && matchMinyan;
+      });
+
+      state.purchases.page = 1;
+      renderGrid('purchases');
+    }
+
+    function sortGrid(type, col) {
+      const st = state[type];
+      if (st.sortCol === col) {
+        st.sortDir = st.sortDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        st.sortCol = col;
+        st.sortDir = 'asc';
+      }
+
+      st.filteredData.sort((a, b) => {
+        let valA = a[col];
+        let valB = b[col];
+
+        if (typeof valA === 'number' && typeof valB === 'number') {
+          return st.sortDir === 'asc' ? valA - valB : valB - valA;
+        }
+
+        valA = String(valA || '');
+        valB = String(valB || '');
+        return st.sortDir === 'asc' ? valA.localeCompare(valB, 'he') : valB.localeCompare(valA, 'he');
+      });
+
+      renderGrid(type);
+    }
+
+    function renderGrid(type) {
+      const st = state[type];
+      const body = document.getElementById(`${type}Body`);
+      body.innerHTML = '';
+
+      const totalPages = Math.ceil(st.filteredData.length / st.limit) || 1;
+      if (st.page > totalPages) st.page = totalPages;
+
+      const start = (st.page - 1) * st.limit;
+      const end = start + st.limit;
+      const pageItems = st.filteredData.slice(start, end);
+
+      if (pageItems.length === 0) {
+        body.innerHTML = `<div style="padding:20px; text-align:center; color:var(--text-muted);">לא נמצאו נתונים</div>`;
+      } else {
+        pageItems.forEach(item => {
+          const row = document.createElement('div');
+          row.className = `grid-row ${type}-grid-cols`;
+
+          if (type === 'purchases') {
+            row.innerHTML = `
+              <div>${item.date}</div>
+              <div>${item.parasha}</div>
+              <div>${item.item}</div>
+              <div>${item.minyan || '-'}</div>
+              <div>₪ ${item.price.toLocaleString()}</div>
+            `;
+          } else if (type === 'payments') {
+            row.innerHTML = `
+              <div>${item.date}</div>
+              <div>${item.receiptNo ? 'קבלה ' + item.receiptNo : '-'}</div>
+              <div>${item.donation || '-'}</div>
+              <div>₪ ${item.totalAmount.toLocaleString()}</div>
+            `;
+          }
+          body.appendChild(row);
+        });
+      }
+
+      const pageInfo = document.getElementById(`pageInfo${type.charAt(0).toUpperCase() + type.slice(1)}`);
+      pageInfo.textContent = `עמוד ${st.page} מתוך ${totalPages}`;
+
+      document.getElementById(`prev${type.charAt(0).toUpperCase() + type.slice(1)}`).disabled = (st.page === 1);
+      document.getElementById(`next${type.charAt(0).toUpperCase() + type.slice(1)}`).disabled = (st.page === totalPages);
+    }
+
+    function changePage(type, delta) {
+      state[type].page += delta;
+      renderGrid(type);
     }
 
     function logout() {
-        document.getElementById('username').value = "";
-        document.getElementById('password').value = "";
-        document.getElementById('user-data').classList.add('hidden');
-        document.getElementById('login-form').classList.remove('hidden');
+      currentUserData = null;
+      document.getElementById('nameInput').value = '';
+      document.getElementById('passInput').value = '';
+      document.getElementById('dashboard').style.display = 'none';
+      document.getElementById('loginCard').style.display = 'block';
     }
-</script>
-
+  </script>
 </body>
 </html>
