@@ -140,6 +140,10 @@
       border-radius: 8px; 
       cursor: pointer;
     }
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
 
     .top-bar-controls {
       display: flex !important;
@@ -517,7 +521,7 @@
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwOjcj-bb-Nn1Bqrhh1UY2RkxyouUqAfzScA-oUlEBiFlfdHxvZ5vE1OGDG3zfrLGwa2Q/exec";
   const TREASURER_PHONE = "972506775829";
 
-  let usersData = {};
+  // שימו לב: אין יותר usersData גלובלי - הדפדפן לא מחזיק בזיכרון את המידע של כולם
   let namesList = [];
 
   const ITEMS_PER_PAGE = 7;
@@ -526,12 +530,12 @@
   let currentSort = { field: null, asc: true };
 
   window.onload = function() {
+    // הבקשה הראשונית מחזירה *רק* רשימת שמות, בלי קודים ובלי נתונים כספיים
     fetch(SCRIPT_URL)
       .then(res => res.json())
       .then(data => {
-        if(data && data.users) {
-          usersData = data.users;
-          namesList = Object.keys(usersData).sort();
+        if (data && data.success && data.names) {
+          namesList = data.names;
           document.getElementById('loader').style.display = 'none';
           document.getElementById('loginForm').style.display = 'block';
         } else {
@@ -579,28 +583,45 @@
     }
   }
 
-  function login() {
+  // login() עכשיו אסינכרונית: היא שולחת את השם והקוד לשרת,
+  // והשרת הוא זה שמאמת ומחזיר רק את הנתונים של המתפלל הזה
+  async function login() {
     const name = document.getElementById('userInput').value.trim();
     const pass = document.getElementById('passInput').value;
     const errDiv = document.getElementById('errMsg');
     errDiv.textContent = "";
 
     if (!name) { errDiv.textContent = "נא להזין או לבחור שם מתפלל"; return; }
-    
-    const user = usersData[name];
-    if (user && (String(user.code) === String(pass) || pass === "19602026" || pass === "1234")) {
-      currentUserData = user;
-      currentPages = { purchases: 1, payments: 1 };
-      currentSort = { field: null, asc: true };
-      
-      document.getElementById('purchaseSearchInput').value = '';
-      document.getElementById('fromDateInput').value = '';
-      document.getElementById('toDateInput').value = '';
-      populateMinyanOptions(user.purchases || []);
+    if (!pass) { errDiv.textContent = "נא להזין קוד אישי"; return; }
 
-      showDashboard(name, user);
-    } else {
-      errDiv.textContent = "שם מתפלל או קוד אישי שגויים";
+    const submitBtn = document.querySelector('.btn-submit');
+    submitBtn.disabled = true;
+    submitBtn.textContent = "מתחבר...";
+
+    try {
+      const url = `${SCRIPT_URL}?name=${encodeURIComponent(name)}&pass=${encodeURIComponent(pass)}`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      if (data && data.success && data.userData) {
+        currentUserData = data.userData;
+        currentPages = { purchases: 1, payments: 1 };
+        currentSort = { field: null, asc: true };
+
+        document.getElementById('purchaseSearchInput').value = '';
+        document.getElementById('fromDateInput').value = '';
+        document.getElementById('toDateInput').value = '';
+        populateMinyanOptions(currentUserData.purchases || []);
+
+        showDashboard(currentUserData.name, currentUserData);
+      } else {
+        errDiv.textContent = (data && data.message) ? data.message : "שם מתפלל או קוד אישי שגויים";
+      }
+    } catch (err) {
+      errDiv.textContent = "שגיאה בתקשורת מול השרת, נסה/י שוב";
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "כניסה למערכת";
     }
   }
 
