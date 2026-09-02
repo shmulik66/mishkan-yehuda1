@@ -195,6 +195,11 @@
     @media (min-width: 480px) {
       .stats-grid { grid-template-columns: repeat(3, 1fr); }
     }
+    /* בתפריט הצד הסטטיסטיקות תמיד עמודה אחת, גם במסכים רחבים */
+    .stats-grid-vertical,
+    .stats-grid-vertical.stats-grid {
+      grid-template-columns: 1fr !important;
+    }
 
     .stat-box { 
       border-radius: 8px; 
@@ -207,6 +212,44 @@
     .box-credit { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
     .box-debit { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
     .box-balance { background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+
+    /* תפריט צד קבוע (סטטיסטיקות + פעולות + סינון) לצד טבלאות התוכן */
+    .dashboard-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    @media (min-width: 900px) {
+      .dashboard-layout {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 16px;
+      }
+      .sidebar-panel {
+        flex: 0 0 280px;
+        position: sticky;
+        top: 10px;
+      }
+      .main-content {
+        flex: 1;
+        min-width: 0;
+      }
+    }
+    .sidebar-card { margin-bottom: 0; }
+    .sidebar-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    /* בתוך התפריט הצד, כפתורי הפעולה תמיד בעמודה אחת (גם במסכים רחבים) */
+    .sidebar-panel .top-bar-controls {
+      flex-direction: column !important;
+      margin-bottom: 0 !important;
+    }
+    /* בתוך התפריט הצד, שדות הסינון תמיד בעמודה אחת */
+    .filter-bar-sidebar {
+      margin-bottom: 0;
+    }
 
     .section-title {
       font-size: 18px; 
@@ -439,96 +482,111 @@
   </div>
 
   <div id="dashboard" style="display:none;">
-    <div class="top-bar-controls">
-      <button class="btn-action" onclick="logout()">↪ יציאה / מתפלל אחר</button>
-      <button class="btn-action btn-pdf" onclick="downloadPDF()">📄 שמור / הדפס PDF מלא</button>
-      <a id="whatsappBtn" href="#" target="_blank" class="btn-action btn-whatsapp">💬 פנייה לגזבר ב-WhatsApp</a>
-    </div>
+    <h2 id="dispName" class="user-title"></h2>
 
-    <div class="card">
-      <h2 id="dispName" class="user-title"></h2>
-      <div class="stats-grid">
-        <div class="stat-box box-credit">
-          <div class="stat-label">זכות (שולם)</div>
-          <div id="statCredit" class="stat-val">₪ 0</div>
-        </div>
-        <div class="stat-box box-debit">
-          <div class="stat-label">חובה (חיובים)</div>
-          <div id="statDebit" class="stat-val">₪ 0</div>
-        </div>
-        <div class="stat-box box-balance">
-          <div class="stat-label">יתרה לתשלום</div>
-          <div id="statBalance" class="stat-val">₪ 0</div>
-        </div>
-      </div>
-    </div>
+    <div class="dashboard-layout">
 
-    <div class="card">
-      <div class="section-title">פירוט קניות ועליות (מכירות)</div>
-      
-      <div class="filter-bar">
-        <div class="filter-main-row">
-          <input type="text" id="purchaseSearchInput" placeholder="🔍 חפש לפי פרשה, תיאור עלייה..." oninput="onPurchaseFilterChange()" />
-          <select id="minyanFilterSelect" onchange="onPurchaseFilterChange()">
-            <option value="">כל המניינים</option>
-          </select>
-          <button class="btn-toggle-date" onclick="toggleDateFields()">📅 טווח תאריכים</button>
+      <!-- תפריט צד קבוע: סטטיסטיקות, פעולות, וסינון -->
+      <aside class="sidebar-panel">
+        <div class="card sidebar-card">
+          <div class="section-title">מצב חשבון</div>
+          <div class="stats-grid stats-grid-vertical">
+            <div class="stat-box box-credit">
+              <div class="stat-label">זכות (שולם)</div>
+              <div id="statCredit" class="stat-val">₪ 0</div>
+            </div>
+            <div class="stat-box box-debit">
+              <div class="stat-label">חובה (חיובים)</div>
+              <div id="statDebit" class="stat-val">₪ 0</div>
+            </div>
+            <div class="stat-box box-balance">
+              <div class="stat-label">יתרה לתשלום</div>
+              <div id="statBalance" class="stat-val">₪ 0</div>
+            </div>
+          </div>
         </div>
 
-        <div class="date-picker-box" id="datePickerBox">
-          <div class="date-field">
-            <span>מתאריך:</span>
-            <input type="date" id="fromDateInput" onchange="onPurchaseFilterChange()" />
+        <div class="card sidebar-card">
+          <div class="section-title">פעולות</div>
+          <div class="top-bar-controls">
+            <button class="btn-action" onclick="logout()">↪ יציאה / מתפלל אחר</button>
+            <button class="btn-action btn-pdf" onclick="downloadPDF()">📄 שמור / הדפס PDF מלא</button>
+            <a id="whatsappBtn" href="#" target="_blank" class="btn-action btn-whatsapp">💬 פנייה לגזבר ב-WhatsApp</a>
           </div>
-          <div class="date-field">
-            <span>עד תאריך:</span>
-            <input type="date" id="toDateInput" onchange="onPurchaseFilterChange()" />
+        </div>
+
+        <div class="card sidebar-card">
+          <div class="section-title">סינון קניות ועליות</div>
+          <div class="filter-bar filter-bar-sidebar">
+            <input type="text" id="purchaseSearchInput" placeholder="🔍 חפש לפי פרשה, תיאור עלייה..." oninput="onPurchaseFilterChange()" />
+            <select id="minyanFilterSelect" onchange="onPurchaseFilterChange()">
+              <option value="">כל המניינים</option>
+            </select>
+            <button class="btn-toggle-date" onclick="toggleDateFields()">📅 טווח תאריכים</button>
+
+            <div class="date-picker-box" id="datePickerBox">
+              <div class="date-field">
+                <span>מתאריך:</span>
+                <input type="date" id="fromDateInput" onchange="onPurchaseFilterChange()" />
+              </div>
+              <div class="date-field">
+                <span>עד תאריך:</span>
+                <input type="date" id="toDateInput" onchange="onPurchaseFilterChange()" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- תוכן ראשי: טבלאות -->
+      <div class="main-content">
+        <div class="card">
+          <div class="section-title">פירוט קניות ועליות (מכירות)</div>
+          <div class="table-container">
+            <div class="grid-header purchases-grid-cols">
+              <div class="sortable-header" onclick="toggleSort('date')">
+                <span>תאריך</span><span id="sort-date" class="sort-icon">▲▼</span>
+              </div>
+              <div class="sortable-header" onclick="toggleSort('parasha')">
+                <span>פרשה</span><span id="sort-parasha" class="sort-icon">▲▼</span>
+              </div>
+              <div class="sortable-header" onclick="toggleSort('item')">
+                <span>תיאור</span><span id="sort-item" class="sort-icon">▲▼</span>
+              </div>
+              <div class="sortable-header" onclick="toggleSort('minyan')">
+                <span>מניין</span><span id="sort-minyan" class="sort-icon">▲▼</span>
+              </div>
+              <div class="sortable-header" onclick="toggleSort('price')">
+                <span>מחיר</span><span id="sort-price" class="sort-icon">▲▼</span>
+              </div>
+            </div>
+            <div id="purchasesGrid"></div>
+          </div>
+          <div class="pagination-controls" id="purchasesPagination">
+            <button class="page-btn" id="pPrev" onclick="changePage('purchases', -1)">הקודם</button>
+            <span class="page-info" id="pInfo">עמוד 1</span>
+            <button class="page-btn" id="pNext" onclick="changePage('purchases', 1)">הבא</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">פירוט תשלומים (זכות)</div>
+          <div class="table-container">
+            <div class="grid-header payments-grid-cols">
+              <div>תאריך</div>
+              <div>מס' קבלה</div>
+              <div>סכום</div>
+            </div>
+            <div id="paymentsGrid"></div>
+          </div>
+          <div class="pagination-controls" id="paymentsPagination">
+            <button class="page-btn" id="payPrev" onclick="changePage('payments', -1)">הקודם</button>
+            <span class="page-info" id="payInfo">עמוד 1</span>
+            <button class="page-btn" id="payNext" onclick="changePage('payments', 1)">הבא</button>
           </div>
         </div>
       </div>
 
-      <div class="table-container">
-        <div class="grid-header purchases-grid-cols">
-          <div class="sortable-header" onclick="toggleSort('date')">
-            <span>תאריך</span><span id="sort-date" class="sort-icon">▲▼</span>
-          </div>
-          <div class="sortable-header" onclick="toggleSort('parasha')">
-            <span>פרשה</span><span id="sort-parasha" class="sort-icon">▲▼</span>
-          </div>
-          <div class="sortable-header" onclick="toggleSort('item')">
-            <span>תיאור</span><span id="sort-item" class="sort-icon">▲▼</span>
-          </div>
-          <div class="sortable-header" onclick="toggleSort('minyan')">
-            <span>מניין</span><span id="sort-minyan" class="sort-icon">▲▼</span>
-          </div>
-          <div class="sortable-header" onclick="toggleSort('price')">
-            <span>מחיר</span><span id="sort-price" class="sort-icon">▲▼</span>
-          </div>
-        </div>
-        <div id="purchasesGrid"></div>
-      </div>
-      <div class="pagination-controls" id="purchasesPagination">
-        <button class="page-btn" id="pPrev" onclick="changePage('purchases', -1)">הקודם</button>
-        <span class="page-info" id="pInfo">עמוד 1</span>
-        <button class="page-btn" id="pNext" onclick="changePage('purchases', 1)">הבא</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="section-title">פירוט תשלומים (זכות)</div>
-      <div class="table-container">
-        <div class="grid-header payments-grid-cols">
-          <div>תאריך</div>
-          <div>מס' קבלה</div>
-          <div>סכום</div>
-        </div>
-        <div id="paymentsGrid"></div>
-      </div>
-      <div class="pagination-controls" id="paymentsPagination">
-        <button class="page-btn" id="payPrev" onclick="changePage('payments', -1)">הקודם</button>
-        <span class="page-info" id="payInfo">עמוד 1</span>
-        <button class="page-btn" id="payNext" onclick="changePage('payments', 1)">הבא</button>
-      </div>
     </div>
   </div>
 
