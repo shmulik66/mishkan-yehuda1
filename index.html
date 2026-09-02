@@ -236,6 +236,30 @@
         min-width: 0;
       }
     }
+
+    /* כפתור המבורגר - מוצג רק בטלפון (מסך צר) */
+    .hamburger-btn {
+      display: none;
+      width: 100%;
+      background: #ffffff;
+      color: #000000;
+      border: 2px solid #c5a059;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-bottom: 12px;
+      align-items: center;
+      justify-content: center;
+    }
+    @media (max-width: 899px) {
+      .hamburger-btn { display: flex; }
+      /* בטלפון, תפריט הצד מוסתר כברירת מחדל, ונפתח בלחיצה על ההמבורגר */
+      .sidebar-panel { display: none; }
+      .sidebar-panel.sidebar-open { display: flex; }
+    }
+
     /* כרטיס השם - רקע חמים ועדין, תואם לכרטיסי הפעולות והסינון */
     .top-status-card {
       background: #fdfbf7;
@@ -511,10 +535,14 @@
       </div>
     </div>
 
+    <button id="sidebarToggleBtn" class="hamburger-btn" onclick="toggleSidebarMenu()">
+      <span>☰ פעולות וסינון</span>
+    </button>
+
     <div class="dashboard-layout">
 
       <!-- תפריט צד קבוע: פעולות וסינון -->
-      <aside class="sidebar-panel">
+      <aside class="sidebar-panel" id="sidebarPanel">
         <div class="card sidebar-card">
           <div class="section-title">פעולות</div>
           <div class="top-bar-controls">
@@ -723,6 +751,11 @@
     box.style.display = (box.style.display === 'grid') ? 'none' : 'grid';
   }
 
+  function toggleSidebarMenu() {
+    const panel = document.getElementById('sidebarPanel');
+    panel.classList.toggle('sidebar-open');
+  }
+
   function populateMinyanOptions(purchases) {
     const select = document.getElementById('minyanFilterSelect');
     select.innerHTML = '<option value="">כל המניינים</option>';
@@ -836,6 +869,7 @@
   function showDashboard(name, user) {
     document.querySelector('.login-card-container').style.display = 'none';
     document.getElementById('dispName').textContent = "שלום " + name;
+    document.getElementById('sidebarPanel').classList.remove('sidebar-open');
 
     document.getElementById('statCredit').textContent = "₪ " + (user.summary.credit || 0).toLocaleString();
     document.getElementById('statDebit').textContent = "₪ " + (user.summary.debit || 0).toLocaleString();
