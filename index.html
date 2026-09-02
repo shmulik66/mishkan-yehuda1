@@ -22,7 +22,6 @@
       width: 100% !important;
       min-height: 100vh;
       font-size: 16px;
-      overflow-y: auto !important;
     }
     
     .wrapper { 
@@ -436,10 +435,13 @@
       grid-template-columns: 1fr;
       gap: 6px;
       margin: 0;
-      padding: 6px 8px;
+      padding: 6px 8px calc(6px + env(safe-area-inset-bottom)) 8px;
       background: #fcf8f2;
       border-top: 2px solid #c5a059;
       box-shadow: 0 -4px 10px rgba(0,0,0,0.08);
+      transform: translate3d(0, 0, 0);
+      -webkit-transform: translate3d(0, 0, 0);
+      will-change: transform;
       z-index: 999;
     }
     @media (min-width: 500px) {
