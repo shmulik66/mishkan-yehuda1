@@ -175,13 +175,12 @@
       text-decoration: none;
       width: 100%;
     }
-    .btn-pdf { color: #047857; border-color: #10b981; }
-    .btn-whatsapp { color: #15803d; border-color: #22c55e; background-color: #f0fdf4; }
+    .btn-pdf, .btn-whatsapp {}
 
     .user-title { 
       text-align: center; 
       font-size: 22px; 
-      color: #0a192f; 
+      color: #000000; 
       margin: 0 0 12px 0; 
       font-weight: 800; 
       font-family: 'Frank Ruhl Hofshi', serif;
@@ -206,8 +205,8 @@
       padding: 10px; 
       text-align: center; 
     }
-    .stat-label { font-size: 13px; margin-bottom: 2px; font-weight: 700; }
-    .stat-val { font-size: 18px; font-weight: 900; }
+    .stat-label { font-size: 13px; margin-bottom: 2px; font-weight: 700; color: #000000; }
+    .stat-val { font-size: 18px; font-weight: 900; color: #000000; }
     
     .box-credit, .box-debit, .box-balance {
       background-color: #ffffff;
@@ -237,13 +236,16 @@
         min-width: 0;
       }
     }
-    /* גוון "אמצע" בין הרקע הלבן של הטבלה לרקע הבז' של הדף */
-    .top-status-card,
-    .sidebar-card {
-      background: #fdfbf7;
+    /* כרטיס השם - רקע לבן פשוט, כמו הטבלה */
+    .top-status-card {
+      background: #ffffff;
       margin-bottom: 12px;
     }
-    .sidebar-card { margin-bottom: 0; }
+    /* גוון "אמצע" בין הרקע הלבן של הטבלה לרקע הבז' של הדף - לכרטיסי הפעולות והסינון */
+    .sidebar-card {
+      background: #fdfbf7;
+      margin-bottom: 0;
+    }
     .sidebar-panel {
       display: flex;
       flex-direction: column;
@@ -311,7 +313,8 @@
 
     .btn-toggle-date {
       background: #ffffff;
-      border: 1px solid #cbd5e0;
+      color: #1e3a8a;
+      border: 2px solid #c5a059;
       border-radius: 8px;
       padding: 10px;
       font-size: 14px;
