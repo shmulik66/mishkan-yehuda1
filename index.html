@@ -209,9 +209,9 @@
     .stat-label { font-size: 13px; margin-bottom: 2px; font-weight: 700; }
     .stat-val { font-size: 18px; font-weight: 900; }
     
-    .box-credit { background-color: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
-    .box-debit { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
-    .box-balance { background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+    .box-credit { background-color: #f2f6fc; color: #0a192f; border: 1px solid #c9d6e8; }
+    .box-debit { background-color: #fdf9ee; color: #8c6d31; border: 1px solid #e2d1a6; }
+    .box-balance { background-color: #eef1f8; color: #1e3a8a; border: 2px solid #c5a059; }
 
     /* תפריט צד קבוע (סטטיסטיקות + פעולות + סינון) לצד טבלאות התוכן */
     .dashboard-layout {
@@ -234,6 +234,9 @@
         flex: 1;
         min-width: 0;
       }
+    }
+    .top-status-card {
+      margin-bottom: 12px;
     }
     .sidebar-card { margin-bottom: 0; }
     .sidebar-panel {
@@ -482,30 +485,28 @@
   </div>
 
   <div id="dashboard" style="display:none;">
-    <h2 id="dispName" class="user-title"></h2>
+    <div class="card top-status-card">
+      <h2 id="dispName" class="user-title"></h2>
+      <div class="stats-grid">
+        <div class="stat-box box-credit">
+          <div class="stat-label">זכות (שולם)</div>
+          <div id="statCredit" class="stat-val">₪ 0</div>
+        </div>
+        <div class="stat-box box-debit">
+          <div class="stat-label">חובה (חיובים)</div>
+          <div id="statDebit" class="stat-val">₪ 0</div>
+        </div>
+        <div class="stat-box box-balance">
+          <div class="stat-label">יתרה לתשלום</div>
+          <div id="statBalance" class="stat-val">₪ 0</div>
+        </div>
+      </div>
+    </div>
 
     <div class="dashboard-layout">
 
-      <!-- תפריט צד קבוע: סטטיסטיקות, פעולות, וסינון -->
+      <!-- תפריט צד קבוע: פעולות וסינון -->
       <aside class="sidebar-panel">
-        <div class="card sidebar-card">
-          <div class="section-title">מצב חשבון</div>
-          <div class="stats-grid stats-grid-vertical">
-            <div class="stat-box box-credit">
-              <div class="stat-label">זכות (שולם)</div>
-              <div id="statCredit" class="stat-val">₪ 0</div>
-            </div>
-            <div class="stat-box box-debit">
-              <div class="stat-label">חובה (חיובים)</div>
-              <div id="statDebit" class="stat-val">₪ 0</div>
-            </div>
-            <div class="stat-box box-balance">
-              <div class="stat-label">יתרה לתשלום</div>
-              <div id="statBalance" class="stat-val">₪ 0</div>
-            </div>
-          </div>
-        </div>
-
         <div class="card sidebar-card">
           <div class="section-title">פעולות</div>
           <div class="top-bar-controls">
