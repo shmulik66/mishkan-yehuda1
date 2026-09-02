@@ -527,6 +527,39 @@
 
         <button type="button" class="btn-submit" onclick="login()">כניסה למערכת</button>
       </form>
+
+      <div style="text-align:center; margin-top:14px;">
+        <a href="javascript:void(0)" onclick="toggleTreasurerLogin()" style="font-size:12px; color:#8c6d31; text-decoration:underline;">כניסת גזבר</a>
+      </div>
+
+      <div id="treasurerLoginBox" style="display:none; margin-top:12px; border-top:1px dashed #e2d1a6; padding-top:12px;">
+        <label for="treasurerPassInput">סיסמת גזבר:</label>
+        <div style="margin-bottom: 10px;">
+          <input type="password" id="treasurerPassInput" placeholder="הזן סיסמת גזבר..." onkeydown="if(event.key==='Enter') treasurerLogin()" inputmode="numeric" />
+        </div>
+        <div id="treasurerErr" class="error-msg"></div>
+        <button type="button" class="btn-submit" onclick="treasurerLogin()">הצג רשימת חייבים</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="treasurerPanel" style="display:none;">
+    <div class="card top-status-card">
+      <h2 class="user-title">רשימת חייבים (גזבר)</h2>
+      <div style="text-align:center; margin-bottom: 10px;">
+        <label for="treasurerThresholdSelect" style="display:inline; font-size:14px;">הצג חוב מעל: </label>
+        <select id="treasurerThresholdSelect" onchange="onThresholdChange()" style="width:auto; display:inline-block; padding: 6px 10px;"></select>
+      </div>
+      <button class="btn-action" onclick="closeTreasurerPanel()">↪ חזרה למסך הכניסה</button>
+    </div>
+    <div class="card">
+      <div class="table-container">
+        <div class="grid-header" style="grid-template-columns: 1fr 120px;">
+          <div>שם המתפלל</div>
+          <div>סכום חוב</div>
+        </div>
+        <div id="treasurerList"></div>
+      </div>
     </div>
   </div>
 
@@ -680,7 +713,19 @@
       .catch(err => {
         document.getElementById('loader').innerText = "שגיאה בתקשורת מול השרת";
       });
+    populateThresholdOptions();
   };
+
+  function populateThresholdOptions() {
+    const select = document.getElementById('treasurerThresholdSelect');
+    for (let val = 500; val <= 10000; val += 500) {
+      const opt = document.createElement('option');
+      opt.value = val;
+      opt.textContent = "₪ " + val.toLocaleString() + " ומעלה";
+      if (val === 1000) opt.selected = true;
+      select.appendChild(opt);
+    }
+  }
 
   function filterNames() {
     const input = document.getElementById('userInput').value.trim().toLowerCase();
@@ -981,6 +1026,80 @@
     document.getElementById('errMsg').textContent = '';
     document.getElementById('suggestions').style.display = 'none';
     currentUserData = null;
+  }
+
+  // ===== אזור גזבר: צפייה ברשימת חייבים, מוגן בסיסמה נפרדת =====
+  let treasurerPassCache = null;
+
+  function toggleTreasurerLogin() {
+    const box = document.getElementById('treasurerLoginBox');
+    box.style.display = (box.style.display === 'none') ? 'block' : 'none';
+  }
+
+  async function treasurerLogin() {
+    const pass = document.getElementById('treasurerPassInput').value;
+    const errDiv = document.getElementById('treasurerErr');
+    errDiv.textContent = '';
+
+    if (!pass) { errDiv.textContent = "נא להזין סיסמת גזבר"; return; }
+
+    treasurerPassCache = pass;
+    const threshold = Number(document.getElementById('treasurerThresholdSelect').value) || 1000;
+    await loadTreasurerDebts(threshold);
+  }
+
+  async function loadTreasurerDebts(minDebt) {
+    const errDiv = document.getElementById('treasurerErr');
+    errDiv.textContent = '';
+    try {
+      const url = `${SCRIPT_URL}?action=treasurerDebts&pass=${encodeURIComponent(treasurerPassCache)}&minDebt=${minDebt}`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      if (data && data.success) {
+        renderTreasurerPanel(data.debts || []);
+      } else {
+        errDiv.textContent = (data && data.message) ? data.message : "סיסמה שגויה";
+      }
+    } catch (err) {
+      errDiv.textContent = "שגיאה בתקשורת מול השרת";
+    }
+  }
+
+  function renderTreasurerPanel(debts) {
+    document.querySelector('.login-card-container').style.display = 'none';
+    document.getElementById('treasurerPanel').style.display = 'block';
+
+    const list = document.getElementById('treasurerList');
+    list.innerHTML = '';
+
+    if (debts.length === 0) {
+      list.innerHTML = '<div style="text-align:center; padding: 15px;">אין מתפללים עם חוב מעל הסכום שנבחר</div>';
+      return;
+    }
+
+    debts.forEach(d => {
+      const row = document.createElement('div');
+      row.className = 'grid-row';
+      row.style.gridTemplateColumns = '1fr 120px';
+      row.innerHTML = `<div>${d.name}</div><div>₪ ${d.debt.toLocaleString()}</div>`;
+      list.appendChild(row);
+    });
+  }
+
+  function onThresholdChange() {
+    if (!treasurerPassCache) return;
+    const threshold = Number(document.getElementById('treasurerThresholdSelect').value) || 1000;
+    loadTreasurerDebts(threshold);
+  }
+
+  function closeTreasurerPanel() {
+    document.getElementById('treasurerPanel').style.display = 'none';
+    document.querySelector('.login-card-container').style.display = 'block';
+    document.getElementById('treasurerLoginBox').style.display = 'none';
+    document.getElementById('treasurerPassInput').value = '';
+    document.getElementById('treasurerErr').textContent = '';
+    treasurerPassCache = null;
   }
 
   function downloadPDF() {
